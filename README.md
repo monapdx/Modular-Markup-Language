@@ -10,7 +10,7 @@ Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semant
 
 The source document should remain readable as plain text while compiling into a fully structured document tree.
 
-Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md).
+Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md). Try [the parser](https://monapdx.github.io/Modular-Markup-Language/demo.html).
 
 ---
 

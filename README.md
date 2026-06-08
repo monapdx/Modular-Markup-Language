@@ -2,9 +2,6 @@
 
 - [Modular Markup (MML)](#modular-markup-mml)
 - [Goals](#goals)
-- [Example](#example)
-  - [MML](#mml)
-  - [Compiled Output](#compiled-output)
 - [Core Philosophy](#core-philosophy)
 - [Syntax](#syntax)
   - [Opening Tags](#opening-tags)

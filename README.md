@@ -1,3 +1,20 @@
+# Modular Markup (MML)
+
+**A meaning-first markup language that remains readable as plain text.**
+
+Modular Markup (MML) is an experimental semantic markup language designed around a simple idea:
+
+> Documents should describe meaning, not formatting.
+
+Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semantic and presentational concerns, MML focuses on explicit semantic structures that are understandable to both humans and machines.
+
+The source document should remain readable as plain text while compiling into a fully structured document tree.
+
+Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md). Try [the parser](https://monapdx.github.io/Modular-Markup-Language/demo.html).
+
+---
+
+
 # Table of Contents
 
 - [Modular Markup (MML)](#modular-markup-mml)
@@ -25,21 +42,6 @@
   - [Semantic Necessity](#semantic-necessity)
 - [Project Status](#project-status)
 - [License](#license)
-
-
-# Modular Markup (MML)
-
-**A meaning-first markup language that remains readable as plain text.**
-
-Modular Markup (MML) is an experimental semantic markup language designed around a simple idea:
-
-> Documents should describe meaning, not formatting.
-
-Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semantic and presentational concerns, MML focuses on explicit semantic structures that are understandable to both humans and machines.
-
-The source document should remain readable as plain text while compiling into a fully structured document tree.
-
-Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md). Try [the parser](https://monapdx.github.io/Modular-Markup-Language/demo.html).
 
 ---
 

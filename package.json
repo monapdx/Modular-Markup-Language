@@ -1,0 +1,9 @@
+{
+  "name": "semantic-markup",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Plain-text semantic markup parser, validator, and compiler",
+  "scripts": {
+    "test": "node tests/run-tests.js"
+  }
+}

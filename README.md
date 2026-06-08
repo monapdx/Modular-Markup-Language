@@ -14,6 +14,37 @@ Read the [full specification](https://github.com/monapdx/Modular-Markup-Language
 
 ---
 
+
+# Table of Contents
+
+- [Modular Markup (MML)](#modular-markup-mml)
+- [Goals](#goals)
+- [Core Philosophy](#core-philosophy)
+- [Syntax](#syntax)
+  - [Opening Tags](#opening-tags)
+  - [Closing Tags](#closing-tags)
+  - [Text Content](#text-content)
+- [Validation](#validation)
+- [Automatic Text Nodes](#automatic-text-nodes)
+- [Semantic Schemas](#semantic-schemas)
+  - [Argument](#argument)
+  - [Timeline](#timeline)
+  - [Calendar](#calendar)
+  - [Comparison](#comparison)
+    - [Before / After](#before-after)
+    - [Entity Comparison](#entity-comparison)
+    - [Scenario Comparison](#scenario-comparison)
+  - [Media](#media)
+- [Design Principles](#design-principles)
+  - [Text Wins](#text-wins)
+  - [Singular Elements](#singular-elements)
+  - [Explicit Closure](#explicit-closure)
+  - [Semantic Necessity](#semantic-necessity)
+- [Project Status](#project-status)
+- [License](#license)
+
+---
+
 # Goals
 
 * Human-readable source documents

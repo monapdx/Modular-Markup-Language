@@ -12,6 +12,8 @@ The source document should remain readable as plain text while compiling into a 
 
 Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md). Try [the parser](https://monapdx.github.io/Modular-Markup-Language/demo.html).
 
+[![SPEC](https://img.shields.io/badge/%F0%9F%93%96%20%20SPEC-111111?style=for-the-badge)](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md) [![Parser](https://img.shields.io/badge/%F0%9F%91%89%20Parser-111111?style=for-the-badge)](https://monapdx.github.io/Modular-Markup-Language/demo.html) [![TAGS](https://img.shields.io/badge/%E2%9C%85%20%20TAGS-111111?style=for-the-badge)](TAGS.md) 
+
 ---
 
 

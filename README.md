@@ -1,3 +1,35 @@
+# Table of Contents
+
+- [Modular Markup (MML)](#modular-markup-mml)
+- [Goals](#goals)
+- [Example](#example)
+  - [MML](#mml)
+  - [Compiled Output](#compiled-output)
+- [Core Philosophy](#core-philosophy)
+- [Syntax](#syntax)
+  - [Opening Tags](#opening-tags)
+  - [Closing Tags](#closing-tags)
+  - [Text Content](#text-content)
+- [Validation](#validation)
+- [Automatic Text Nodes](#automatic-text-nodes)
+- [Semantic Schemas](#semantic-schemas)
+  - [Argument](#argument)
+  - [Timeline](#timeline)
+  - [Calendar](#calendar)
+  - [Comparison](#comparison)
+    - [Before / After](#before-after)
+    - [Entity Comparison](#entity-comparison)
+    - [Scenario Comparison](#scenario-comparison)
+  - [Media](#media)
+- [Design Principles](#design-principles)
+  - [Text Wins](#text-wins)
+  - [Singular Elements](#singular-elements)
+  - [Explicit Closure](#explicit-closure)
+  - [Semantic Necessity](#semantic-necessity)
+- [Project Status](#project-status)
+- [License](#license)
+
+
 # Modular Markup (MML)
 
 **A meaning-first markup language that remains readable as plain text.**

@@ -1,18 +1,5 @@
-# Modular Markup Language Specification v0.1
 
-## Status
 
-Draft
-
-## Version
-
-0.1
-
-## Abbreviation
-
-MML
-
----
 
 # 1. Introduction
 

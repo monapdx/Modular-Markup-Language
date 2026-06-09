@@ -1,4 +1,13 @@
-export { RESERVED_ELEMENTS, parseAttributes, matchOpeningTag, matchClosingTag } from "./grammar.js";
+export {
+  CANONICAL_ELEMENTS,
+  ELEMENT_ALIASES,
+  RESERVED_ELEMENTS,
+  normalizeElementName,
+  isReservedElement,
+  parseAttributes,
+  matchOpeningTag,
+  matchClosingTag,
+} from "./grammar.js";
 export { parse, getDocumentChildren } from "./parser.js";
 export { validate, validateAll } from "./validator.js";
 export { compile, astToJson } from "./compiler.js";

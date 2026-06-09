@@ -99,8 +99,8 @@ function validateElement(node, parent, errors) {
       }
       break;
 
-    case "year-start":
-    case "year-end":
+    case "start-year":
+    case "end-year":
       if (parentName !== "timeline") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
@@ -113,15 +113,16 @@ function validateElement(node, parent, errors) {
       }
       break;
 
-    case "year-month":
+    case "month":
+    case "year":
       if (parentName !== "calendar") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
-          element: "year-month",
+          element: node.name,
           requiredParent: "calendar",
           suggestedParentChain: ["calendar"],
           line: node.line,
-          message: "year-month requires parent calendar",
+          message: `${node.name} requires parent calendar`,
         });
       }
       break;
@@ -165,15 +166,15 @@ function validateElement(node, parent, errors) {
       }
       break;
 
-    case "conditions":
+    case "condition":
       if (parentName !== "scenario") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
-          element: "conditions",
+          element: "condition",
           requiredParent: "scenario",
           suggestedParentChain: ["comparison", "scenario"],
           line: node.line,
-          message: "conditions requires parent scenario",
+          message: "condition requires parent scenario",
         });
       }
       break;
@@ -205,8 +206,8 @@ function validateElement(node, parent, errors) {
 
     case "timeline": {
       const missing = [];
-      if (!hasChildNamed(node, "year-start")) missing.push("year-start");
-      if (!hasChildNamed(node, "year-end")) missing.push("year-end");
+      if (!hasChildNamed(node, "start-year")) missing.push("start-year");
+      if (!hasChildNamed(node, "end-year")) missing.push("end-year");
       if (missing.length > 0) {
         errors.push({
           code: "MISSING_REQUIRED_CHILD",
@@ -220,13 +221,13 @@ function validateElement(node, parent, errors) {
     }
 
     case "calendar":
-      if (!hasChildNamed(node, "year-month")) {
+      if (!hasChildNamed(node, "month") && !hasChildNamed(node, "year")) {
         errors.push({
           code: "MISSING_REQUIRED_CHILD",
           element: "calendar",
-          requiredChild: "year-month",
+          missingChildren: ["month", "year"],
           line: node.line,
-          message: "calendar requires year-month",
+          message: "calendar requires month or year",
         });
       }
       break;
@@ -265,13 +266,13 @@ function validateElement(node, parent, errors) {
       break;
 
     case "scenario":
-      if (!hasChildNamed(node, "conditions")) {
+      if (!hasChildNamed(node, "condition")) {
         errors.push({
           code: "MISSING_REQUIRED_CHILD",
           element: "scenario",
-          requiredChild: "conditions",
+          requiredChild: "condition",
           line: node.line,
-          message: "scenario should contain conditions",
+          message: "scenario should contain condition",
         });
       }
       break;
@@ -301,7 +302,7 @@ function validateComparison(node, errors) {
   const scenarios = childrenNamed(node, "scenario");
   const schemaScenario =
     scenarios.length >= 2 &&
-    scenarios.every((scenario) => hasChildNamed(scenario, "conditions"));
+    scenarios.every((scenario) => hasChildNamed(scenario, "condition"));
 
   if (schemaBeforeAfter || schemaEntity || schemaScenario) {
     return;
@@ -316,7 +317,7 @@ function validateComparison(node, errors) {
     hints.push("entity schema requires at least two entity children each containing unique");
   }
   if (scenarios.length > 0) {
-    hints.push("scenario schema requires at least two scenario children each containing conditions");
+    hints.push("scenario schema requires at least two scenario children each containing condition");
   }
 
   errors.push({
@@ -326,7 +327,7 @@ function validateComparison(node, errors) {
     message:
       hints.length > 0
         ? `comparison does not match a valid schema: ${hints.join("; ")}`
-        : "comparison requires before/after, entity/shared/unique, or scenario/conditions schema",
+        : "comparison requires before/after, entity/shared/unique, or scenario/condition schema",
   });
 }
 

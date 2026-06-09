@@ -1,5 +1,5 @@
 /**
- * Semantic Markup Language — Grammar (v0.1)
+ * Modular Markup Language — Grammar (v0.1)
  *
  * Opening tag line:
  *   - A reserved element name alone on the line, e.g. `claim`
@@ -18,64 +18,141 @@
  *   - Malformed attribute syntax → whole line is treated as text ("text wins")
  *
  * Blank lines inside content are IGNORED (not emitted as text nodes).
+ *
+ * Canonical element names follow DOCS/TAGS.md. Shorthand aliases follow
+ * DOCS/SHORTHAND.md. Legacy SPEC names are accepted and normalized.
  */
 
-/** @readonly */
-export const RESERVED_ELEMENTS = new Set([
-  "document",
-  "section",
-  "subhead",
-  "text",
-  "quote",
-  "blockquote",
-  "note",
-  "source",
-  "link",
-  "a",
-  "media",
-  "image",
-  "video",
-  "audio",
-  "caption",
+/** @readonly — canonical names from DOCS/TAGS.md */
+export const CANONICAL_ELEMENTS = new Set([
   "argument",
+  "calendar",
+  "month",
+  "year",
+  "canvas",
   "claim",
   "evidence",
-  "timeline",
-  "calendar",
-  "event",
-  "date",
-  "year-start",
-  "year-end",
-  "year-month",
   "comparison",
-  "before",
   "after",
+  "before",
+  "condition",
+  "document",
+  "blockquote",
+  "footnote",
+  "link",
+  "list",
+  "item",
+  "section",
+  "text",
   "entity",
   "unique",
-  "shared",
-  "scenario",
-  "conditions",
-  "table",
-  "row",
-  "column",
-  "cell",
+  "event",
+  "date",
   "form",
-  "field",
-  "input",
-  "select",
-  "option",
   "button",
+  "dropdown",
+  "option",
+  "selection",
+  "fieldset",
+  "legend",
+  "input",
+  "textarea",
+  "media",
+  "audio",
+  "image",
+  "video",
+  "scenario",
+  "script",
+  "style",
+  "table",
+  "cell",
+  "column",
+  "row",
+  "timeline",
+  "end-year",
+  "start-year",
+]);
+
+/**
+ * Shorthand (SHORTHAND.md) and legacy (SPEC) aliases → canonical TAGS name.
+ * @readonly
+ */
+export const ELEMENT_ALIASES = {
+  // SHORTHAND.md
+  arg: "argument",
+  cal: "calendar",
+  comp: "comparison",
+  cond: "condition",
+  doc: "document",
+  quote: "blockquote",
+  foot: "footnote",
+  fnote: "footnote",
+  sect: "section",
+  drop: "dropdown",
+  set: "fieldset",
+  para: "textarea",
+  mp3: "audio",
+  wav: "audio",
+  mp4: "video",
+  img: "image",
+  jpg: "image",
+  png: "image",
+  svg: "image",
+  gif: "image",
+  col: "column",
+  scene: "scenario",
+  evi: "evidence",
+  // Legacy SPEC / prototype names
+  "year-start": "start-year",
+  "year-end": "end-year",
+  "year-month": "month",
+  conditions: "condition",
+};
+
+/**
+ * Reserved names accepted in source but not renamed (SPEC/compiler support).
+ * @readonly
+ */
+export const LEGACY_ELEMENTS = new Set([
+  "subhead",
+  "caption",
+  "shared",
+  "source",
+  "note",
+  "a",
+  "select",
   "nav",
   "menu",
   "header",
   "footer",
-  "canvas",
-  "script",
-  "style",
+]);
+
+/** @readonly — every name that may appear as an opening or closing tag */
+export const RESERVED_ELEMENTS = new Set([
+  ...CANONICAL_ELEMENTS,
+  ...Object.keys(ELEMENT_ALIASES),
+  ...LEGACY_ELEMENTS,
 ]);
 
 const ELEMENT_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
 const ATTR_PAIR_PATTERN = /^[a-z][a-z0-9-]*="[^"]*"$/;
+
+/**
+ * Resolve shorthand or legacy alias to canonical element name when defined.
+ * @param {string} name
+ * @returns {string}
+ */
+export function normalizeElementName(name) {
+  return ELEMENT_ALIASES[name] ?? name;
+}
+
+/**
+ * @param {string} name
+ * @returns {boolean}
+ */
+export function isReservedElement(name) {
+  return RESERVED_ELEMENTS.has(name);
+}
 
 /**
  * Parse key="value" attribute segment after the element name.
@@ -113,22 +190,30 @@ export function matchOpeningTag(line) {
   if (!trimmed) return null;
 
   if (ELEMENT_NAME_PATTERN.test(trimmed)) {
-    if (!RESERVED_ELEMENTS.has(trimmed)) return null;
-    return { kind: "open", name: trimmed, attributes: {} };
+    if (!isReservedElement(trimmed)) return null;
+    return {
+      kind: "open",
+      name: normalizeElementName(trimmed),
+      attributes: {},
+    };
   }
 
   const spaceIndex = trimmed.indexOf(" ");
   if (spaceIndex === -1) return null;
 
-  const name = trimmed.slice(0, spaceIndex);
-  if (!ELEMENT_NAME_PATTERN.test(name) || !RESERVED_ELEMENTS.has(name)) {
+  const rawName = trimmed.slice(0, spaceIndex);
+  if (!ELEMENT_NAME_PATTERN.test(rawName) || !isReservedElement(rawName)) {
     return null;
   }
 
   const attributes = parseAttributes(trimmed.slice(spaceIndex + 1));
   if (attributes === null) return null;
 
-  return { kind: "open", name, attributes };
+  return {
+    kind: "open",
+    name: normalizeElementName(rawName),
+    attributes,
+  };
 }
 
 /**
@@ -139,10 +224,10 @@ export function matchClosingTag(line) {
   const trimmed = line.trim();
   if (!trimmed.startsWith("/")) return null;
 
-  const name = trimmed.slice(1);
-  if (!ELEMENT_NAME_PATTERN.test(name) || !RESERVED_ELEMENTS.has(name)) {
+  const rawName = trimmed.slice(1);
+  if (!ELEMENT_NAME_PATTERN.test(rawName) || !isReservedElement(rawName)) {
     return null;
   }
 
-  return { kind: "close", name };
+  return { kind: "close", name: normalizeElementName(rawName) };
 }

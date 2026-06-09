@@ -1,0 +1,125 @@
+name: Submit Schema
+description: Propose a multi-part MML tag/schema such as argument, timeline, debate, profile, etc.
+title: "[Schema]: "
+labels: ["schema proposal", "complex tag"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to propose a complex, multi-part MML structure.
+
+  - type: input
+    id: schema-name
+    attributes:
+      label: Schema / Tag Name
+      description: What should this schema be called?
+      placeholder: argument
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose
+      description: What is this schema meant to represent or organize?
+      placeholder: |
+        Example: An argument structure containing one or more claims, supporting evidence, objections, and responses.
+    validations:
+      required: true
+
+  - type: textarea
+    id: required-children
+    attributes:
+      label: Required Child Tags
+      description: Which child tags must appear inside this schema?
+      placeholder: |
+        Example:
+        - claim
+        - evidence
+    validations:
+      required: true
+
+  - type: textarea
+    id: optional-children
+    attributes:
+      label: Optional Child Tags
+      description: Which child tags may appear, but are not required?
+      placeholder: |
+        Example:
+        - objection
+        - response
+        - source
+    validations:
+      required: false
+
+  - type: textarea
+    id: rules
+    attributes:
+      label: Structural Rules
+      description: Describe any nesting, ordering, minimum/maximum, or dependency rules.
+      placeholder: |
+        Example:
+        - argument must contain at least one claim
+        - evidence must belong to a claim
+        - objection may appear after claim or evidence
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Markup
+      description: Show how this schema would look in MML.
+      render: html
+      placeholder: |
+        <argument>
+          <claim>This is the main claim.</claim>
+          <evidence>This supports the claim.</evidence>
+        </argument>
+    validations:
+      required: true
+
+  - type: textarea
+    id: rendering
+    attributes:
+      label: Suggested Rendering Behavior
+      description: How should this schema display when rendered?
+      placeholder: |
+        Example: Render as a bordered argument card with claims emphasized and evidence nested underneath.
+    validations:
+      required: false
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: What kinds of writing, documents, or interfaces would this schema help with?
+      placeholder: |
+        Example:
+        - essays
+        - debate notes
+        - research summaries
+        - legal reasoning
+    validations:
+      required: false
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexity Level
+      description: How complex is this schema?
+      options:
+        - Simple nested structure
+        - Moderate multi-part structure
+        - Complex structure with strict rules
+        - Unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Anything else worth considering?
+    validations:
+      required: false

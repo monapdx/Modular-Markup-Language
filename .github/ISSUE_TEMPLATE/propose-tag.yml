@@ -1,0 +1,81 @@
+name: Propose Tag
+description: Suggest a new tag for Modular Markup Language
+title: "[Tag Proposal]: "
+labels: ["tag proposal"]
+body:
+  - type: input
+    id: suggested-tag
+    attributes:
+      label: Suggested Tag
+      description: What tag are you proposing?
+      placeholder: "example: argument"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tag-category
+    attributes:
+      label: Tag Category
+      description: What kind of tag is this?
+      options:
+        - Structural
+        - Semantic
+        - Interactive
+        - Display / Layout
+        - Metadata
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose
+      description: What should this tag do?
+      placeholder: "Explain what this tag represents and why it belongs in the language."
+    validations:
+      required: true
+
+  - type: textarea
+    id: parent-requirements
+    attributes:
+      label: Parent / Child Requirements
+      description: Should this tag require a parent tag, child tags, or both?
+      placeholder: |
+        Examples:
+        - Must be inside <argument>
+        - Requires at least one <claim> child
+        - Can exist independently
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Usage
+      description: Show how the tag would be used.
+      render: html
+      placeholder: |
+        <argument>
+          <claim>
+            Example content
+          </claim>
+        </argument>
+    validations:
+      required: false
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why Should This Be Included?
+      description: Explain why this functionality deserves a dedicated tag instead of plain text or an existing tag.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Anything else worth considering?
+    validations:
+      required: false

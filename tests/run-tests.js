@@ -209,17 +209,17 @@ Common ground.
   assertTrue(validate(ast).valid);
 });
 
-test("comparison scenario / conditions schema", () => {
+test("comparison scenario / condition schema", () => {
   const source = `comparison
 scenario
-conditions
+condition
 If A happens.
-/conditions
+/condition
 /scenario
 scenario
-conditions
+condition
 If B happens.
-/conditions
+/condition
 /scenario
 /comparison`;
 
@@ -312,6 +312,142 @@ x
   assertFalse(result.valid);
   assertEqual(result.html, "");
   assertMatch(result.validationErrors[0].message, /requires parent claim/);
+});
+
+test("legacy year-start alias normalizes to start-year", () => {
+  const source = `timeline
+year-start
+2020
+/year-start
+year-end
+2024
+/year-end
+/timeline`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+  assertTrue(findElement(ast, "start-year") != null);
+  assertTrue(findElement(ast, "end-year") != null);
+});
+
+test("legacy year-month alias normalizes to month", () => {
+  const source = `calendar
+year-month
+2024-03
+/year-month
+/calendar`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+  assertTrue(findElement(ast, "month") != null);
+});
+
+test("shorthand tags from SHORTHAND.md", () => {
+  const source = `arg
+claim
+evi
+Supported.
+/evi
+/claim
+/arg`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(findElement(ast, "argument") != null);
+  assertTrue(findElement(ast, "claim") != null);
+  assertTrue(findElement(ast, "evidence") != null);
+});
+
+test("form elements from TAGS.md", () => {
+  const source = `form action="POST"
+fieldset
+legend
+Name
+/legend
+input type="text"
+/input
+/fieldset
+dropdown
+option
+A
+/option
+selection
+A
+/selection
+/dropdown
+button type="submit"
+Submit
+/button
+para
+Notes here.
+/para
+/form`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(findElement(ast, "form") != null);
+  assertTrue(findElement(ast, "fieldset") != null);
+  assertTrue(findElement(ast, "dropdown") != null);
+  assertTrue(findElement(ast, "textarea") != null);
+});
+
+test("document structure elements from TAGS.md", () => {
+  const source = `document
+section title="Intro"
+text
+Hello.
+/text
+/section
+list
+item
+One
+/item
+/list
+footnote
+See also.
+/footnote
+/document`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(findElement(ast, "list") != null);
+  assertTrue(findElement(ast, "item") != null);
+  assertTrue(findElement(ast, "footnote") != null);
+});
+
+test("table elements from TAGS.md", () => {
+  const source = `table
+row
+cell
+A1
+/cell
+column
+B
+/column
+/row
+/table`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(findElement(ast, "table") != null);
+  assertTrue(findElement(ast, "row") != null);
+  assertTrue(findElement(ast, "cell") != null);
+  assertTrue(findElement(ast, "column") != null);
+});
+
+test("media shorthand image alias", () => {
+  const source = `media
+img
+/photo.png
+/image
+/media`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+  assertTrue(findElement(ast, "image") != null);
 });
 
 // --- Runner ---

@@ -800,7 +800,7 @@ Check out the **[README](/DOCS/README.md)** if you're not sure where to start.
 
 You can read the full **[SPEC](/DOCS/SPEC.md)** here. 
 
-Try the **[PARSER](index.html)**.
+Try the **[PARSER](/FILES/index.html)**.
 
 You can find the full list of **[TAGS](/DOCS/TAGS.md)** here.
 

@@ -106,15 +106,15 @@ category: documentation
 ---
 ## TAGS
 
-Here is the list of **[TAGS](DOCS/TAGS)**. 
+Here is the list of **[TAGS](/DOCS/TAGS)**. 
 
-Looking for the **[SHORTHAND](DOCS/SHORTHAND.md)** version?
+Looking for the **[SHORTHAND](/DOCS/SHORTHAND.md)** version?
 
-Check out a list of **[PROPOSED TAGS](DOCS/PROPOSED)**.
+Check out a list of **[PROPOSED TAGS](/DOCS/PROPOSED.md)**.
 
-Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](DOCS/DEPENDENCIES.md)**.
+Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](/DOCS/DEPENDENCIES.md)**.
 
-Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](DOCS/SYNONYMS.md)** make it fine to replace one with the other!
+Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](/DOCS/SYNONYMS.md)** make it fine to replace one with the other!
 
 
 #TAgs #parent #child #GRAMMAr #SEMANTIc #MARKUp #DATA-STRUCTURe #LISTs #rules #dependencies 

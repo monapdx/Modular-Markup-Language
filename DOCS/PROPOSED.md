@@ -3,54 +3,58 @@ title: PROPOSED
 category: documentation
 ---
 
-## node
 
-## cluster
+## PROPOSED TAGS
 
-## pattern
+---
+- ## node
 
-## process
+- ## cluster
 
-## identity
+- ## pattern
 
-### action
+- ## process
 
-### value
+- ## role
 
-### motive
+## PROPOSED SCHEMAS
 
-### goal
+---
 
-### reward
+- ## identity
 
-## category
+	- ### action
+	- ### value
+	- ### motive
+	- ### goal
+	- ### reward
 
-### group
+- ## category
 
-### relationship
+	- ### group
+	- ### relationship
 
-## profile
+- ## profile
 
-### user
-### gender
-### age
-### location
+	- ### user
+	- ### gender
+	- ### age
+	- ### location
 
-## role
+- ## education
 
-## education
+	- ### university
+	- ### degree
+		- Associate
+		- Bachelor
+		- Master
+		- major
+		- minor
 
-### university
 
-### degree
+---
 
-	Associate
-	Bachelor
-	Master
-
-	major
-	minor
-
+Here is the list of **[TAGS](/DOCS/TAGS.md)**. 
 
 Have an idea for a tag we should add? **[SUBMIT A TAG](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml)** here.
 

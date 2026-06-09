@@ -1,18 +1,8 @@
-
-## TAG PAIRS
-
-|     |     |
-| --- | --- |
-|     |     |
+---
+title: SCRATCHPAD
+category: notes
+---
 
 
-> [!EXAMPLE] IN OTHER WORDS
-> TAG <---> TAG
 
-``
-> [!tip]+ HELPFUL TIP
-> ADVICE GOES HERE!
-> 
-
-![[index.html]]
 

@@ -13,55 +13,70 @@ category: documentation
 - [ ] In *some cases*, **file extensions can be used as shorthand** for some Tags, but they *must be* **exactly three characters**
 
 
-
 ## OFFICIAL TAG SHORTHANDS
 
-argument ---> arg
-calendar ---> cal
-comparison ---> comp
-condition ---> cond
-document ---> doc
-blockquote ---> quote
-footnote ---> foot, fnote
-section ---> sect
-dropdown ---> drop
-fieldset ---> set
-textarea ---> para
-audio ---> mp3, wav
-video ---> mp4
-image ---> img, jpg, png, svg, gif
-column ---> col
-scenario ---> scene
-subhead ---> sub
-caption ---> cap
-evidence ---> evi
+| TAG          | SHORTHAND               |
+| ------------ | ----------------------- |
+| argument     | arg                     |
+| calendar     | cal                     |
+| comparison   | comp                    |
+| condition    | cond                    |
+| document     | doc                     |
+| blockquote   | quote                   |
+| footnote     | foot, note              |
+| section      | sect                    |
+| dropdown     | drop                    |
+| fieldset     | set                     |
+| textarea     | para                    |
+| audio        | mp3, wav                |
+| video        | mp4                     |
+| image        | img, png, gif, jpg, svg |
+| column       | col                     |
+| scenario     | scene                   |
+| subhead      | sub                     |
+| caption      | cap                     |
+| evidence     | evi                     |
+| entity       | ent                     |
+| option       | opt                     |
+| select       | sel                     |
+| legend       | leg                     |
+| statement    | stat                    |
+| position     | pos                     |
+| support      | sup                     |
+| chapter      | chap                    |
+| recording    | rec                     |
+| illustration | ill                     |
+| artwork      | art                     |
+| situation    | sit                     |
+| circumstance | cir                     |
+|              |                         |
 
 ---
-
 ## PROPOSED TAG SHORTHANDS
 
-pattern ---> pat
-process ---> pro
-action ---> act
-category ---> cat
-association ---> ass
-relationship ---> rel
-constraint ---> cons
-education ---> edu
-university ---> uni
+| TAG          | SHORTHAND |
+| ------------ | --------- |
+| pattern      | pat       |
+| process      | pro       |
+| action       | act       |
+| category     | cat       |
+| association  | ass       |
+| relationship | rel       |
+| constraint   | cons      |
+| education    | edu       |
+| university   | uni       |
+|              |           |
 
 ---
 ## TAGS
 
-Here is the list of **[TAGS](DOCS/TAGS)**. 
+Here is the list of **[TAGS](/DOCS/TAGS.md)**. 
 
-Looking for the **[SHORTHAND](DOCS/SHORTHAND.md)** version?
+Check out a list of **[PROPOSED TAGS](/DOCS/PROPOSED.md)**.
 
-Check out a list of **[PROPOSED TAGS](DOCS/PROPOSED)**.
+Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](/DOCS/DEPENDENCIES.md)**.
 
-Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](DOCS/DEPENDENCIES.md)**.
-
-Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](DOCS/SYNONYMS.md)** make it fine to replace one with the other!
+Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](/DOCS/SYNONYMS.md)** make it fine to replace one with the other!
 
 
 

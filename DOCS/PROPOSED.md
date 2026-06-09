@@ -44,16 +44,13 @@ category: documentation
 
 ### degree
 
-	#### Associate
-	#### Bachelor
-	#### Master
+	Associate
+	Bachelor
+	Master
 
-	### major
-	### minor
+	major
+	minor
 
-
-
-This document is specifically for tags which have been **[PROPOSED]()** for inclusion. 
 
 Have an idea for a tag we should add? **[SUBMIT A TAG](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml)** here.
 

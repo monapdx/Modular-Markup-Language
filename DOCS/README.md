@@ -6,13 +6,7 @@ category: documentation
 
 **A meaning-first markup language that remains readable as plain text.**
 
-Modular Markup (MML) is an experimental semantic markup language designed around a simple idea:
-
-> Documents should describe meaning, not formatting.
-
-Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semantic and presentational concerns, MML focuses on explicit semantic structures that are understandable to both humans and machines.
-
-The source document should remain readable as plain text while compiling into a fully structured document tree.
+A semantic alternative to Markdown that compiles to HTML. Instead of describing formatting, MML describes meaning through structured tags like claim, evidence, argument, timeline, and event.
 
 ---
 # Goals

@@ -1,3 +1,7 @@
+---
+title: README
+category: documentation
+---
 # Modular Markup (MML)
 
 **A meaning-first markup language that remains readable as plain text.**
@@ -10,58 +14,19 @@ Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semant
 
 The source document should remain readable as plain text while compiling into a fully structured document tree.
 
-Read the [full specification](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md). Try [the parser](https://monapdx.github.io/Modular-Markup-Language/demo.html).
-
-[![SPEC](https://img.shields.io/badge/%F0%9F%93%96%20%20SPEC-111111?style=for-the-badge)](https://github.com/monapdx/Modular-Markup-Language/blob/main/MML-Specification.md) [![Parser](https://img.shields.io/badge/%F0%9F%91%89%20Parser-111111?style=for-the-badge)](https://monapdx.github.io/Modular-Markup-Language/demo.html) [![TAGS](https://img.shields.io/badge/%E2%9C%85%20%20TAGS-111111?style=for-the-badge)](TAGS.md) 
-
 ---
-
-
-# Table of Contents
-
-- [Modular Markup (MML)](#modular-markup-mml)
-- [Goals](#goals)
-- [Core Philosophy](#core-philosophy)
-- [Syntax](#syntax)
-  - [Opening Tags](#opening-tags)
-  - [Closing Tags](#closing-tags)
-  - [Text Content](#text-content)
-- [Validation](#validation)
-- [Automatic Text Nodes](#automatic-text-nodes)
-- [Semantic Schemas](#semantic-schemas)
-  - [Argument](#argument)
-  - [Timeline](#timeline)
-  - [Calendar](#calendar)
-  - [Comparison](#comparison)
-    - [Before / After](#before-after)
-    - [Entity Comparison](#entity-comparison)
-    - [Scenario Comparison](#scenario-comparison)
-  - [Media](#media)
-- [Design Principles](#design-principles)
-  - [Text Wins](#text-wins)
-  - [Singular Elements](#singular-elements)
-  - [Explicit Closure](#explicit-closure)
-  - [Semantic Necessity](#semantic-necessity)
-- [Project Status](#project-status)
-- [License](#license)
-
----
-
 # Goals
 
-* Human-readable source documents
-* Explicit semantic structure
-* Strong parent-child validation
-* Meaning-first document modeling
-* Plain text as the authoring format
-* Automatic structure generation
-* Compiler-friendly AST representation
-* Extensible semantic schemas
+* [ ] Human-readable source documents
+* [ ] Explicit semantic structure
+* [ ] Strong parent-child validation
+* [ ] Meaning-first document modeling
+* [ ] Plain text as the authoring format
+* [ ] Automatic structure generation
+* [ ] Compiler-friendly AST representation
+* [ ] Extensible semantic schemas
 
 ---
-
-# Example
-
 ## MML
 
 ```text
@@ -100,7 +65,7 @@ The final rendered output is already HTML.
 
 MML is built around semantic objects rather than formatting instructions.
 
-For example:
+**For example:**
 
 ```text
 argument
@@ -116,7 +81,7 @@ caption
 
 represent meaningful concepts.
 
-By contrast, generic containers such as:
+**By contrast, generic containers such as:**
 
 ```html
 <div>
@@ -179,7 +144,7 @@ The word "Arguments" is content, not a tag.
 
 MML validates semantic structure, not just syntax.
 
-Example:
+**Example:**
 
 ```text
 evidence
@@ -187,14 +152,14 @@ The final output is already HTML.
 /evidence
 ```
 
-Produces:
+**Produces:**
 
 ```text
 Error:
 evidence requires parent claim.
 ```
 
-Valid:
+**Valid:**
 
 ```text
 argument
@@ -216,7 +181,7 @@ The final output is already HTML.
 
 Plain text is automatically wrapped in text nodes.
 
-Source:
+**Source:**
 
 ```text
 claim
@@ -224,7 +189,7 @@ Markdown is unnecessary.
 /claim
 ```
 
-Internal representation:
+**Internal representation:**
 
 ```html
 <claim>
@@ -246,11 +211,11 @@ argument
     └── evidence
 ```
 
-Rules:
+**Rules:**
 
-* argument requires at least one claim
-* claim may exist standalone
-* evidence requires parent claim
+* [ ] argument requires at least one claim
+* [ ] claim may exist standalone
+* [ ] evidence requires parent claim
 
 ---
 
@@ -263,11 +228,11 @@ timeline
 └── year-end
 ```
 
-Rules:
+**Rules:**
 
-* timeline requires year-start
-* timeline requires year-end
-* event requires date
+* [ ] timeline requires year-start
+* [ ] timeline requires year-end
+* [ ] event requires date
 
 ---
 
@@ -279,10 +244,10 @@ calendar
 └── event
 ```
 
-Rules:
+**Rules:**
 
-* calendar requires year-month
-* event requires date
+* [ ] calendar requires year-month
+* [ ] event requires date
 
 ---
 
@@ -330,10 +295,10 @@ media
 └── source
 ```
 
-Rules:
+**Rules:**
 
-* media requires at least one image, audio, or video
-* caption typically belongs to media
+* [ ] media requires at least one image, audio, or video
+* [ ] caption typically belongs to media
 
 ---
 
@@ -351,7 +316,7 @@ The parser should never aggressively reinterpret ordinary writing as structure.
 
 Element names are singular.
 
-Valid:
+**Valid:**
 
 ```text
 claim
@@ -360,7 +325,7 @@ entity
 image
 ```
 
-Invalid:
+**Invalid:**
 
 ```text
 claims
@@ -375,7 +340,7 @@ images
 
 Every opened element must be explicitly closed.
 
-Valid:
+**Valid:**
 
 ```text
 claim
@@ -383,7 +348,7 @@ Text.
 /claim
 ```
 
-Invalid:
+**Invalid:**
 
 ```text
 claim
@@ -405,7 +370,34 @@ Early specification and parser prototype.
 The language is actively evolving and many schemas, validation rules, and compilation targets remain under discussion.
 
 ---
+## CONTRIBUTE
 
-# License
+Have an issue? **[GET IN TOUCH](https://github.com/monapdx/Modular-Markup-Language/issues/new/choose?utm_source=chatgpt.com)**.
 
-TBD
+Have an idea for a tag we should add? **[SUBMIT A TAG](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml)** here.
+
+Do you have a more advanced tag idea? **[SUBMIT A SCHEMA](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml&utm_source=chatgpt.com)** instead!
+
+## SUPPORT
+
+Check out the **[README](DOCS/README)** if you're not sure where to start.
+
+You can read the full **[SPEC](DOCS/SPEC)** here. 
+
+Try the **[PARSER](FILES/index.html)**.
+
+## TAGS
+
+Here is the list of **[TAGS](DOCS/TAGS)**. 
+
+Looking for the **[SHORTHAND](DOCS/SHORTHAND.md)** version?
+
+Check out a list of **[PROPOSED TAGS](DOCS/PROPOSED)**.
+
+Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](DOCS/DEPENDENCIES.md)**.
+
+Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](DOCS/SYNONYMS.md)** make it fine to replace one with the other!
+
+
+
+#readme #markup #grammar #syntax #semantic #data-structure #schemas #official #tags 

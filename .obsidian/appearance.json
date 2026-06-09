@@ -1,0 +1,15 @@
+{
+  "enabledCssSnippets": [
+    "links",
+    "lists",
+    "callouts",
+    "code-blocks",
+    "blockquotes",
+    "html",
+    "neo-brutalist-test",
+    "properties",
+    "chunky-tags",
+    "sticker-tags",
+    "tag-styles"
+  ]
+}

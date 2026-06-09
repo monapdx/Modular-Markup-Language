@@ -1,0 +1,29 @@
+/* brutalist-callouts.css */
+
+.callout {
+  border: 3px solid #000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000;
+  background: #fff;
+}
+
+.callout-title {
+  background: #ff2bd6;
+  color: #000;
+  margin: -12px -12px 12px -12px;
+  padding: 0.6em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.callout[data-callout="note"] .callout-title {
+  background: #00e5ff;
+}
+
+.callout[data-callout="warning"] .callout-title {
+  background: #fffb00;
+}
+
+.callout[data-callout="success"] .callout-title {
+  background: #39ff14;
+}

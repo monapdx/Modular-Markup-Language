@@ -1,9 +1,12 @@
-
-
+---
+title: SPEC
+category: documentation
+version: "0.1"
+---
 
 # 1. Introduction
 
-Modular Markup Language (MML) is a semantic document language designed around a simple principle:
+**Modular Markup Language (MML)** is a semantic document language designed around a simple principle:
 
 > Documents should describe meaning rather than formatting.
 
@@ -19,12 +22,12 @@ Unlike HTML, MML prioritizes semantic relationships and parent-child validation 
 
 MML is designed to be:
 
-* Human-readable
-* Machine-parseable
-* Semantically meaningful
-* Validation-friendly
-* Extensible
-* Plain-text authorable
+* [ ] Human-readable
+* [ ] Machine-parseable
+* [ ] Semantically meaningful
+* [ ] Validation-friendly
+* [ ] Extensible
+* [ ] Plain-text authorable
 
 ---
 
@@ -218,8 +221,8 @@ The word "Arguments" is text content.
 
 A line is interpreted as an opening tag when:
 
-* It begins with a valid element name.
-* Any supplied attributes are valid.
+* [ ] It begins with a valid element name.
+* [ ] Any supplied attributes are valid.
 
 ---
 
@@ -322,11 +325,11 @@ The parser should provide structured repair information whenever possible.
 
 Purpose:
 
-Represents a collection of claims.
+- [ ] Represents a collection of claims.
 
 Rules:
 
-* Requires at least one claim.
+* [ ] Requires at least one claim.
 
 Allowed Children:
 
@@ -340,12 +343,12 @@ claim
 
 Purpose:
 
-Represents a semantic assertion.
+- [ ] Represents a semantic assertion.
 
 Rules:
 
-* May exist independently.
-* May exist within argument.
+* [ ] May exist independently.
+* [ ] May exist within argument.
 
 Allowed Children:
 
@@ -354,7 +357,6 @@ text
 evidence
 quote
 source
-note
 ```
 
 ---
@@ -363,11 +365,11 @@ note
 
 Purpose:
 
-Supports a claim.
+- [ ] Supports a claim.
 
 Rules:
 
-* Requires parent claim.
+* [ ] Requires parent claim.
 
 Allowed Children:
 
@@ -375,7 +377,6 @@ Allowed Children:
 text
 quote
 source
-note
 ```
 
 ---
@@ -386,7 +387,7 @@ note
 
 Purpose:
 
-Represents a chronological range.
+- [ ] Represents a chronological range.
 
 Required Children:
 
@@ -409,7 +410,7 @@ A timeline containing only year-start and year-end is valid.
 
 Rules:
 
-* Requires parent timeline.
+* [ ] Requires parent timeline.
 
 ---
 
@@ -417,7 +418,7 @@ Rules:
 
 Rules:
 
-* Requires parent timeline.
+* [ ] Requires parent timeline.
 
 ---
 
@@ -425,14 +426,14 @@ Rules:
 
 Purpose:
 
-Represents a time-bound occurrence.
+- [ ] Represents a time-bound occurrence.
 
 Rules:
 
-* Requires date.
-* May exist independently.
-* May exist within timeline.
-* May exist within calendar.
+* [ ] Requires date.
+* [ ] May exist independently.
+* [ ] May exist within timeline.
+* [ ] May exist within calendar.
 
 Allowed Children:
 
@@ -452,7 +453,7 @@ link
 
 Rules:
 
-* Requires parent event.
+* [ ] Requires parent event.
 
 ---
 
@@ -462,7 +463,7 @@ Rules:
 
 Purpose:
 
-Represents a calendar period.
+- [ ] Represents a calendar period.
 
 Required Children:
 
@@ -484,7 +485,7 @@ A calendar containing only year-month is valid.
 
 Rules:
 
-* Requires parent calendar.
+* [ ] Requires parent calendar.
 
 ---
 
@@ -542,7 +543,7 @@ shared
 
 Rules:
 
-* Requires parent comparison.
+* [ ] Requires parent comparison.
 
 Allowed Children:
 
@@ -557,7 +558,7 @@ text
 
 Rules:
 
-* Requires parent entity.
+* [ ] Requires parent entity.
 
 ---
 
@@ -565,7 +566,7 @@ Rules:
 
 Rules:
 
-* Requires parent comparison.
+* [ ] Requires parent comparison.
 
 ---
 
@@ -590,7 +591,7 @@ conditions
 
 Rules:
 
-* Requires parent comparison.
+* [ ] Requires parent comparison.
 
 Allowed Children:
 
@@ -606,7 +607,7 @@ note
 
 Rules:
 
-* Requires parent scenario.
+* [ ] Requires parent scenario.
 
 ---
 
@@ -616,11 +617,11 @@ Rules:
 
 Purpose:
 
-Groups related media assets.
+- [ ] Groups related media assets.
 
 Required Children:
 
-At least one of:
+- [ ] At least one of:
 
 ```text
 image
@@ -639,19 +640,19 @@ source
 
 ### image
 
-Represents an image.
+- [ ] Represents an image.
 
 ---
 
 ### audio
 
-Represents audio content.
+- [ ] Represents audio content.
 
 ---
 
 ### video
 
-Represents video content.
+- [ ] Represents video content.
 
 ---
 
@@ -659,7 +660,7 @@ Represents video content.
 
 Purpose:
 
-Describes associated media.
+- [ ] Describes associated media.
 
 Preferred Parent:
 
@@ -675,7 +676,7 @@ media
 
 Purpose:
 
-Represents a logical document section.
+- [ ] Represents a logical document section.
 
 Attributes:
 
@@ -697,7 +698,7 @@ The title attribute functions as the section heading.
 
 Purpose:
 
-Represents a heading within a section.
+- [ ] Represents a heading within a section.
 
 ---
 
@@ -721,9 +722,7 @@ section
 subhead
 
 text
-quote
 blockquote
-note
 source
 
 link
@@ -762,16 +761,11 @@ column
 cell
 
 form
-field
+fieldset
 input
 select
 option
 button
-
-nav
-menu
-header
-footer
 
 canvas
 script
@@ -784,17 +778,33 @@ style
 
 Potential future areas include:
 
-* Compiler targets
-* Rich editor support
-* Semantic repair actions
-* Schema extensions
-* Accessibility metadata
-* Knowledge graph generation
-* PDF and eBook compilation
-* AI-native document representations
+* [ ] Compiler targets
+* [ ] Rich editor support
+* [ ] Semantic repair actions
+* [ ] Schema extensions
+* [ ] Accessibility metadata
+* [ ] Knowledge graph generation
+* [ ] PDF and eBook compilation
+* [ ] AI-native document representations
 
 ---
 
 # 17. Guiding Principle
 
 > A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.
+
+---
+## SUPPORT
+
+Check out the **[README](DOCS/README)** if you're not sure where to start.
+
+You can read the full **[SPEC](DOCS/SPEC)** here. 
+
+Try the **[PARSER](FILES/index.html)**.
+
+You can find the full list of **[TAGS](DOCS/TAGS)** here.
+
+
+
+
+#specification #draft #syntax #markup #semantic #grammar #language 

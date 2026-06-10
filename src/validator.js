@@ -235,7 +235,7 @@ function validateElement(node, parent, errors) {
       break;
     }
 
-    case "calendar":
+    case "calendar": {
       if (!hasChildNamed(node, "month") && !hasChildNamed(node, "year")) {
         errors.push({
           code: "MISSING_REQUIRED_CHILD",
@@ -244,8 +244,11 @@ function validateElement(node, parent, errors) {
           line: node.line,
           message: "calendar requires month or year",
         });
+        break;
       }
+      validateCalendarEvents(node, errors);
       break;
+    }
 
     case "event":
       if (!hasChildNamed(node, "date")) {
@@ -324,6 +327,48 @@ function parseYearFromDateText(text) {
   if (us) return parseInt(us[1], 10);
 
   return null;
+}
+
+/**
+ * @param {number} year
+ * @param {number} month
+ * @returns {number}
+ */
+function daysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+/**
+ * Event day numbers must fall within the calendar month when year and month are set.
+ * @param {ElementNode} node
+ * @param {ValidationError[]} errors
+ */
+function validateCalendarEvents(node, errors) {
+  const yearNode = childrenNamed(node, "year")[0];
+  const monthNode = childrenNamed(node, "month")[0];
+  if (!yearNode || !monthNode) return;
+
+  const year = parseYearValue(elementTextContent(yearNode));
+  const month = parseInt(elementTextContent(monthNode).trim(), 10);
+  if (year === null || !Number.isFinite(month) || month < 1 || month > 12) return;
+
+  const maxDay = daysInMonth(year, month);
+
+  for (const event of childrenNamed(node, "event")) {
+    const dateNode = childrenNamed(event, "date")[0];
+    if (!dateNode) continue;
+
+    const dateText = elementTextContent(dateNode);
+    const day = parseInt(dateText.trim(), 10);
+    if (!Number.isFinite(day) || day < 1 || day > maxDay) {
+      errors.push({
+        code: "CALENDAR_EVENT_OUT_OF_RANGE",
+        element: "event",
+        line: event.line,
+        message: `event date ${dateText} is not a valid day in ${year}-${String(month).padStart(2, "0")} (1–${maxDay})`,
+      });
+    }
+  }
 }
 
 /**

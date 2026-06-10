@@ -234,6 +234,45 @@ test("calendar with year-month", () => {
   assertTrue(validate(ast).valid);
 });
 
+test("calendar compiles to month table with highlighted event day", () => {
+  const source = `calendar
+year
+2018
+month
+8
+event
+date
+22`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<calendar>");
+  assertIncludes(html, '<table class="mml-calendar">');
+  assertIncludes(html, "<caption>August 2018</caption>");
+  assertIncludes(html, 'class="mml-event-day"');
+  assertIncludes(html, ">22</td>");
+});
+
+test("calendar event day outside month range", () => {
+  const source = `calendar
+year
+2018
+month
+2
+event
+date
+30`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "CALENDAR_EVENT_OUT_OF_RANGE");
+});
+
 test("comparison before/after schema", () => {
   const source = `comparison
   before

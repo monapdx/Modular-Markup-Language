@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="theme-light">
+  <main class="markdown-preview-view markdown-rendered">
+<div class="metadata-container">
+  <div class="metadata-property">
+    <span class="metadata-property-key">title</span>
+    <span class="metadata-property-value">README</span>
+  </div>
+  <div class="metadata-property">
+    <span class="metadata-property-key">category</span>
+    <span class="metadata-property-value">documentation</span>
+  </div>
+</div>
+
+<h1>Modular Markup (MML)</h1>
+<p><strong>A meaning-first markup language that remains readable as plain text.</strong></p>
+<p>Modular Markup (MML) is an experimental semantic markup language designed around a simple idea:</p>
+<blockquote>
+<p>Documents should describe meaning, not formatting.</p>
+</blockquote>
+<p>Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semantic and presentational concerns, MML focuses on explicit semantic structures that are understandable to both humans and machines.</p>
+<p>The source document should remain readable as plain text while compiling into a fully structured document tree.</p>
+<hr>
+<h1>Goals</h1>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Human-readable source documents</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Explicit semantic structure</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Strong parent-child validation</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Meaning-first document modeling</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Plain text as the authoring format</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Automatic structure generation</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Compiler-friendly AST representation</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Extensible semantic schemas</li>
+</ul>
+<hr>
+<h2>MML</h2>
+<pre><code class="language-text">argument
+
+claim
+Markdown introduces an unnecessary abstraction layer.
+
+evidence
+The final rendered output is already HTML.
+/evidence
+
+/claim
+
+/argument
+</code></pre>
+<h2>Compiled Output</h2>
+<pre><code class="language-html">&lt;argument&gt;
+  &lt;claim&gt;
+    &lt;text&gt;Markdown introduces an unnecessary abstraction layer.&lt;/text&gt;
+
+    &lt;evidence&gt;
+      &lt;text&gt;The final rendered output is already HTML.&lt;/text&gt;
+    &lt;/evidence&gt;
+
+  &lt;/claim&gt;
+&lt;/argument&gt;
+</code></pre>
+<hr>
+<h1>Core Philosophy</h1>
+<p>MML is built around semantic objects rather than formatting instructions.</p>
+<p><strong>For example:</strong></p>
+<pre><code class="language-text">argument
+claim
+evidence
+timeline
+event
+comparison
+entity
+image
+caption
+</code></pre>
+<p>represent meaningful concepts.</p>
+<p><strong>By contrast, generic containers such as:</strong></p>
+<pre><code class="language-html">&lt;div&gt;
+&lt;span&gt;
+</code></pre>
+<p>have no direct equivalent in MML.</p>
+<p>Every element should represent something recognizable and meaningful.</p>
+<hr>
+<h1>Syntax</h1>
+<h2>Opening Tags</h2>
+<p>Opening tags are written as plain keywords.</p>
+<pre><code class="language-text">claim
+</code></pre>
+<pre><code class="language-text">section title=&quot;Background&quot;
+</code></pre>
+<hr>
+<h2>Closing Tags</h2>
+<p>Closing tags use a slash prefix.</p>
+<pre><code class="language-text">/claim
+</code></pre>
+<pre><code class="language-text">/section
+</code></pre>
+<hr>
+<h2>Text Content</h2>
+<p>Anything that is not recognized as valid markup is treated as text.</p>
+<pre><code class="language-text">claim
+
+Arguments are not always unhealthy.
+
+/claim
+</code></pre>
+<p>The word &quot;Arguments&quot; is content, not a tag.</p>
+<hr>
+<h1>Validation</h1>
+<p>MML validates semantic structure, not just syntax.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-text">evidence
+The final output is already HTML.
+/evidence
+</code></pre>
+<p><strong>Produces:</strong></p>
+<pre><code class="language-text">Error:
+evidence requires parent claim.
+</code></pre>
+<p><strong>Valid:</strong></p>
+<pre><code class="language-text">argument
+
+claim
+
+evidence
+The final output is already HTML.
+/evidence
+
+/claim
+
+/argument
+</code></pre>
+<hr>
+<h1>Automatic Text Nodes</h1>
+<p>Plain text is automatically wrapped in text nodes.</p>
+<p><strong>Source:</strong></p>
+<pre><code class="language-text">claim
+Markdown is unnecessary.
+/claim
+</code></pre>
+<p><strong>Internal representation:</strong></p>
+<pre><code class="language-html">&lt;claim&gt;
+  &lt;text&gt;Markdown is unnecessary.&lt;/text&gt;
+&lt;/claim&gt;
+</code></pre>
+<p>Authors rarely need to write explicit text tags.</p>
+<hr>
+<h1>Semantic Schemas</h1>
+<h2>Argument</h2>
+<pre><code class="language-text">argument
+└── claim
+    └── evidence
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> argument requires at least one claim</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> claim may exist standalone</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> evidence requires parent claim</li>
+</ul>
+<hr>
+<h2>Timeline</h2>
+<pre><code class="language-text">timeline
+├── year-start
+├── event
+└── year-end
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> timeline requires year-start</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> timeline requires year-end</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> event requires date</li>
+</ul>
+<hr>
+<h2>Calendar</h2>
+<pre><code class="language-text">calendar
+├── year-month
+└── event
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> calendar requires year-month</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> event requires date</li>
+</ul>
+<hr>
+<h2>Comparison</h2>
+<h3>Before / After</h3>
+<pre><code class="language-text">comparison
+├── before
+└── after
+</code></pre>
+<h3>Entity Comparison</h3>
+<pre><code class="language-text">comparison
+├── entity
+│   └── unique
+├── entity
+│   └── unique
+└── shared
+</code></pre>
+<h3>Scenario Comparison</h3>
+<pre><code class="language-text">comparison
+├── scenario
+│   └── conditions
+└── scenario
+    └── conditions
+</code></pre>
+<hr>
+<h2>Media</h2>
+<pre><code class="language-text">media
+├── image
+├── video
+├── audio
+├── caption
+└── source
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> media requires at least one image, audio, or video</li>
+<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> caption typically belongs to media</li>
+</ul>
+<hr>
+<h1>Design Principles</h1>
+<h2>Text Wins</h2>
+<p>If something is not valid markup, it is text.</p>
+<p>The parser should never aggressively reinterpret ordinary writing as structure.</p>
+<hr>
+<h2>Singular Elements</h2>
+<p>Element names are singular.</p>
+<p><strong>Valid:</strong></p>
+<pre><code class="language-text">claim
+event
+entity
+image
+</code></pre>
+<p><strong>Invalid:</strong></p>
+<pre><code class="language-text">claims
+events
+entities
+images
+</code></pre>
+<hr>
+<h2>Explicit Closure</h2>
+<p>Every opened element must be explicitly closed.</p>
+<p><strong>Valid:</strong></p>
+<pre><code class="language-text">claim
+Text.
+/claim
+</code></pre>
+<p><strong>Invalid:</strong></p>
+<pre><code class="language-text">claim
+Text.
+</code></pre>
+<hr>
+<h2>Semantic Necessity</h2>
+<p>A tag should only exist if it represents a meaningful concept that cannot already be expressed using existing tags.</p>
+<hr>
+<h1>Project Status</h1>
+<p>Early specification and parser prototype.</p>
+<p>The language is actively evolving and many schemas, validation rules, and compilation targets remain under discussion.</p>
+<hr>
+<h2>CONTRIBUTE</h2>
+<p>Have an issue? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new/choose?utm_source=chatgpt.com">GET IN TOUCH</a></strong>.</p>
+<p>Have an idea for a tag we should add? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml">SUBMIT A TAG</a></strong> here.</p>
+<p>Do you have a more advanced tag idea? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml&amp;utm_source=chatgpt.com">SUBMIT A SCHEMA</a></strong> instead!</p>
+<hr>
+<h2>SUPPORT</h2>
+<p>You can read the full <strong><a href="./SPEC.html">SPEC</a></strong> here.</p>
+<p>Try the <strong><a href="/FILES/index.html">PARSER</a></strong>.</p>
+<hr>
+<h2>TAGS</h2>
+<p>Here is the list of <strong><a href="./TAGS.html">TAGS</a></strong>.</p>
+<p>Looking for the <strong><a href="./SHORTHAND.html">SHORTHAND</a></strong> version?</p>
+<p>Check out a list of <strong><a href="./PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
+<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="./DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
+<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="./SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
+<p><span class="tag">#readme</span> <span class="tag">#markup</span> <span class="tag">#grammar</span> <span class="tag">#syntax</span> <span class="tag">#semantic</span> <span class="tag">#data-structure</span> <span class="tag">#schemas</span> <span class="tag">#official</span> <span class="tag">#tags</span></p>
+
+  </main>
+</body>
+</html>

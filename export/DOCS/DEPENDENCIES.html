@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEPENDENCIES</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="theme-light">
+  <main class="markdown-preview-view markdown-rendered">
+<div class="metadata-container">
+  <div class="metadata-property">
+    <span class="metadata-property-key">title</span>
+    <span class="metadata-property-value">DEPENDENCIES</span>
+  </div>
+  <div class="metadata-property">
+    <span class="metadata-property-key">category</span>
+    <span class="metadata-property-value">documentation</span>
+  </div>
+</div>
+
+<h2>PARENT TAGS</h2>
+<table>
+<thead>
+<tr>
+<th>TAG</th>
+<th>SELF-CONTAINED</th>
+<th>CONTAINER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>document</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>style</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>script</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>media</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>argument</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>claim</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>canvas</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>calendar</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>timeline</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>event</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>comparison</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>entity</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>list</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>section</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>form</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>fieldset</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>dropdown</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>table</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>text</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<h2>CHILD TAGS</h2>
+<table>
+<thead>
+<tr>
+<th>TAG</th>
+<th>CHILD OF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>option</td>
+<td>dropdown</td>
+</tr>
+<tr>
+<td>select</td>
+<td>dropdown</td>
+</tr>
+<tr>
+<td>input</td>
+<td>form</td>
+</tr>
+<tr>
+<td>item</td>
+<td>list</td>
+</tr>
+<tr>
+<td>year-start</td>
+<td>timeline</td>
+</tr>
+<tr>
+<td>year-end</td>
+<td>timeline</td>
+</tr>
+<tr>
+<td>month</td>
+<td>calendar</td>
+</tr>
+<tr>
+<td>year</td>
+<td>calendar</td>
+</tr>
+<tr>
+<td>date</td>
+<td>event</td>
+</tr>
+<tr>
+<td>image</td>
+<td>media</td>
+</tr>
+<tr>
+<td>audio</td>
+<td>media</td>
+</tr>
+<tr>
+<td>video</td>
+<td>media</td>
+</tr>
+<tr>
+<td>fieldset</td>
+<td>form</td>
+</tr>
+<tr>
+<td>legend</td>
+<td>fieldset</td>
+</tr>
+<tr>
+<td>evidence</td>
+<td>claim</td>
+</tr>
+<tr>
+<td>shared</td>
+<td>entity</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>entity</td>
+</tr>
+<tr>
+<td>before</td>
+<td>comparison</td>
+</tr>
+<tr>
+<td>after</td>
+<td>comparison</td>
+</tr>
+<tr>
+<td>row</td>
+<td>table</td>
+</tr>
+<tr>
+<td>column</td>
+<td>table</td>
+</tr>
+<tr>
+<td>cell</td>
+<td>table</td>
+</tr>
+<tr>
+<td>scenario</td>
+<td>comparison</td>
+</tr>
+<tr>
+<td>condition</td>
+<td>comparison</td>
+</tr>
+<tr>
+<td>entity</td>
+<td>comparison</td>
+</tr>
+<tr>
+<td>footnote</td>
+<td>text</td>
+</tr>
+<tr>
+<td>link</td>
+<td>text</td>
+</tr>
+<tr>
+<td>button</td>
+<td>form</td>
+</tr>
+<tr>
+<td>textarea</td>
+<td>form</td>
+</tr>
+<tr>
+<td>quote</td>
+<td>text</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>REQUIRES</h2>
+<ul>
+    
+<li>claim &lt;--- <strong>REQUIRES</strong> &lt;--- evidence</li>
+<li>calendar ---&gt; <strong>REQUIRES</strong> ---&gt; month <strong>AND</strong> year</li>
+<li>event ---&gt; <strong>REQUIRES</strong> ---&gt; date</li>
+<li>unique ---&gt; <strong>REQUIRES</strong> ---&gt; entity</li>
+<li>shared ---&gt; <strong>REQUIRES</strong> ---&gt; entity</li>
+<li>timeline ---&gt; <strong>REQUIRES</strong> ---&gt; start-year <strong>AND</strong> end-year</li>
+<li>condition ---&gt; <strong>REQUIRES</strong> ---&gt; scenario</li>
+<li>option ---&gt; <strong>REQUIRES</strong> ---&gt; dropdown</li>
+<li>select ---&gt; <strong>REQUIRES</strong> ---&gt; dropdown</li>
+<li>list ---&gt; <strong>REQUIRES</strong> ---&gt; item</li>
+</ul>
+
+<hr>
+<h2>AS A CHILD OF ---&gt; IS ONLY VALID ---&gt; WHEN MULTIPLES EXIST</h2>
+<ul>
+<li>entity ---&gt; <strong>AS A CHILD OF</strong> ---&gt; comparison ---&gt; <strong>IS ONLY VALID</strong> ---&gt; <strong>WHEN TWO OR MORE EXIST AS CHILDREN</strong></li>
+<li>scenario ---&gt; <strong>AS A CHILD OF</strong> ---&gt; comparison ---&gt; <strong>IS ONLY VALID</strong> ---&gt; <strong>WHEN TWO OR MORE EXIST AS CHILDREN</strong></li>
+</ul>
+<hr>
+<h2>PAIRS &amp; SETS ---&gt; CANNOT EXIST OUTSIDE OF</h2>
+<ul>
+<li>after <strong>AND</strong> before ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; comparison</li>
+<li>start-year <strong>AND</strong> end-year ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> timeline</li>
+<li>image, audio, <strong>AND</strong> video <strong>CANNOT EXIST OUTSIDE OF</strong> media</li>
+</ul>
+<hr>
+<h2>CANNOT EXIST OUTSIDE OF</h2>
+<ul>
+<li>row ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; table</li>
+<li>column ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; table</li>
+<li>cell ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; row <strong>OR</strong> column</li>
+<li>input ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; form</li>
+<li>legend ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; fieldset</li>
+<li>dropdown ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; form</li>
+<li>section ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; document</li>
+</ul>
+<hr>
+<h2>TAGS</h2>
+<p>Here is the list of <strong><a href="/DOCS/TAGS">TAGS</a></strong>.</p>
+<p>Looking for the <strong><a href="./SHORTHAND.html">SHORTHAND</a></strong> version?</p>
+<p>Check out a list of <strong><a href="./PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
+<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="./DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
+<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="./SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
+<p><span class="tag">#TAgs</span> <span class="tag">#parent</span> <span class="tag">#child</span> <span class="tag">#GRAMMAr</span> <span class="tag">#SEMANTIc</span> <span class="tag">#MARKUp</span> <span class="tag">#DATA-STRUCTURe</span> <span class="tag">#LISTs</span> <span class="tag">#rules</span> <span class="tag">#dependencies</span></p>
+
+  </main>
+</body>
+</html>

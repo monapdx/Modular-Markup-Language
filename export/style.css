@@ -1,3 +1,128 @@
+/* ---- snippet: blockquotes.css ---- */
+/* chunky-blockquotes.css */
+
+.markdown-preview-view blockquote,
+.HyperMD-quote {
+  border-left: 10px solid #ff2bd6 !important;
+  background: #111;
+  color: #fff;
+  padding: 1em;
+  margin: 1.5em 0;
+  box-shadow: 6px 6px 0 #000;
+  font-size: 1.05em;
+}
+
+.markdown-preview-view blockquote p {
+  margin: 0.3em 0;
+}
+
+/* ---- snippet: callouts.css ---- */
+/* brutalist-callouts.css */
+
+.callout {
+  border: 3px solid #000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000;
+  background: #fff;
+}
+
+.callout-title {
+  background: #ff2bd6;
+  color: #000;
+  margin: -12px -12px 12px -12px;
+  padding: 0.6em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.callout[data-callout="note"] .callout-title {
+  background: #00e5ff;
+}
+
+.callout[data-callout="warning"] .callout-title {
+  background: #fffb00;
+}
+
+.callout[data-callout="success"] .callout-title {
+  background: #000;
+}
+
+/* ---- snippet: code-blocks.css ---- */
+/* Neon code blocks for Obsidian Reading View */
+
+.markdown-rendered pre {
+  background: #111 !important;
+  border: 2px solid #00e5ff !important;
+  box-shadow: 5px 5px 0 #ff2bd6 !important;
+  padding: 1em !important;
+  border-radius: 0 !important;
+}
+
+.markdown-rendered pre code {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+/* Inline code */
+.markdown-rendered :not(pre) > code {
+  background: #111 !important;
+  color: #000 !important;
+  border: 1px solid #ff2bd6 !important;
+  padding: 0.15em 0.35em;
+}
+
+/* ---- snippet: html.css ---- */
+/* html-ish-tags.css */
+/* Makes inline code tags feel like visible semantic markup */
+
+.cm-inline-code,
+.markdown-preview-view code {
+  font-family: monospace;
+  font-weight: 700;
+  color: #ff2bd6 !important;
+  background: #fff !important;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000;
+  border-radius: 0;
+}
+
+/* ---- snippet: links.css ---- */
+/* brutalist-links.css */
+
+.markdown-preview-view a,
+.cm-hmd-internal-link,
+.cm-link {
+  color: #000 !important;
+  background: #39ff14;
+  padding: 0.05em 0.25em;
+  font-weight: 800;
+  text-decoration: none !important;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.markdown-preview-view a:hover {
+  background: #000;
+  box-shadow: 3px 3px 0 #00e5ff;
+}
+
+/* ---- snippet: lists.css ---- */
+/* loud-lists.css */
+
+.markdown-preview-view ul li::marker,
+.markdown-preview-view ol li::marker {
+  color: #ff2bd6;
+  font-weight: 900;
+}
+
+.markdown-preview-view li {
+  margin: 0.35em 0;
+}
+
+.markdown-preview-view ul {
+  list-style-type: square;
+}
+
+/* ---- snippet: neo-brutalist-test.css ---- */
 /* Neo-Brutalist Obsidian — Readable + Code Block Fixed */
 
 /* ==========================================================
@@ -23,7 +148,7 @@ body,
 
   --code-background: #000000 !important;
   --code-normal: #c6ff00 !important;
-  --code-comment: #8be28b !important;
+  --code-comment: #000 !important;
   --code-function: #00e5ff !important;
   --code-important: #ff00aa !important;
   --code-keyword: #ff00aa !important;
@@ -73,7 +198,7 @@ body,
 .markdown-rendered h1,
 .markdown-preview-view h1 {
   background: #ff00aa !important;
-  color: #000000 !important;
+  color: #fff !important;
   border: 4px solid #000000 !important;
   padding: 10px 15px !important;
   box-shadow: 6px 6px 0 #000000 !important;
@@ -181,7 +306,7 @@ body,
 .markdown-preview-view blockquote,
 blockquote {
   background: #ff00aa !important;
-  color: #000000 !important;
+  color: #fff !important;
   border: 4px solid #000000 !important;
   padding: 20px !important;
   font-size: 1.15em !important;
@@ -191,7 +316,7 @@ blockquote {
 
 .markdown-rendered blockquote *,
 .markdown-preview-view blockquote * {
-  color: #000000 !important;
+  color: #fff !important;
 }
 
 /* ==========================================================
@@ -296,7 +421,7 @@ tr:nth-child(even) td {
 
 .markdown-rendered pre .token.comment,
 .markdown-preview-view pre .token.comment {
-  color: #8be28b !important;
+  color: #000 !important;
   font-style: italic !important;
 }
 
@@ -436,4 +561,337 @@ img {
 ::selection {
   background: #ff00aa !important;
   color: #000000 !important;
+}
+
+
+/* ---- snippet: properties.css ---- */
+/* ==========================================================
+   PROPERTIES / FRONTMATTER
+   ========================================================== */
+
+.metadata-container {
+    background: #ff00aa !important;
+    border: 4px solid #000 !important;
+    box-shadow: 8px 8px 0 #000 !important;
+    padding: 12px !important;
+    margin-bottom: 20px !important;
+    color:#000;
+}
+
+/* Property rows */
+
+.metadata-property {
+    background: #ffffff !important;
+    border: 3px solid #000 !important;
+    margin: 6px 0 !important;
+    padding: 8px !important;
+}
+
+/* Property names */
+
+.metadata-property-key {
+    color: #000 !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Property values */
+
+.metadata-property-value {
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
+/* Tags inside properties */
+
+.metadata-property-value .tag {
+    background: #000000 !important;
+    color: #fff !important;
+    border: 2px solid #000 !important;
+    box-shadow: 2px 2px 0 #000 !important;
+}
+
+/* Collapse button */
+
+.metadata-container .collapse-icon svg {
+    color: #fff !important;
+    stroke-width: 3px !important;
+}
+
+/* Hover effect */
+
+.metadata-property:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #000;
+}
+
+/* ---- snippet: tag-styles.css ---- */
+/* Neo-Brutalist Tags */
+
+.tag,
+.cm-hashtag {
+  display: inline-block;
+  background: #39ff14 !important;
+  color: #000 !important;
+
+  border: 3px solid #000 !important;
+  border-radius: 0 !important;
+
+  padding: 2px 8px !important;
+  margin: 1px 2px !important;
+
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+
+  box-shadow: 3px 3px 0 #000;
+
+  transition: transform 0.1s ease;
+}
+
+/* Hover effect */
+.tag:hover,
+.cm-hashtag:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #00e5ff;
+}
+
+/* Tag pane */
+.tag-pane-tag {
+  background: #39ff14 !important;
+  color: #000 !important;
+
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+
+  box-shadow: 3px 3px 0 #ff2bd6;
+  font-weight: 700;
+}
+
+.tag,
+.cm-hashtag {
+  background: #ffa1d9 !important;
+  color: #000 !important;
+
+  border: 3px solid #000 !important;
+  border-radius: 0 !important;
+
+  padding: 4px 10px !important;
+
+  font-weight: 900;
+  font-size: 0.9em;
+
+  box-shadow: 5px 5px 0 #ff2bd6;
+}
+
+/* ------------------------------------------------------------------ */
+/* Export fallback — basic readability only; snippets take priority   */
+/* ------------------------------------------------------------------ */
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body.theme-light {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  min-height: 100vh;
+}
+
+.markdown-preview-view {
+  max-width: 52rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Index page */
+.export-index {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.export-index h1 {
+  margin-top: 0;
+}
+
+.export-index ul {
+  list-style: none;
+  padding: 0;
+}
+
+.export-index li {
+  margin: 0.4rem 0;
+}
+
+.export-index a {
+  text-decoration: none;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+}
+
+.markdown-preview-view,
+.markdown-rendered {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.markdown-preview-view a {
+  display: inline-block;
+  background: #39ff14 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 #ff2bd6 !important;
+  padding: 2px 6px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+.markdown-preview-view a:hover {
+  background: #ff2bd6 !important;
+  box-shadow: 3px 3px 0 #00e5ff !important;
+}
+
+.markdown-preview-view ul li::marker,
+.markdown-preview-view ol li::marker {
+  color: #000 !important;
+}
+
+/* ==========================================================
+   FINAL FIX: EXPORTED TASK LISTS — remove extra bullets
+   Put at bottom so it overrides earlier list styles
+   ========================================================== */
+
+ul.contains-task-list,
+.markdown-preview-view ul.contains-task-list,
+.markdown-rendered ul.contains-task-list {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+ul.contains-task-list > li.task-list-item,
+.markdown-preview-view ul.contains-task-list > li.task-list-item,
+.markdown-rendered ul.contains-task-list > li.task-list-item {
+  display: block !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
+ul.contains-task-list > li.task-list-item::marker,
+.markdown-preview-view ul.contains-task-list > li.task-list-item::marker,
+.markdown-rendered ul.contains-task-list > li.task-list-item::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* Kill bullets on ALL task-list items, including parent checklist rows */
+
+.markdown-preview-view li.task-list-item,
+.markdown-preview-view li.task-list-item li {
+  list-style: none !important;
+}
+
+.markdown-preview-view li.task-list-item::marker,
+.markdown-preview-view li.task-list-item li::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+.markdown-preview-view li.task-list-item {
+  display: block !important;
+  width: auto !important;
+}
+
+.markdown-preview-view li.task-list-item > ul {
+  margin-top: 8px !important;
+  margin-left: 32px !important;
+  padding-left: 0 !important;
+}
+
+/* Cleaner task/checklist layout */
+
+.markdown-preview-view li.task-list-item {
+  display: block !important;
+  list-style: none !important;
+
+  border: 3px solid #000 !important;
+  background: #fff !important;
+  box-shadow: 4px 4px 0 #000 !important;
+
+  padding: 0.55rem 0.75rem !important;
+  margin: 0.65rem 0 !important;
+
+  line-height: 1.45 !important;
+}
+
+.markdown-preview-view li.task-list-item::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* Checkbox spacing */
+.markdown-preview-view .task-list-item-checkbox {
+  margin-right: 0.45rem !important;
+  transform: scale(1.15) !important;
+}
+
+/* Nested checklist indentation */
+.markdown-preview-view li.task-list-item + li.task-list-item {
+  margin-top: 0.65rem !important;
+}
+
+/* Make deeply nested items a little quieter */
+.markdown-preview-view ul ul li.task-list-item {
+  border-width: 2px !important;
+  box-shadow: 3px 3px 0 #000 !important;
+  margin-left: 1.5rem !important;
+  font-size: 0.95em !important;
+}
+
+/* Keep nested task lists from adding browser weirdness */
+.markdown-preview-view ul.contains-task-list,
+.markdown-preview-view li.task-list-item > ul {
+  padding-left: 0 !important;
+}
+
+/* Restore normal list indentation outside task lists */
+.markdown-preview-view ul:not(.contains-task-list),
+.markdown-preview-view ol {
+  padding-left: 1.75rem !important;
+  margin-left: 0 !important;
+}
+
+.markdown-preview-view ul ul {
+  margin-top: 0.5rem !important;
+}
+
+/* Force exported tables to actually widen */
+
+.markdown-preview-view table,
+.markdown-rendered table {
+  width: 100% !important;
+  min-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.markdown-preview-view th,
+.markdown-preview-view td,
+.markdown-rendered th,
+.markdown-rendered td {
+  padding: 8px 12px !important;
+  word-break: normal !important;
 }

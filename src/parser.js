@@ -1,4 +1,4 @@
-import { matchOpeningTag, matchClosingTag } from "./grammar.js";
+import { matchOpeningTag, matchClosingTag, getRequiredParents } from "./grammar.js";
 
 /**
  * @typedef {Object} TextNode
@@ -53,19 +53,69 @@ function createText(value, line) {
 }
 
 /**
+ * Close open tags that are finished before a new opening tag.
+ * Only the tag that most recently received content is auto-closed; containers
+ * stay open for more children. Repeated same-name tags close additional ancestors.
+ * @param {ElementNode[]} stack
+ * @param {string} newTagName
+ * @param {ElementNode | null} lastContentTarget
+ */
+function closeBeforeOpening(stack, newTagName, lastContentTarget) {
+  if (stack.length <= 1) return;
+
+  let top = stack[stack.length - 1];
+  if (
+    !top.implicit &&
+    top.children.length > 0 &&
+    top === lastContentTarget
+  ) {
+    stack.pop();
+    top = stack[stack.length - 1];
+  }
+
+  while (stack.length > 1) {
+    top = stack[stack.length - 1];
+    if (top.implicit || top.children.length === 0 || top.name !== newTagName) {
+      break;
+    }
+    stack.pop();
+  }
+
+  const requiredParents = getRequiredParents(newTagName);
+  if (!requiredParents) return;
+
+  while (stack.length > 1) {
+    top = stack[stack.length - 1];
+    if (top.implicit || requiredParents.includes(top.name)) {
+      break;
+    }
+    stack.pop();
+  }
+}
+
+/**
  * Flush accumulated text lines into a single text node on the parent.
  * @param {ElementNode} parent
  * @param {string[]} buffer
  * @param {number} startLine
  */
+/**
+ * @returns {ElementNode | null} The element that received text, if any.
+ */
 function flushTextBuffer(parent, buffer, startLine) {
-  if (buffer.length === 0) return;
+  if (buffer.length === 0) return null;
   parent.children.push(createText(buffer.join("\n"), startLine));
   buffer.length = 0;
+  return parent;
 }
 
 /**
  * Parse semantic markup source into an AST.
+ *
+ * Opening-tag-only authoring: one tag per line, no required closing tags.
+ * When a new opening tag appears, any open tag that already has content
+ * (text or child elements) is implicitly closed. Closing tags (/tag) are
+ * optional and never required. Matchers emit closers only at compile time.
  *
  * Blank-line policy: blank lines are skipped and never become text nodes.
  * Consecutive non-blank untagged lines merge into one text node (joined by \n).
@@ -86,13 +136,14 @@ export function parse(source) {
   /** @type {string[]} */
   const textBuffer = [];
   let textBufferStartLine = 0;
+  /** @type {ElementNode | null} */
+  let lastContentTarget = null;
 
   for (let i = 0; i < lines.length; i++) {
     const lineNumber = i + 1;
     const line = lines[i];
     const trimmed = line.trim();
 
-    // Blank lines are ignored (see grammar.js).
     if (trimmed === "") {
       continue;
     }
@@ -100,6 +151,7 @@ export function parse(source) {
     const closing = matchClosingTag(line);
     if (closing) {
       flushTextBuffer(stack[stack.length - 1], textBuffer, textBufferStartLine);
+      lastContentTarget = null;
 
       if (stack.length <= 1) {
         errors.push({
@@ -130,38 +182,32 @@ export function parse(source) {
 
     const opening = matchOpeningTag(line);
     if (opening) {
-      flushTextBuffer(stack[stack.length - 1], textBuffer, textBufferStartLine);
+      const contentTarget = flushTextBuffer(
+        stack[stack.length - 1],
+        textBuffer,
+        textBufferStartLine
+      );
+
+      closeBeforeOpening(stack, opening.name, contentTarget ?? lastContentTarget);
 
       const element = createElement(opening.name, opening.attributes, lineNumber);
+      lastContentTarget = null;
       stack[stack.length - 1].children.push(element);
       stack.push(element);
       continue;
     }
 
-    // Plain text line.
     if (textBuffer.length === 0) {
       textBufferStartLine = lineNumber;
     }
-    textBuffer.push(line);
+    textBuffer.push(trimmed);
+    lastContentTarget = stack[stack.length - 1];
   }
 
   flushTextBuffer(stack[stack.length - 1], textBuffer, textBufferStartLine);
 
-  if (stack.length > 1) {
-    for (let i = stack.length - 1; i >= 1; i--) {
-      const open = stack[i];
-      errors.push({
-        code: "UNCLOSED_TAG",
-        message: `Unclosed tag "${open.name}" opened on line ${open.line}. Expected /${open.name}.`,
-        line: open.line,
-        openElement: open.name,
-        expected: open.name,
-      });
-    }
-  }
-
   return {
-    ast: errors.length === 0 ? root : root,
+    ast: root,
     errors,
   };
 }

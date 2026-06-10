@@ -80,6 +80,14 @@ category: documentation
 - list ---> **REQUIRES** ---> item
 
 ---
+## GROUP
+
+- group ---> **REQUIRES** ---> at least two **entity** children **SHARING A COMMON TRAIT VALUE**
+- entity ---> **AS A CHILD OF** ---> group ---> contains one or more **trait** children
+- trait ---> **REQUIRES** ---> entity parent; trait text is the trait value (e.g. human, male)
+- comparison ---> **DOES NOT** use the group shared-trait rule; it uses named schemas instead (before/after, entity/unique, scenario/condition)
+
+---
 ## AS A CHILD OF ---> IS ONLY VALID ---> WHEN MULTIPLES EXIST
 
 - entity ---> **AS A CHILD OF** ---> comparison ---> **IS ONLY VALID** ---> **WHEN TWO OR MORE EXIST AS CHILDREN**

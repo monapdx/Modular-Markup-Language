@@ -20,6 +20,7 @@ category: documentation
 | argument     | arg                     |
 | calendar     | cal                     |
 | comparison   | comp                    |
+| group        | grp                     |
 | condition    | cond                    |
 | document     | doc                     |
 | blockquote   | quote                   |

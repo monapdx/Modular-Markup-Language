@@ -136,7 +136,7 @@
 <body>
   <header>
     <h1>Semantic Markup Parser</h1>
-    <p>Plain-text semantic language — not Markdown. If a line is not valid markup, it is text.</p>
+    <p>Opening tags only — one per line. No /closing tags needed; they are generated for you at compile time.</p>
   </header>
 
   <div id="status" class="status valid">Ready</div>
@@ -187,17 +187,10 @@
     const statusEl = document.getElementById("status");
 
     const EXAMPLE = `argument
-
 claim
-Markdown introduces an unnecessary abstraction layer.
-
+Dogs are better companions.
 evidence
-The final rendered output is already HTML.
-/evidence
-
-/claim
-
-/argument`;
+Loki.`;
 
     sourceEl.value = EXAMPLE;
 

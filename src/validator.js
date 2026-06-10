@@ -1,8 +1,8 @@
 /**
  * Semantic validation for parsed AST nodes.
  *
- * Validation runs after parsing and assumes syntactic structure (matching tags)
- * is already correct. It checks parent/child requirements and comparison schemas.
+ * Validation runs after parsing and checks parent/child requirements,
+ * group trait rules, and comparison schemas.
  */
 
 /**
@@ -87,14 +87,14 @@ function validateElement(node, parent, errors) {
 
   switch (node.name) {
     case "evidence":
-      if (parentName !== "claim") {
+      if (parentName !== "claim" && parentName !== "argument") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: "evidence",
           requiredParent: "claim",
-          suggestedParentChain: ["claim"],
+          suggestedParentChain: ["argument", "claim"],
           line: node.line,
-          message: "evidence requires parent claim",
+          message: "evidence requires parent claim or argument",
         });
       }
       break;
@@ -136,6 +136,19 @@ function validateElement(node, parent, errors) {
           suggestedParentChain: ["event"],
           line: node.line,
           message: "date requires parent event",
+        });
+      }
+      break;
+
+    case "trait":
+      if (parentName !== "entity") {
+        errors.push({
+          code: "MISSING_REQUIRED_PARENT",
+          element: "trait",
+          requiredParent: "entity",
+          suggestedParentChain: ["group", "entity"],
+          line: node.line,
+          message: "trait requires parent entity",
         });
       }
       break;
@@ -265,6 +278,10 @@ function validateElement(node, parent, errors) {
       validateComparison(node, errors);
       break;
 
+    case "group":
+      validateGroup(node, errors);
+      break;
+
     case "scenario":
       if (!hasChildNamed(node, "condition")) {
         errors.push({
@@ -283,7 +300,74 @@ function validateElement(node, parent, errors) {
 }
 
 /**
- * comparison supports three schemas; at least one must match.
+ * @param {ElementNode} node
+ * @returns {string}
+ */
+function elementTextContent(node) {
+  return node.children
+    .filter((child) => child.type === "text")
+    .map((child) => child.value.trim())
+    .join("\n");
+}
+
+/**
+ * @param {ElementNode} entity
+ * @returns {string[]}
+ */
+function entityTraitValues(entity) {
+  return childrenNamed(entity, "trait")
+    .map((trait) => elementTextContent(trait))
+    .filter((value) => value.length > 0);
+}
+
+/**
+ * A group contains entity children; at least two entities must share a common
+ * trait value (text inside a trait tag, e.g. both entities include trait human).
+ * Unlike comparison, group does not use named comparison schemas.
+ * @param {ElementNode} node
+ * @param {ValidationError[]} errors
+ */
+function validateGroup(node, errors) {
+  const entities = childrenNamed(node, "entity");
+
+  if (entities.length < 2) {
+    errors.push({
+      code: "INVALID_GROUP_SCHEMA",
+      element: "group",
+      line: node.line,
+      message: "group requires at least two entity children",
+    });
+    return;
+  }
+
+  /** @type {Map<string, number>} */
+  const traitValueCounts = new Map();
+  for (const entity of entities) {
+    for (const value of entityTraitValues(entity)) {
+      traitValueCounts.set(value, (traitValueCounts.get(value) ?? 0) + 1);
+    }
+  }
+
+  const sharedTraitValues = [...traitValueCounts.entries()]
+    .filter(([, count]) => count >= 2)
+    .map(([value]) => value);
+
+  if (sharedTraitValues.length > 0) {
+    return;
+  }
+
+  errors.push({
+    code: "INVALID_GROUP_SCHEMA",
+    element: "group",
+    line: node.line,
+    message:
+      "group requires at least two entity children sharing a common trait value",
+  });
+}
+
+/**
+ * comparison supports named schemas (before/after, entity/unique, scenario/condition).
+ * It does not use the generic group shared-trait rule.
  * @param {ElementNode} node
  * @param {ValidationError[]} errors
  */

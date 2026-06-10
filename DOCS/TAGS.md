@@ -22,9 +22,13 @@ category: documentation
 ### 9. after
 ### 10. before
 
-## 11. condition
+## 11. group
 
-## 12. document
+### trait
+
+## 12. condition
+
+## 13. document
 
 ### 13. quote
 ### 14. footnote
@@ -105,7 +109,7 @@ category: documentation
 ### 46. start-year
 
 
-## CURRENT TOTAL: 46 OFFICIAL TAGS
+## CURRENT TOTAL: 48 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

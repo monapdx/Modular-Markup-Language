@@ -53,15 +53,35 @@ function findElement(ast, name) {
 
 // --- Test cases ---
 
+test("opening-tag-only argument / claim / evidence (user example)", () => {
+  const source = `argument
+claim
+Dogs are better companions.
+evidence
+Loki.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertTrue(validation.valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<argument>");
+  assertIncludes(html, "<claim>");
+  assertIncludes(html, "<text>Dogs are better companions.</text>");
+  assertIncludes(html, "<evidence>");
+  assertIncludes(html, "<text>Loki.</text>");
+  assertIncludes(html, "</argument>");
+  assertIncludes(html, "</claim>");
+  assertIncludes(html, "</evidence>");
+});
+
 test("valid argument / claim / evidence", () => {
   const source = `argument
 claim
 Markdown introduces an unnecessary abstraction layer.
 evidence
-The final rendered output is already HTML.
-/evidence
-/claim
-/argument`;
+The final rendered output is already HTML.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -78,8 +98,7 @@ The final rendered output is already HTML.
 
 test("evidence without claim", () => {
   const source = `evidence
-The final output is HTML.
-/evidence`;
+The final output is HTML.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -88,10 +107,32 @@ The final output is HTML.
   assertEqual(validation.errors[0].code, "MISSING_REQUIRED_PARENT");
   assertEqual(validation.errors[0].element, "evidence");
   assertEqual(validation.errors[0].requiredParent, "claim");
-  assertEqual(validation.errors[0].suggestedParentChain, ["claim"]);
+  assertEqual(validation.errors[0].suggestedParentChain, ["argument", "claim"]);
 });
 
-test("mismatched closing tag", () => {
+test("closing tags are optional not required", () => {
+  const withoutClosers = `argument
+claim
+Dogs are better companions.
+evidence
+Loki.`;
+
+  const withClosers = `argument
+claim
+Dogs are better companions.
+/claim
+evidence
+Loki.`;
+
+  const withoutResult = parse(withoutClosers);
+  const withResult = parse(withClosers);
+  assertEqual(withoutResult.errors, []);
+  assertEqual(withResult.errors, []);
+  assertTrue(validate(withoutResult.ast).valid);
+  assertTrue(validate(withResult.ast).valid);
+});
+
+test("mismatched optional closing tag", () => {
   const source = `argument
 claim
 Text.
@@ -100,16 +141,11 @@ Text.
   const { errors } = parse(source);
   const mismatch = errors.find((e) => e.code === "MISMATCHED_CLOSE");
   assertTrue(mismatch != null, "Expected MISMATCHED_CLOSE error");
-  assertIncludes(
-    mismatch.message,
-    "Cannot close argument while claim is still open. Expected /claim but found /argument."
-  );
 });
 
 test("standalone claim", () => {
   const source = `claim
-Markdown is unnecessary.
-/claim`;
+Markdown is unnecessary.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -128,11 +164,8 @@ test("timeline with year-start and year-end only", () => {
   const source = `timeline
 year-start
 2020
-/year-start
 year-end
-2024
-/year-end
-/timeline`;
+2024`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -143,17 +176,12 @@ test("timeline with events", () => {
   const source = `timeline
 year-start
 2020
-/year-start
 event
 date
 2021-06-01
-/date
 Launch day.
-/event
 year-end
-2024
-/year-end
-/timeline`;
+2024`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -162,10 +190,8 @@ year-end
 
 test("calendar with year-month", () => {
   const source = `calendar
-year-month
-2024-03
-/year-month
-/calendar`;
+  year-month
+    2024-03`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -174,13 +200,10 @@ year-month
 
 test("comparison before/after schema", () => {
   const source = `comparison
-before
-Old approach.
-/before
-after
-New approach.
-/after
-/comparison`;
+  before
+    Old approach.
+  after
+    New approach.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -192,17 +215,11 @@ test("comparison entity / shared / unique schema", () => {
 entity
 unique
 Alpha only.
-/unique
-/entity
 entity
 unique
 Beta only.
-/unique
-/entity
 shared
-Common ground.
-/shared
-/comparison`;
+Common ground.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -211,32 +228,115 @@ Common ground.
 
 test("comparison scenario / condition schema", () => {
   const source = `comparison
-scenario
-condition
-If A happens.
-/condition
-/scenario
-scenario
-condition
-If B happens.
-/condition
-/scenario
-/comparison`;
+  scenario
+    condition
+      If A happens.
+  scenario
+    condition
+      If B happens.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
   assertTrue(validate(ast).valid);
 });
 
+test("valid group entity trait example from GIF", () => {
+  const source = `group
+entity
+trait
+human
+trait
+male
+entity
+trait
+human
+trait
+female`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<group>");
+  assertIncludes(html, "<entity>");
+  assertIncludes(html, "<trait>");
+  assertIncludes(html, "<text>human</text>");
+  assertIncludes(html, "<text>male</text>");
+  assertIncludes(html, "<text>female</text>");
+  assertIncludes(html, "</group>");
+});
+
+test("invalid group with only one entity", () => {
+  const source = `group
+entity
+trait
+human
+trait
+male`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "INVALID_GROUP_SCHEMA");
+  assertIncludes(validation.errors[0].message, "at least two entity children");
+});
+
+test("invalid group without shared trait value", () => {
+  const source = `group
+entity
+trait
+human
+trait
+male
+entity
+trait
+canine
+trait
+female`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "INVALID_GROUP_SCHEMA");
+  assertIncludes(validation.errors[0].message, "sharing a common trait value");
+});
+
+test("trait without entity parent", () => {
+  const source = `trait
+human`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "MISSING_REQUIRED_PARENT");
+  assertEqual(validation.errors[0].element, "trait");
+});
+
+test("group shorthand alias grp", () => {
+  const source = `grp
+entity
+trait
+human
+entity
+trait
+human`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+  assertTrue(findElement(ast, "group") != null);
+});
+
 test("media with image and caption", () => {
   const source = `media
-image
-/photo.png
-/image
-caption
-A sample photo.
-/caption
-/media`;
+  image
+    /photo.png
+  caption
+    A sample photo.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -245,8 +345,7 @@ A sample photo.
 
 test("reserved words used as normal text", () => {
   const source = `claim
-Arguments aren't always unhealthy.
-/claim`;
+Arguments aren't always unhealthy.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -256,8 +355,7 @@ Arguments aren't always unhealthy.
 
 test("section title attribute", () => {
   const source = `section title="Background"
-Some content.
-/section`;
+Some content.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -273,8 +371,7 @@ Some content.
 
 test("title attribute line is plain text inside section", () => {
   const source = `section
-title="Background"
-/section`;
+title="Background"`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -285,8 +382,7 @@ title="Background"
 
 test("malformed attribute line is text not tag", () => {
   const source = `section
-section title=Background
-/section`;
+section title=Background`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -296,8 +392,7 @@ section title=Background
 
 test("non-reserved word line is text", () => {
   const source = `claim
-hello
-/claim`;
+hello`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -307,8 +402,7 @@ hello
 
 test("processSource returns empty html when invalid", () => {
   const result = processSource(`evidence
-x
-/evidence`);
+x`);
   assertFalse(result.valid);
   assertEqual(result.html, "");
   assertMatch(result.validationErrors[0].message, /requires parent claim/);
@@ -316,13 +410,10 @@ x
 
 test("legacy year-start alias normalizes to start-year", () => {
   const source = `timeline
-year-start
-2020
-/year-start
-year-end
-2024
-/year-end
-/timeline`;
+  year-start
+    2020
+  year-end
+    2024`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -333,10 +424,8 @@ year-end
 
 test("legacy year-month alias normalizes to month", () => {
   const source = `calendar
-year-month
-2024-03
-/year-month
-/calendar`;
+  year-month
+    2024-03`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -346,12 +435,9 @@ year-month
 
 test("shorthand tags from SHORTHAND.md", () => {
   const source = `arg
-claim
-evi
-Supported.
-/evi
-/claim
-/arg`;
+  claim
+    evi
+      Supported.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -362,28 +448,19 @@ Supported.
 
 test("form elements from TAGS.md", () => {
   const source = `form action="POST"
-fieldset
-legend
-Name
-/legend
-input type="text"
-/input
-/fieldset
-dropdown
-option
-A
-/option
-selection
-A
-/selection
-/dropdown
-button type="submit"
-Submit
-/button
-para
-Notes here.
-/para
-/form`;
+  fieldset
+    legend
+      Name
+    input type="text"
+  dropdown
+    option
+      A
+    selection
+      A
+  button type="submit"
+    Submit
+  para
+    Notes here.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -395,20 +472,14 @@ Notes here.
 
 test("document structure elements from TAGS.md", () => {
   const source = `document
-section title="Intro"
-text
-Hello.
-/text
-/section
-list
-item
-One
-/item
-/list
-footnote
-See also.
-/footnote
-/document`;
+  section title="Intro"
+    text
+      Hello.
+  list
+    item
+      One
+  footnote
+    See also.`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -419,15 +490,11 @@ See also.
 
 test("table elements from TAGS.md", () => {
   const source = `table
-row
-cell
-A1
-/cell
-column
-B
-/column
-/row
-/table`;
+  row
+    cell
+      A1
+    column
+      B`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
@@ -439,15 +506,37 @@ B
 
 test("media shorthand image alias", () => {
   const source = `media
-img
-/photo.png
-/image
-/media`;
+  img
+    /photo.png`;
 
   const { ast, errors } = parse(source);
   assertEqual(errors, []);
   assertTrue(validate(ast).valid);
   assertTrue(findElement(ast, "image") != null);
+});
+
+test("implicit close at EOF leaves no unclosed errors", () => {
+  const source = `argument
+  claim
+    Nested content.`;
+
+  const { errors } = parse(source);
+  assertEqual(errors, []);
+  assertFalse(errors.some((e) => e.code === "UNCLOSED_TAG"));
+});
+
+test("sibling tags share parent when prior tag has content", () => {
+  const source = `argument
+claim
+First claim.
+claim
+Second claim.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const argument = findElement(ast, "argument");
+  const claims = argument.children.filter((c) => c.type === "element" && c.name === "claim");
+  assertEqual(claims.length, 2);
 });
 
 // --- Runner ---

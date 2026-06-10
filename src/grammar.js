@@ -5,11 +5,12 @@
  *   - A reserved element name alone on the line, e.g. `claim`
  *   - Or name + attributes, e.g. `section title="Background"`
  *
- * Closing tag line:
- *   - Slash-prefixed reserved name, e.g. `/claim`
+ * Authoring uses opening tags only — one tag per line. Structure is inferred
+ * when the next tag or content appears; closing tags are optional, never required,
+ * and are always generated at compile time in the output.
  *
- * A line is markup ONLY if the entire trimmed line matches opening or closing
- * tag grammar. Otherwise it is plain text — even if it contains reserved words.
+ * A line is markup ONLY if the entire trimmed line matches opening tag grammar.
+ * Otherwise it is plain text — even if it contains reserved words.
  *
  * Attributes (opening tags only):
  *   - Zero or more key="value" pairs separated by whitespace
@@ -33,6 +34,7 @@ export const CANONICAL_ELEMENTS = new Set([
   "claim",
   "evidence",
   "comparison",
+  "group",
   "after",
   "before",
   "condition",
@@ -45,6 +47,7 @@ export const CANONICAL_ELEMENTS = new Set([
   "section",
   "text",
   "entity",
+  "trait",
   "unique",
   "event",
   "date",
@@ -82,6 +85,7 @@ export const ELEMENT_ALIASES = {
   arg: "argument",
   cal: "calendar",
   comp: "comparison",
+  grp: "group",
   cond: "condition",
   doc: "document",
   quote: "blockquote",
@@ -134,6 +138,26 @@ export const RESERVED_ELEMENTS = new Set([
   ...LEGACY_ELEMENTS,
 ]);
 
+/**
+ * Known parent requirements used when inferring implicit close boundaries.
+ * @readonly
+ * @type {Readonly<Record<string, readonly string[]>>}
+ */
+export const REQUIRED_PARENTS = {
+  evidence: ["claim", "argument"],
+  "start-year": ["timeline"],
+  "end-year": ["timeline"],
+  month: ["calendar"],
+  year: ["calendar"],
+  date: ["event"],
+  trait: ["entity"],
+  unique: ["entity"],
+  entity: ["group", "comparison"],
+  shared: ["comparison"],
+  condition: ["scenario"],
+  caption: ["media"],
+};
+
 const ELEMENT_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
 const ATTR_PAIR_PATTERN = /^[a-z][a-z0-9-]*="[^"]*"$/;
 
@@ -152,6 +176,14 @@ export function normalizeElementName(name) {
  */
 export function isReservedElement(name) {
   return RESERVED_ELEMENTS.has(name);
+}
+
+/**
+ * @param {string} name Canonical element name
+ * @returns {readonly string[] | undefined}
+ */
+export function getRequiredParents(name) {
+  return REQUIRED_PARENTS[name];
 }
 
 /**

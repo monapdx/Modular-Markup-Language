@@ -229,7 +229,9 @@ function validateElement(node, parent, errors) {
           line: node.line,
           message: `timeline requires ${missing.join(" and ")}`,
         });
+        break;
       }
+      validateTimelineRange(node, errors);
       break;
     }
 
@@ -296,6 +298,72 @@ function validateElement(node, parent, errors) {
 
     default:
       break;
+  }
+}
+
+/**
+ * @param {string} text
+ * @returns {number | null}
+ */
+function parseYearValue(text) {
+  const trimmed = text.trim();
+  const yearOnly = trimmed.match(/^(\d{4})$/);
+  if (yearOnly) return parseInt(yearOnly[1], 10);
+  return parseYearFromDateText(trimmed);
+}
+
+/**
+ * @param {string} text
+ * @returns {number | null}
+ */
+function parseYearFromDateText(text) {
+  const iso = text.match(/^(\d{4})-\d{1,2}-\d{1,2}$/);
+  if (iso) return parseInt(iso[1], 10);
+
+  const us = text.match(/^\d{1,2}-\d{1,2}-(\d{4})$/);
+  if (us) return parseInt(us[1], 10);
+
+  return null;
+}
+
+/**
+ * Events within a timeline must have dates that fall within start-year–end-year.
+ * @param {ElementNode} node
+ * @param {ValidationError[]} errors
+ */
+function validateTimelineRange(node, errors) {
+  const startYearNode = childrenNamed(node, "start-year")[0];
+  const endYearNode = childrenNamed(node, "end-year")[0];
+  const startYear = parseYearValue(elementTextContent(startYearNode));
+  const endYear = parseYearValue(elementTextContent(endYearNode));
+
+  if (startYear === null || endYear === null) return;
+
+  if (startYear > endYear) {
+    errors.push({
+      code: "INVALID_TIMELINE_RANGE",
+      element: "timeline",
+      line: node.line,
+      message: `timeline start-year ${startYear} must not be after end-year ${endYear}`,
+    });
+  }
+
+  for (const event of childrenNamed(node, "event")) {
+    const dateNode = childrenNamed(event, "date")[0];
+    if (!dateNode) continue;
+
+    const dateText = elementTextContent(dateNode);
+    const dateYear = parseYearFromDateText(dateText);
+    if (dateYear === null) continue;
+
+    if (dateYear < startYear || dateYear > endYear) {
+      errors.push({
+        code: "TIMELINE_EVENT_OUT_OF_RANGE",
+        element: "event",
+        line: event.line,
+        message: `event date ${dateText} (${dateYear}) falls outside timeline range ${startYear}–${endYear}`,
+      });
+    }
   }
 }
 

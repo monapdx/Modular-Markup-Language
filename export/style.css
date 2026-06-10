@@ -89,21 +89,7 @@
 /* ---- snippet: links.css ---- */
 /* brutalist-links.css */
 
-.markdown-preview-view a,
-.cm-hmd-internal-link,
-.cm-link {
-  color: #000 !important;
-  background: #39ff14;
-  padding: 0.05em 0.25em;
-  font-weight: 800;
-  text-decoration: none !important;
-  box-shadow: 3px 3px 0 #000;
-}
 
-.markdown-preview-view a:hover {
-  background: #000;
-  box-shadow: 3px 3px 0 #00e5ff;
-}
 
 /* ---- snippet: lists.css ---- */
 /* loud-lists.css */
@@ -132,7 +118,7 @@
 body,
 .theme-light,
 .theme-dark {
-  --background-primary: #ffffff !important;
+  --background-primary: #e69dfc !important;
   --background-secondary: #f3f3f3 !important;
   --background-secondary-alt: #e9e9e9 !important;
   --background-modifier-border: #000000 !important;
@@ -239,14 +225,7 @@ body,
    LINKS
    ========================================================== */
 
-.markdown-rendered a,
-.markdown-preview-view a,
-.cm-link,
-.cm-url {
-  color: #7a00ff !important;
-  font-weight: 900 !important;
-  text-decoration: underline !important;
-}
+
 
 .internal-link {
   display: inline-block;
@@ -734,7 +713,7 @@ body.theme-light {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
+  background: #e69dfc;
 }
 
 .markdown-preview-view,
@@ -749,23 +728,34 @@ body {
 
 .markdown-preview-view a {
   display: inline-block;
+
   background: #39ff14 !important;
   color: #000 !important;
-  border: 2px solid #000 !important;
-  box-shadow: 3px 3px 0 #ff2bd6 !important;
-  padding: 2px 6px !important;
-  font-weight: 800 !important;
+
+  border: 3px solid #000 !important;
+
+  padding: 4px 10px !important;
+
+  font-weight: 900 !important;
   text-decoration: none !important;
+
+  box-shadow: 5px 5px 0 #000 !important;
+
+  transition: all 0.08s ease;
 }
 
 .markdown-preview-view a:hover {
-  background: #ff2bd6 !important;
-  box-shadow: 3px 3px 0 #00e5ff !important;
+  background: #fc0377 !important;
+  color:#fff;
+
+  transform: translate(-2px,-2px);
+
+  box-shadow: 7px 7px 0 #000 !important;
 }
 
 .markdown-preview-view ul li::marker,
 .markdown-preview-view ol li::marker {
-  color: #000 !important;
+  color: #fff !important;
 }
 
 /* ==========================================================

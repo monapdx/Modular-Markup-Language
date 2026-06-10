@@ -188,6 +188,26 @@ year-end
   assertTrue(validate(ast).valid);
 });
 
+test("timeline event date outside range", () => {
+  const source = `timeline
+year-start
+2000
+event
+date
+09-14-1945
+year-end
+2015`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "TIMELINE_EVENT_OUT_OF_RANGE");
+  assertIncludes(validation.errors[0].message, "1945");
+  assertIncludes(validation.errors[0].message, "2000");
+  assertIncludes(validation.errors[0].message, "2015");
+});
+
 test("calendar with year-month", () => {
   const source = `calendar
   year-month

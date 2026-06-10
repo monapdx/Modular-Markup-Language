@@ -188,6 +188,22 @@ year-end
   assertTrue(validate(ast).valid);
 });
 
+test("timeline with spaced end year alias", () => {
+  const source = `timeline
+start-year
+2000
+event
+date
+09-14-2001
+end year
+2015`;
+
+  const result = processSource(source);
+  assertTrue(result.valid);
+  assertIncludes(result.html, "<end-year>");
+  assertIncludes(result.html, "<text>2015</text>");
+});
+
 test("timeline event date outside range", () => {
   const source = `timeline
 year-start

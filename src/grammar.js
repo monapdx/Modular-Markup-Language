@@ -114,6 +114,17 @@ export const ELEMENT_ALIASES = {
 };
 
 /**
+ * Multi-word lines that map to a single element (e.g. "end year" → end-year).
+ * @readonly
+ */
+export const SPACED_ELEMENT_ALIASES = {
+  "end year": "end-year",
+  "start year": "start-year",
+  "year end": "end-year",
+  "year start": "start-year",
+};
+
+/**
  * Reserved names accepted in source but not renamed (SPEC/compiler support).
  * @readonly
  */
@@ -221,6 +232,15 @@ export function matchOpeningTag(line) {
   const trimmed = line.trim();
   if (!trimmed) return null;
 
+  const spacedAlias = SPACED_ELEMENT_ALIASES[trimmed];
+  if (spacedAlias) {
+    return {
+      kind: "open",
+      name: spacedAlias,
+      attributes: {},
+    };
+  }
+
   if (ELEMENT_NAME_PATTERN.test(trimmed)) {
     if (!isReservedElement(trimmed)) return null;
     return {
@@ -257,6 +277,11 @@ export function matchClosingTag(line) {
   if (!trimmed.startsWith("/")) return null;
 
   const rawName = trimmed.slice(1);
+  const spacedAlias = SPACED_ELEMENT_ALIASES[rawName];
+  if (spacedAlias) {
+    return { kind: "close", name: spacedAlias };
+  }
+
   if (!ELEMENT_NAME_PATTERN.test(rawName) || !isReservedElement(rawName)) {
     return null;
   }

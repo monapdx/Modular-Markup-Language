@@ -106,7 +106,7 @@ category: documentation
 ---
 ## TAGS
 
-Here is the list of **[TAGS](/DOCS/TAGS.md)**. 
+Here is the list of **[TAGS](/DOCS/TAGS)**. 
 
 Looking for the **[SHORTHAND](/DOCS/SHORTHAND.md)** version?
 

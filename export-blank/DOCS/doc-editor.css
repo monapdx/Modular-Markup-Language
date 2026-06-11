@@ -1,0 +1,192 @@
+/* Document element toolbar — matches notes-ui neo-brutalist style */
+
+body.doc-editor-active {
+  padding-bottom: 0;
+}
+
+body.doc-editor-active .markdown-preview-view,
+body.doc-editor-active .markdown-rendered {
+  padding-bottom: 10rem !important;
+}
+
+#doc-content {
+  min-height: 2rem;
+}
+
+.doc-editor-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  background: #fff;
+  border-top: 5px solid #000;
+  box-shadow: 0 -6px 0 #ff2bd6;
+  padding: 0.65rem 1rem 0.85rem;
+  box-sizing: border-box;
+}
+
+.doc-editor-toolbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.doc-editor-toolbar-label {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.55rem;
+  background: #000;
+  color: #fff;
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #ff2bd6;
+  margin-right: 0.25rem;
+}
+
+.doc-editor-toolbar .btn {
+  font-size: 0.65rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.doc-editor-toolbar .btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.doc-editor-toolbar .btn-group + .btn-group::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 1.5rem;
+  background: #000;
+  margin: 0 0.15rem;
+}
+
+/* Large text entry in modals */
+
+.doc-textarea {
+  display: block;
+  width: 100%;
+  min-height: 180px;
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  border: 5px solid #000;
+  border-radius: 0;
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+  line-height: 1.55;
+  background: #fff;
+  color: #000;
+  box-shadow: 8px 8px 0 #000;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.doc-textarea:focus {
+  box-shadow: 8px 8px 0 #00e5ff;
+  transform: translate(-2px, -2px);
+}
+
+.doc-modal-field {
+  margin-bottom: 1rem;
+}
+
+.doc-modal-field label {
+  display: inline-block;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  background: #000;
+  color: #fff;
+}
+
+.doc-modal-field input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 0.85rem;
+  border: 4px solid #000;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 5px 5px 0 #000;
+  outline: none;
+}
+
+.doc-modal-field input:focus {
+  box-shadow: 5px 5px 0 #00e5ff;
+}
+
+.doc-modal-hint {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: -0.5rem 0 1rem;
+  line-height: 1.45;
+}
+
+/* Inserted content helpers */
+
+.doc-inserted {
+  outline: none;
+}
+
+.doc-inserted:focus {
+  box-shadow: 0 0 0 3px #00e5ff;
+}
+
+.doc-editor-toolbar .modal {
+  max-width: 520px;
+}
+
+/* Editable table cells */
+
+.doc-editor-table td[contenteditable="true"],
+.doc-editor-table th[contenteditable="true"] {
+  min-width: 4rem;
+  min-height: 1.5rem;
+  cursor: text;
+}
+
+.doc-editor-table td[contenteditable="true"]:focus,
+.doc-editor-table th[contenteditable="true"]:focus {
+  outline: 3px solid #00e5ff;
+  outline-offset: -3px;
+}
+
+/* Checklist item text */
+
+.doc-editor-checklist-text {
+  outline: none;
+}
+
+.doc-editor-checklist-text:empty::before {
+  content: "Task text…";
+  color: #888;
+  font-weight: 400;
+}
+
+/* Callout body */
+
+.callout-content {
+  outline: none;
+  min-height: 1.5rem;
+}
+
+.callout-content:empty::before {
+  content: "Callout body…";
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 400;
+}

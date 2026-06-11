@@ -122,6 +122,72 @@
     #errors-output { background: #fff; }
     #compiled-output { background: var(--white); }
 
+    #preview-output {
+      background: var(--white);
+      padding: 1.25rem;
+      min-height: 220px;
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+    }
+
+    #preview-output.preview-empty {
+      color: #666;
+      font-style: italic;
+    }
+
+    #preview-output .mml-calendar {
+      width: 100%;
+      max-width: 420px;
+      border-collapse: collapse;
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--purple);
+      margin: 0 auto;
+    }
+
+    #preview-output .mml-calendar caption {
+      caption-side: top;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      background: var(--yellow);
+      border-bottom: 3px solid var(--black);
+    }
+
+    #preview-output .mml-calendar th,
+    #preview-output .mml-calendar td {
+      border: 2px solid var(--black);
+      text-align: center;
+      padding: 0.55rem 0.35rem;
+      width: 14.28%;
+      font-size: 0.9rem;
+    }
+
+    #preview-output .mml-calendar th {
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    #preview-output .mml-calendar td {
+      background: var(--white);
+    }
+
+    #preview-output .mml-calendar td.mml-event-day {
+      background: var(--lime);
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px var(--hot-pink);
+    }
+
+    #preview-output section subhead {
+      display: block;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 3px solid var(--black);
+    }
+
     .status {
       padding: 0.75rem 1.5rem;
       font-family: Arial, sans-serif;
@@ -143,7 +209,8 @@
 
   <div class="controls">
     <button type="button" id="run-btn">Parse &amp; Compile</button>
-    <button type="button" id="example-btn">Load Example</button>
+    <button type="button" id="example-btn">Load Argument Example</button>
+    <button type="button" id="calendar-btn">Load Calendar Example</button>
     <button type="button" id="clear-btn">Clear</button>
   </div>
 
@@ -169,8 +236,15 @@
       </div>
     </section>
 
+    <section class="panel preview-panel" style="grid-column: 1 / -1;">
+      <div class="panel-header">Live Preview</div>
+      <div class="panel-body">
+        <div id="preview-output" class="preview-empty">Fix errors or enter source to see a rendered preview.</div>
+      </div>
+    </section>
+
     <section class="panel" style="grid-column: 1 / -1;">
-      <div class="panel-header">Compiled Output</div>
+      <div class="panel-header">Compiled Output (HTML)</div>
       <div class="panel-body">
         <pre id="compiled-output"></pre>
       </div>
@@ -184,6 +258,7 @@
     const astEl = document.getElementById("ast-output");
     const errorsEl = document.getElementById("errors-output");
     const compiledEl = document.getElementById("compiled-output");
+    const previewEl = document.getElementById("preview-output");
     const statusEl = document.getElementById("status");
 
     const EXAMPLE = `argument
@@ -192,7 +267,29 @@ Dogs are better companions.
 evidence
 Loki.`;
 
+    const CALENDAR_EXAMPLE = `calendar
+year
+2018
+month
+8
+event
+date
+22`;
+
     sourceEl.value = EXAMPLE;
+
+    function updatePreview(html, valid) {
+      if (!valid || !html) {
+        previewEl.innerHTML = "";
+        previewEl.textContent = valid
+          ? "(nothing to preview)"
+          : "Fix errors to see a rendered preview.";
+        previewEl.classList.add("preview-empty");
+        return;
+      }
+      previewEl.classList.remove("preview-empty");
+      previewEl.innerHTML = html;
+    }
 
     function run() {
       const result = processSource(sourceEl.value);
@@ -213,6 +310,8 @@ Loki.`;
         ? result.html
         : "(compilation skipped — fix errors first)";
 
+      updatePreview(result.html, result.valid);
+
       statusEl.className = "status " + (result.valid ? "valid" : "invalid");
       statusEl.textContent = result.valid
         ? "Valid — parsed and compiled successfully"
@@ -222,6 +321,10 @@ Loki.`;
     document.getElementById("run-btn").addEventListener("click", run);
     document.getElementById("example-btn").addEventListener("click", () => {
       sourceEl.value = EXAMPLE;
+      run();
+    });
+    document.getElementById("calendar-btn").addEventListener("click", () => {
+      sourceEl.value = CALENDAR_EXAMPLE;
       run();
     });
     document.getElementById("clear-btn").addEventListener("click", () => {

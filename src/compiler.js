@@ -135,13 +135,8 @@ function buildMonthTable(year, month, eventDays, cellIndent) {
         continue;
       }
 
-      const classes = eventDays.has(day)
-        ? ' class="mml-event-day"'
-        : "";
-      const style = eventDays.has(day)
-        ? ' style="background:#c6ff00;font-weight:bold"'
-        : "";
-      lines.push(`${pad}      <td${classes}${style}>${day}</td>`);
+      const classes = eventDays.has(day) ? ' class="mml-event-day"' : "";
+      lines.push(`${pad}      <td${classes}>${day}</td>`);
       day++;
     }
     lines.push(`${pad}    </tr>`);

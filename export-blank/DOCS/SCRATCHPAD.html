@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCRATCHPAD</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="doc-editor.css">
+  <link rel="stylesheet" href="notes-ui.css">
+</head>
+<body class="theme-light" data-doc-editor-target="note-body">
+  <main class="markdown-preview-view markdown-rendered">
+    <div class="metadata-container">
+      <div class="metadata-property">
+        <span class="metadata-property-key">title</span>
+        <span class="metadata-property-value">SCRATCHPAD</span>
+      </div>
+      <div class="metadata-property">
+        <span class="metadata-property-key">category</span>
+        <span class="metadata-property-value">notes</span>
+      </div>
+    </div>
+
+    <section class="scratchpad-wrapper">
+      <div class="page-header">
+        <h1 class="page-title">Scratch Pad</h1>
+        <a class="nav-link" href="NOTES.html">View saved notes</a>
+      </div>
+
+      <div class="field">
+        <label for="note-title">Title</label>
+        <input type="text" id="note-title" class="nb-input" placeholder="Note title" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="note-tags">Tags</label>
+        <input type="text" id="note-tags" class="nb-input" placeholder="#ideas #draft #mml" autocomplete="off">
+        <p class="tag-hint">Use hashtags like #tag1 #tag2. On save, a .html file downloads — save it into the <strong>notes/</strong> folder.</p>
+      </div>
+
+      <div class="field" id="created-field" hidden>
+        <label>Created</label>
+        <div class="readonly-value" id="note-created"></div>
+      </div>
+
+      <div class="field">
+        <label for="note-body">Note</label>
+        <div class="scratchpad nb-editor" id="note-body" contenteditable="true" spellcheck="true"></div>
+      </div>
+
+      <div class="toolbar">
+        <button type="button" class="btn btn-primary" id="save-btn">Save note</button>
+        <button type="button" class="btn" id="edit-btn">Edit note</button>
+        <button type="button" class="btn btn-danger" id="delete-btn" disabled>Delete note</button>
+      </div>
+
+      <p class="status-bar" id="status-bar">New note — created date will be added when you save.</p>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-title">
+    <div class="modal">
+      <h2 id="success-title">Note saved</h2>
+      <p id="success-message">Your note was saved successfully.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="success-ok">OK</button>
+        <a class="btn btn-primary" href="NOTES.html" id="success-view">View in notes</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal">
+      <h2 id="edit-title">Choose a note to edit</h2>
+      <ul class="edit-list" id="edit-list"></ul>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="edit-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="notes-storage.js"></script>
+  <script>
+    (function () {
+      var notes = window.MMLNotes;
+      if (!notes) {
+        document.getElementById("status-bar").textContent =
+          "Error: notes-storage.js failed to load. Check that the file is in the same folder as this page.";
+        return;
+      }
+
+      var titleEl = document.getElementById("note-title");
+      var tagsEl = document.getElementById("note-tags");
+      var bodyEl = document.getElementById("note-body");
+      var createdField = document.getElementById("created-field");
+      var createdEl = document.getElementById("note-created");
+      var statusBar = document.getElementById("status-bar");
+      var deleteBtn = document.getElementById("delete-btn");
+      var successModal = document.getElementById("success-modal");
+      var editModal = document.getElementById("edit-modal");
+      var editList = document.getElementById("edit-list");
+
+      var editingId = null;
+
+      if (!notes.storageAvailable()) {
+        statusBar.textContent =
+          "Warning: browser storage is blocked. Notes cannot be saved in this context.";
+      }
+
+      function tagsToInput(tagList) {
+        return tagList.map(function (tag) {
+          return "#" + tag;
+        }).join(" ");
+      }
+
+      function loadNote(note) {
+        editingId = note.id;
+        titleEl.value = note.title;
+        tagsEl.value = tagsToInput(note.tags);
+        bodyEl.innerHTML = note.content;
+        createdEl.textContent = notes.formatNoteDate(note.createdAt);
+        createdField.hidden = false;
+        deleteBtn.disabled = false;
+        statusBar.textContent =
+          'Editing "' + note.title + '" — last updated ' + notes.formatNoteDate(note.updatedAt);
+        history.replaceState(null, "", "SCRATCHPAD.html?id=" + encodeURIComponent(note.id));
+      }
+
+      function clearForm() {
+        editingId = null;
+        titleEl.value = "";
+        tagsEl.value = "";
+        bodyEl.innerHTML = "";
+        createdField.hidden = true;
+        createdEl.textContent = "";
+        deleteBtn.disabled = true;
+        statusBar.textContent = "New note — created date will be added when you save.";
+        history.replaceState(null, "", "SCRATCHPAD.html");
+      }
+
+      function openSuccessModal(note) {
+        document.getElementById("success-message").textContent =
+          '"' +
+          note.title +
+          '" downloaded as ' +
+          note.filename +
+          ". Save it to the notes/ folder, then open NOTES.html to see it in the list.";
+        successModal.classList.add("open");
+      }
+
+      function closeSuccessModal() {
+        successModal.classList.remove("open");
+      }
+
+      document.getElementById("save-btn").addEventListener("click", function () {
+        var title = titleEl.value.trim();
+        var content = bodyEl.innerHTML.trim();
+
+        if (!title && !content) {
+          statusBar.textContent = "Add a title or note content before saving.";
+          return;
+        }
+
+        statusBar.textContent = "Saving…";
+
+        notes
+          .saveNote({
+            id: editingId || undefined,
+            title: title,
+            content: content,
+            tags: notes.parseTags(tagsEl.value),
+          })
+          .then(function (note) {
+            loadNote(note);
+            openSuccessModal(note);
+            statusBar.textContent =
+              'Downloaded "' +
+              note.filename +
+              '". Save to notes/ folder — listed on NOTES.html.';
+          })
+          .catch(function (err) {
+            statusBar.textContent = "Save failed: " + (err && err.message ? err.message : String(err));
+          });
+      });
+
+      document.getElementById("edit-btn").addEventListener("click", function () {
+        notes.ready.then(function () {
+          var allNotes = notes.getNotes();
+          editList.innerHTML = "";
+
+          if (allNotes.length === 0) {
+            editList.innerHTML = '<li><button type="button" disabled>No saved notes yet</button></li>';
+          } else {
+            allNotes.forEach(function (note) {
+              var li = document.createElement("li");
+              var btn = document.createElement("button");
+              btn.type = "button";
+              btn.innerHTML =
+                note.title + '<span class="meta">' + notes.formatNoteDate(note.createdAt) + "</span>";
+              btn.addEventListener("click", function () {
+                loadNote(note);
+                editModal.classList.remove("open");
+              });
+              li.appendChild(btn);
+              editList.appendChild(li);
+            });
+          }
+
+          editModal.classList.add("open");
+        });
+      });
+
+      document.getElementById("delete-btn").addEventListener("click", function () {
+        if (!editingId) return;
+        var title = titleEl.value.trim() || "Untitled";
+        if (!confirm('Remove "' + title + '" from the index? (Downloaded file on disk is not deleted.)')) return;
+
+        notes
+          .deleteNote(editingId)
+          .then(function () {
+            clearForm();
+            statusBar.textContent = "Note removed from index.";
+          })
+          .catch(function (err) {
+            statusBar.textContent = "Delete failed: " + (err && err.message ? err.message : String(err));
+          });
+      });
+
+      document.getElementById("success-ok").addEventListener("click", closeSuccessModal);
+      document.getElementById("edit-cancel").addEventListener("click", function () {
+        editModal.classList.remove("open");
+      });
+
+      successModal.addEventListener("click", function (event) {
+        if (event.target === successModal) closeSuccessModal();
+      });
+
+      editModal.addEventListener("click", function (event) {
+        if (event.target === editModal) editModal.classList.remove("open");
+      });
+
+      notes.ready.then(function () {
+        if (!notes.storageAvailable()) {
+          statusBar.textContent =
+            "Warning: browser storage is blocked. The index on NOTES.html will not update.";
+        }
+
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get("id");
+        if (id) {
+          var existing = notes.getNoteById(id);
+          if (existing) loadNote(existing);
+        }
+      });
+    })();
+  </script>
+  <script src="doc-editor.js"></script>
+</body>
+</html>

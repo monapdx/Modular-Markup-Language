@@ -4,6 +4,8 @@
   "type": "module",
   "description": "Plain-text semantic markup parser, validator, and compiler",
   "scripts": {
-    "test": "node tests/run-tests.js"
+    "test": "node tests/run-tests.js",
+    "build-notes": "node scripts/build-notes-html.mjs",
+    "notes": "node scripts/notes-server.mjs"
   }
 }

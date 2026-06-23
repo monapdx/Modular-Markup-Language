@@ -5,6 +5,7 @@ category: documentation
 
 
 ## 1. argument
+Remote work improves productivity.
 
 ## 2. calendar
 
@@ -14,10 +15,12 @@ category: documentation
 ## 5. canvas
 
 ## 6. claim
-
+Remote workers spend less time commuting.
 ### 7. evidence
+Employees avoid daily commuting.
 
 ## 8. comparison
+Remote work is more flexible than office work.
 
 ### 9. after
 ### 10. before
@@ -46,6 +49,7 @@ category: documentation
     22. shared
 
 ## 23. event
+Product launched in 2025.
 
 ### 24. date
 
@@ -86,6 +90,7 @@ category: documentation
 ### 32. textarea
 
 ## 33. media
+https://example.com/image.png
 
 ### 34. audio
 ### 35. image
@@ -104,6 +109,7 @@ category: documentation
 ### 43. row
 
 ## 44. timeline
+2024: Company adopts remote-first policy.
 
 ### 45. end-year
 ### 46. start-year
@@ -145,3 +151,4 @@ Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)
 
 
 #tags #semantic #markup #official #current #data-structure #lists 
+is it done by the requirement

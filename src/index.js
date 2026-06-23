@@ -9,10 +9,29 @@ export {
   parseAttributes,
   matchOpeningTag,
   matchClosingTag,
+  matchInlineValueElement,
 } from "./grammar.js";
 export { parse, getDocumentChildren } from "./parser.js";
 export { validate, validateAll } from "./validator.js";
 export { compile, astToJson } from "./compiler.js";
+export {
+  generateEbookToc,
+  prepareEbookHeadings,
+  slugifyHeading,
+  findEbookRoot,
+  collectHeadings,
+  assignHeadingIds,
+  buildTocTree,
+} from "./ebook.js";
+export {
+  EBOOK_ROOT_CHILDREN,
+  EBOOK_REQUIRED_CHILDREN,
+  METADATA_FIELDS,
+  COVER_CHILDREN,
+  CONTENT_CHILDREN,
+  EBOOK_OUTPUT_FORMATS,
+  EBOOK_MODES,
+} from "./ebook-schema.js";
 
 import { parse } from "./parser.js";
 import { validateAll } from "./validator.js";

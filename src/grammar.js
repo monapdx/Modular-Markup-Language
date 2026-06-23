@@ -74,6 +74,21 @@ export const CANONICAL_ELEMENTS = new Set([
   "timeline",
   "end-year",
   "start-year",
+  "ebook",
+  "metadata",
+  "cover",
+  "toc",
+  "content",
+  "heading",
+  "paragraph",
+  "title",
+  "subtitle",
+  "author",
+  "language",
+  "description",
+  "publisher",
+  "rights",
+  "javascript",
 ]);
 
 /**
@@ -111,6 +126,9 @@ export const ELEMENT_ALIASES = {
   "year-end": "end-year",
   "year-month": "month",
   conditions: "condition",
+  js: "javascript",
+  p: "paragraph",
+  h: "heading",
 };
 
 /**
@@ -160,13 +178,30 @@ export const REQUIRED_PARENTS = {
   "end-year": ["timeline"],
   month: ["calendar"],
   year: ["calendar"],
-  date: ["event"],
+  date: ["event", "metadata"],
   trait: ["entity"],
   unique: ["entity"],
   entity: ["group", "comparison"],
   shared: ["comparison"],
   condition: ["scenario"],
-  caption: ["media"],
+  caption: ["media", "cover"],
+  image: ["cover", "content", "media", "section"],
+  metadata: ["ebook"],
+  cover: ["ebook"],
+  toc: ["ebook"],
+  content: ["ebook"],
+  style: ["ebook"],
+  javascript: ["ebook"],
+  script: ["ebook"],
+  title: ["metadata"],
+  subtitle: ["metadata"],
+  author: ["metadata"],
+  language: ["metadata"],
+  description: ["metadata"],
+  publisher: ["metadata"],
+  rights: ["metadata"],
+  heading: ["content", "section"],
+  paragraph: ["content", "section"],
 };
 
 const ELEMENT_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
@@ -287,4 +322,46 @@ export function matchClosingTag(line) {
   }
 
   return { kind: "close", name: normalizeElementName(rawName) };
+}
+
+/**
+ * Opening tag with inline quoted value: `title "My Book"`, `heading level="1" "Chapter"`.
+ * @param {string} line
+ * @returns {{ kind: "inline", name: string, attributes: Record<string, string>, value: string } | null}
+ */
+export function matchInlineValueElement(line) {
+  const trimmed = line.trim();
+  const valueMatch = trimmed.match(/^(.+)\s+"([^"]*)"$/);
+  if (!valueMatch) return null;
+
+  const beforeValue = valueMatch[1].trim();
+  const value = valueMatch[2];
+
+  const spaceIndex = beforeValue.indexOf(" ");
+  if (spaceIndex === -1) {
+    if (!ELEMENT_NAME_PATTERN.test(beforeValue) || !isReservedElement(beforeValue)) {
+      return null;
+    }
+    return {
+      kind: "inline",
+      name: normalizeElementName(beforeValue),
+      attributes: {},
+      value,
+    };
+  }
+
+  const rawName = beforeValue.slice(0, spaceIndex);
+  if (!ELEMENT_NAME_PATTERN.test(rawName) || !isReservedElement(rawName)) {
+    return null;
+  }
+
+  const attributes = parseAttributes(beforeValue.slice(spaceIndex + 1));
+  if (attributes === null) return null;
+
+  return {
+    kind: "inline",
+    name: normalizeElementName(rawName),
+    attributes,
+    value,
+  };
 }

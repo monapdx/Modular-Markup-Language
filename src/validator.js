@@ -2,8 +2,18 @@
  * Semantic validation for parsed AST nodes.
  *
  * Validation runs after parsing and checks parent/child requirements,
- * group trait rules, and comparison schemas.
+ * group trait rules, comparison schemas, and ebook structure.
  */
+
+import {
+  EBOOK_ROOT_CHILDREN,
+  EBOOK_REQUIRED_CHILDREN,
+  METADATA_FIELDS,
+  COVER_CHILDREN,
+  CONTENT_CHILDREN,
+  EBOOK_OUTPUT_FORMATS,
+  EBOOK_MODES,
+} from "./ebook-schema.js";
 
 /**
  * @typedef {import("./parser.js").ElementNode} ElementNode
@@ -60,6 +70,122 @@ function hasChildNamed(node, name) {
  */
 function childrenNamed(node, name) {
   return childElements(node).filter((child) => child.name === name);
+}
+
+/**
+ * @param {ElementNode} node
+ * @param {readonly string[]} allowed
+ * @param {string} containerName
+ * @param {ValidationError[]} errors
+ */
+function validateAllowedChildren(node, allowed, containerName, errors) {
+  for (const child of childElements(node)) {
+    if (!allowed.includes(child.name)) {
+      errors.push({
+        code: "INVALID_EBOOK_CHILD",
+        element: child.name,
+        line: child.line,
+        message: `${child.name} is not allowed inside ${containerName}`,
+      });
+    }
+  }
+}
+
+/**
+ * @param {ElementNode} node
+ * @param {ValidationError[]} errors
+ */
+function validateEbook(node, errors) {
+  for (const required of EBOOK_REQUIRED_CHILDREN) {
+    if (!hasChildNamed(node, required)) {
+      errors.push({
+        code: "MISSING_REQUIRED_CHILD",
+        element: "ebook",
+        requiredChild: required,
+        line: node.line,
+        message: `ebook requires ${required}`,
+      });
+    }
+  }
+
+  validateAllowedChildren(node, EBOOK_ROOT_CHILDREN, "ebook", errors);
+
+  const output = node.attributes.output;
+  if (output && !EBOOK_OUTPUT_FORMATS.includes(output)) {
+    errors.push({
+      code: "INVALID_EBOOK_ATTRIBUTE",
+      element: "ebook",
+      line: node.line,
+      message: `ebook output must be one of: ${EBOOK_OUTPUT_FORMATS.join(", ")}`,
+    });
+  }
+
+  const mode = node.attributes.mode;
+  if (mode && !EBOOK_MODES.includes(mode)) {
+    errors.push({
+      code: "INVALID_EBOOK_ATTRIBUTE",
+      element: "ebook",
+      line: node.line,
+      message: `ebook mode must be one of: ${EBOOK_MODES.join(", ")}`,
+    });
+  }
+}
+
+/**
+ * @param {ElementNode} node
+ * @param {ElementNode | null} parent
+ * @param {ValidationError[]} errors
+ */
+function validateMetadata(node, parent, errors) {
+  if (parent?.name !== "ebook") {
+    errors.push({
+      code: "MISSING_REQUIRED_PARENT",
+      element: "metadata",
+      requiredParent: "ebook",
+      suggestedParentChain: ["ebook"],
+      line: node.line,
+      message: "metadata requires parent ebook",
+    });
+  }
+  validateAllowedChildren(node, METADATA_FIELDS, "metadata", errors);
+}
+
+/**
+ * @param {ElementNode} node
+ * @param {ElementNode | null} parent
+ * @param {ValidationError[]} errors
+ */
+function validateCover(node, parent, errors) {
+  if (parent?.name !== "ebook") {
+    errors.push({
+      code: "MISSING_REQUIRED_PARENT",
+      element: "cover",
+      requiredParent: "ebook",
+      suggestedParentChain: ["ebook"],
+      line: node.line,
+      message: "cover requires parent ebook",
+    });
+  }
+  validateAllowedChildren(node, COVER_CHILDREN, "cover", errors);
+}
+
+/**
+ * @param {ElementNode} node
+ * @param {ElementNode | null} parent
+ * @param {ValidationError[]} errors
+ */
+function validateContent(node, parent, errors) {
+  if (parent?.name !== "ebook") {
+    errors.push({
+      code: "MISSING_REQUIRED_PARENT",
+      element: "content",
+      requiredParent: "ebook",
+      suggestedParentChain: ["ebook"],
+      line: node.line,
+      message: "content requires parent ebook",
+    });
+  }
+  validateAllowedChildren(node, CONTENT_CHILDREN, "content", errors);
 }
 
 /**
@@ -128,14 +254,14 @@ function validateElement(node, parent, errors) {
       break;
 
     case "date":
-      if (parentName !== "event") {
+      if (parentName !== "event" && parentName !== "metadata") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: "date",
           requiredParent: "event",
           suggestedParentChain: ["event"],
           line: node.line,
-          message: "date requires parent event",
+          message: "date requires parent event or metadata",
         });
       }
       break;
@@ -193,14 +319,14 @@ function validateElement(node, parent, errors) {
       break;
 
     case "caption":
-      if (parentName !== "media") {
+      if (parentName !== "media" && parentName !== "cover") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: "caption",
           requiredParent: "media",
           suggestedParentChain: ["media"],
           line: node.line,
-          message: "caption requires parent media",
+          message: "caption requires parent media or cover",
         });
       }
       break;
@@ -285,6 +411,35 @@ function validateElement(node, parent, errors) {
 
     case "group":
       validateGroup(node, errors);
+      break;
+
+    case "ebook":
+      validateEbook(node, errors);
+      break;
+
+    case "metadata":
+      validateMetadata(node, parent, errors);
+      break;
+
+    case "cover":
+      validateCover(node, parent, errors);
+      break;
+
+    case "content":
+      validateContent(node, parent, errors);
+      break;
+
+    case "toc":
+      if (parentName !== "ebook") {
+        errors.push({
+          code: "MISSING_REQUIRED_PARENT",
+          element: "toc",
+          requiredParent: "ebook",
+          suggestedParentChain: ["ebook"],
+          line: node.line,
+          message: "toc requires parent ebook",
+        });
+      }
       break;
 
     case "scenario":

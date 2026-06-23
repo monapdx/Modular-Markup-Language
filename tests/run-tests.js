@@ -2,6 +2,11 @@ import { parse } from "../src/parser.js";
 import { validate, validateAll } from "../src/validator.js";
 import { compile } from "../src/compiler.js";
 import { processSource } from "../src/index.js";
+import {
+  generateEbookToc,
+  prepareEbookHeadings,
+  collectHeadings,
+} from "../src/ebook.js";
 
 /** @typedef {{ name: string, fn: () => void }} TestCase */
 
@@ -612,6 +617,157 @@ Second claim.`;
   const argument = findElement(ast, "argument");
   const claims = argument.children.filter((c) => c.type === "element" && c.name === "claim");
   assertEqual(claims.length, 2);
+});
+
+const EXAMPLE_EBOOK = `ebook output="html" mode="interactive"
+
+metadata
+  title "Proof I Was Here"
+  author "Ashly Lorenzana"
+  language "en"
+
+cover
+  image "cover.jpg"
+  caption "Cover image"
+
+toc
+
+content
+  heading level="1" "Chapter One"
+  section
+    paragraph "The first paragraph."
+
+  heading level="2" "A Smaller Room"
+  section
+    paragraph "More text."
+
+  heading level="1" "Chapter Two"
+  section
+    paragraph "Another chapter."
+
+style
+  body { color: black; }
+
+javascript
+  console.log("interactive");`;
+
+test("valid ebook with metadata, cover, toc, and content", () => {
+  const { ast, errors } = parse(EXAMPLE_EBOOK);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertTrue(validation.valid, validation.errors.map((e) => e.message).join("; "));
+
+  const ebook = findElement(ast, "ebook");
+  assertTrue(ebook != null);
+  assertTrue(findElement(ast, "metadata") != null);
+  assertTrue(findElement(ast, "cover") != null);
+  assertTrue(findElement(ast, "toc") != null);
+  assertTrue(findElement(ast, "content") != null);
+
+  const title = findElement(ast, "title");
+  assertTrue(title != null);
+  assertIncludes(
+    title.children.find((c) => c.type === "text")?.value ?? "",
+    "Proof I Was Here"
+  );
+});
+
+test("valid ebook with only content", () => {
+  const source = `ebook
+content
+  heading level="1" "Only Chapter"
+  paragraph "Body text."`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+  assertTrue(findElement(ast, "content") != null);
+});
+
+test("TOC generated from heading order", () => {
+  const { ast } = parse(EXAMPLE_EBOOK);
+  const ebook = findElement(ast, "ebook");
+  const toc = generateEbookToc(ebook);
+  const labels = [];
+
+  /** @param {import("../src/ebook.js").TocNode[]} nodes */
+  function flatten(nodes) {
+    for (const node of nodes) {
+      labels.push(node.label);
+      flatten(node.children);
+    }
+  }
+  flatten(toc);
+
+  assertEqual(labels, [
+    "Chapter One",
+    "A Smaller Room",
+    "Chapter Two",
+  ]);
+});
+
+test("nested TOC generated from heading levels", () => {
+  const { ast } = parse(EXAMPLE_EBOOK);
+  const ebook = findElement(ast, "ebook");
+  const toc = generateEbookToc(ebook);
+
+  assertEqual(toc.length, 2);
+  assertEqual(toc[0].label, "Chapter One");
+  assertEqual(toc[0].children.length, 1);
+  assertEqual(toc[0].children[0].label, "A Smaller Room");
+  assertEqual(toc[1].label, "Chapter Two");
+  assertEqual(toc[1].children.length, 0);
+});
+
+test("heading IDs generated when missing", () => {
+  const { ast } = parse(EXAMPLE_EBOOK);
+  const ebook = findElement(ast, "ebook");
+  const content = findElement(ast, "content");
+  prepareEbookHeadings(ebook);
+
+  const headings = collectHeadings(content);
+  assertEqual(headings.length, 3);
+  assertEqual(headings[0].node.attributes.id, "chapter-one");
+  assertEqual(headings[1].node.attributes.id, "a-smaller-room");
+  assertEqual(headings[2].node.attributes.id, "chapter-two");
+});
+
+test("invalid ebook missing required content", () => {
+  const source = `ebook
+metadata
+  title "No Body"`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertTrue(
+    validation.errors.some((e) => e.code === "MISSING_REQUIRED_CHILD" && e.element === "ebook")
+  );
+});
+
+test("plain-text export ignores style and javascript", () => {
+  const { ast } = parse(EXAMPLE_EBOOK);
+  const output = compile(ast, { format: "plain-text" });
+
+  assertIncludes(output, "title: Proof I Was Here");
+  assertIncludes(output, "Chapter One");
+  assertFalse(output.includes("<style>"));
+  assertFalse(output.includes("<script>"));
+  assertFalse(output.includes("cover.jpg"));
+});
+
+test("HTML interactive export preserves style and javascript", () => {
+  const { ast } = parse(EXAMPLE_EBOOK);
+  const output = compile(ast, { format: "html" });
+
+  assertIncludes(output, '<ebook output="html" mode="interactive">');
+  assertIncludes(output, "<style>");
+  assertIncludes(output, "body { color: black; }");
+  assertIncludes(output, "<script>");
+  assertIncludes(output, 'console.log("interactive");');
+  assertIncludes(output, 'href="#chapter-one"');
+  assertIncludes(output, 'id="chapter-one"');
 });
 
 // --- Runner ---

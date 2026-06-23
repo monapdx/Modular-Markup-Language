@@ -1,4 +1,9 @@
-import { matchOpeningTag, matchClosingTag, getRequiredParents } from "./grammar.js";
+import {
+  matchOpeningTag,
+  matchClosingTag,
+  matchInlineValueElement,
+  getRequiredParents,
+} from "./grammar.js";
 
 /**
  * @typedef {Object} TextNode
@@ -194,6 +199,23 @@ export function parse(source) {
       lastContentTarget = null;
       stack[stack.length - 1].children.push(element);
       stack.push(element);
+      continue;
+    }
+
+    const inline = matchInlineValueElement(line);
+    if (inline) {
+      const contentTarget = flushTextBuffer(
+        stack[stack.length - 1],
+        textBuffer,
+        textBufferStartLine
+      );
+
+      closeBeforeOpening(stack, inline.name, contentTarget ?? lastContentTarget);
+
+      const element = createElement(inline.name, inline.attributes, lineNumber);
+      element.children.push(createText(inline.value, lineNumber));
+      stack[stack.length - 1].children.push(element);
+      lastContentTarget = element;
       continue;
     }
 

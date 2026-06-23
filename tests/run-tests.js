@@ -618,6 +618,66 @@ Second claim.`;
   const claims = argument.children.filter((c) => c.type === "element" && c.name === "claim");
   assertEqual(claims.length, 2);
 });
+//here
+test("plain text inside claim becomes text node", () => {
+  const source = `claim
+Markdown is unnecessary.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<claim>");
+  assertIncludes(html, "<text>Markdown is unnecessary.</text>");
+  assertIncludes(html, "</claim>");
+});
+
+test("plain text inside evidence becomes text node", () => {
+  const source = `argument
+claim
+Remote work saves time.
+evidence
+Employees avoid daily commuting.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<evidence>");
+  assertIncludes(html, "<text>Employees avoid daily commuting.</text>");
+  assertIncludes(html, "</evidence>");
+});
+
+test("plain text inside caption becomes text node", () => {
+  const source = `media
+image
+/photo.png
+caption
+System architecture overview.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  assertTrue(validate(ast).valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<caption>");
+  assertIncludes(html, "<text>System architecture overview.</text>");
+  assertIncludes(html, "</caption>");
+});
+
+test("ordinary text is not parsed as a tag", () => {
+  const source = `claim
+This is just plain text, not a tag.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+
+  const html = compile(ast);
+  assertIncludes(html, "<text>This is just plain text, not a tag.</text>");
+  assertFalse(html.includes("<This is just plain text"));
+});
 
 const EXAMPLE_EBOOK = `ebook output="html" mode="interactive"
 

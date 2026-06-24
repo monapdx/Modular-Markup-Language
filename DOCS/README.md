@@ -379,6 +379,18 @@ Have an idea for a tag we should add? **[SUBMIT A TAG](https://github.com/monapd
 Do you have a more advanced tag idea? **[SUBMIT A SCHEMA](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml&utm_source=chatgpt.com)** instead!
 
 ---
+## Community
+
+- Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before
+  participating.
+- See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to report bugs,
+  propose tags/schemas, set up your dev environment, and submit pull
+  requests.
+- All pull requests use the template in
+  [.github/PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md)
+  automatically.
+
+---
 ## SUPPORT
 
 You can read the full **[SPEC](/DOCS/SPEC.md)** here. 

@@ -4,7 +4,7 @@ category: documentation
 ---
 # Modular Markup (MML)
 
-[![Star Repo](https://img.shields.io/badge/%F0%9F%92%A1%20Propose%20Tag-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml) 
+[![Star Repo](https://img.shields.io/badge/%F0%9F%92%A1%20Propose%20Tag-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml) [![Suggest Schema](https://img.shields.io/badge/%F0%9F%92%A1%20Suggest%20Schema-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=suggest-schema.yml) 
 
 **A meaning-first markup language that remains readable as plain text.**
 

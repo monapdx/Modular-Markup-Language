@@ -4,6 +4,8 @@ category: documentation
 ---
 # Modular Markup (MML)
 
+[![Star Repo](https://img.shields.io/badge/%F0%9F%92%A1%20Propose%20Tag-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml) [![Suggest Schema](https://img.shields.io/badge/%F0%9F%92%A1%20Suggest%20Schema-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=suggest-schema.yml) 
+
 **A meaning-first markup language that remains readable as plain text.**
 
 Modular Markup (MML) is a semantic markup language designed around a simple idea:
@@ -291,5 +293,38 @@ Have a multi-tag schema idea? **[Submit a schema](https://github.com/monapdx/Mod
 * **[SYNONYMS.md](SYNONYMS.md)** — synonym mappings
 * **[LINKS.md](LINKS.md)** — links and navigation
 * **[Parser demo](../index.html)** — live parse, validate, and compile
+
+The language is actively evolving and many schemas, validation rules, and compilation targets remain under discussion.
+
+---
+## CONTRIBUTE
+
+Have an issue? **[GET IN TOUCH](https://github.com/monapdx/Modular-Markup-Language/issues/new/choose?utm_source=chatgpt.com)**.
+
+Have an idea for a tag we should add? **[SUBMIT A TAG](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml)** here.
+
+Do you have a more advanced tag idea? **[SUBMIT A SCHEMA](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml&utm_source=chatgpt.com)** instead!
+
+---
+## SUPPORT
+
+You can read the full **[SPEC](/DOCS/SPEC.md)** here. 
+
+Try the **[PARSER](/FILES/index.html)**.
+
+---
+## TAGS
+
+Here is the list of **[TAGS](/DOCS/TAGS.md)**. 
+
+Looking for the **[SHORTHAND](/DOCS/SHORTHAND.md)** version?
+
+Check out a list of **[PROPOSED TAGS](/DOCS/PROPOSED.md)**.
+
+Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](/DOCS/DEPENDENCIES.md)**.
+
+Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](/DOCS/SYNONYMS.md)** make it fine to replace one with the other!
+
+
 
 #readme #markup #grammar #syntax #semantic #data-structure #schemas #official #tags #documentation

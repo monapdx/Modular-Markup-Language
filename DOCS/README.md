@@ -73,7 +73,7 @@ The final rendered output is already HTML.
 </argument>
 ```
 
-Try this in the **[parser demo](../index.html)** at the repo root.
+Try this in the **[parser demo](https://monapdx.github.io/Modular-Markup-Language/)** at the repo root.
 
 ---
 

@@ -39,34 +39,7 @@
 <li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Compiler-friendly AST representation</li>
 <li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Extensible semantic schemas</li>
 </ul>
-<hr>
-<h2>MML</h2>
-<pre><code class="language-text">argument
 
-claim
-Markdown introduces an unnecessary abstraction layer.
-
-evidence
-The final rendered output is already HTML.
-/evidence
-
-/claim
-
-/argument
-</code></pre>
-<h2>Compiled Output</h2>
-<pre><code class="language-html">&lt;argument&gt;
-  &lt;claim&gt;
-    &lt;text&gt;Markdown introduces an unnecessary abstraction layer.&lt;/text&gt;
-
-    &lt;evidence&gt;
-      &lt;text&gt;The final rendered output is already HTML.&lt;/text&gt;
-    &lt;/evidence&gt;
-
-  &lt;/claim&gt;
-&lt;/argument&gt;
-</code></pre>
-<hr>
 <h1>Core Philosophy</h1>
 <p>MML is built around semantic objects rather than formatting instructions.</p>
 <p><strong>For example:</strong></p>
@@ -95,13 +68,7 @@ caption
 </code></pre>
 <pre><code class="language-text">section title=&quot;Background&quot;
 </code></pre>
-<hr>
-<h2>Closing Tags</h2>
-<p>Closing tags use a slash prefix.</p>
-<pre><code class="language-text">/claim
-</code></pre>
-<pre><code class="language-text">/section
-</code></pre>
+
 <hr>
 <h2>Text Content</h2>
 <p>Anything that is not recognized as valid markup is treated as text.</p>
@@ -109,7 +76,7 @@ caption
 
 Arguments are not always unhealthy.
 
-/claim
+
 </code></pre>
 <p>The word &quot;Arguments&quot; is content, not a tag.</p>
 <hr>
@@ -118,7 +85,7 @@ Arguments are not always unhealthy.
 <p><strong>Example:</strong></p>
 <pre><code class="language-text">evidence
 The final output is already HTML.
-/evidence
+
 </code></pre>
 <p><strong>Produces:</strong></p>
 <pre><code class="language-text">Error:
@@ -131,11 +98,7 @@ claim
 
 evidence
 The final output is already HTML.
-/evidence
 
-/claim
-
-/argument
 </code></pre>
 <hr>
 <h1>Automatic Text Nodes</h1>
@@ -143,7 +106,7 @@ The final output is already HTML.
 <p><strong>Source:</strong></p>
 <pre><code class="language-text">claim
 Markdown is unnecessary.
-/claim
+
 </code></pre>
 <p><strong>Internal representation:</strong></p>
 <pre><code class="language-html">&lt;claim&gt;
@@ -243,18 +206,6 @@ image
 events
 entities
 images
-</code></pre>
-<hr>
-<h2>Explicit Closure</h2>
-<p>Every opened element must be explicitly closed.</p>
-<p><strong>Valid:</strong></p>
-<pre><code class="language-text">claim
-Text.
-/claim
-</code></pre>
-<p><strong>Invalid:</strong></p>
-<pre><code class="language-text">claim
-Text.
 </code></pre>
 <hr>
 <h2>Semantic Necessity</h2>

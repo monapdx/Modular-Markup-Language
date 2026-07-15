@@ -21,17 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Assemble site from export/
-        run: |
-          mkdir -p _site
-          cp -r export/. _site/
-          # Parser (FILES/) imports the live source tree
-          cp -r src _site/src
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: export
 
   deploy:
     needs: build

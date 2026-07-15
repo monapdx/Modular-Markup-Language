@@ -1,12 +1,12 @@
-import { parse } from "../src/parser.js";
-import { validate, validateAll } from "../src/validator.js";
-import { compile } from "../src/compiler.js";
-import { processSource } from "../src/index.js";
+import { parse } from "../export/src/parser.js";
+import { validate, validateAll } from "../export/src/validator.js";
+import { compile } from "../export/src/compiler.js";
+import { processSource } from "../export/src/index.js";
 import {
   generateEbookToc,
   prepareEbookHeadings,
   collectHeadings,
-} from "../src/ebook.js";
+} from "../export/src/ebook.js";
 
 /** @typedef {{ name: string, fn: () => void }} TestCase */
 
@@ -875,7 +875,7 @@ test("TOC generated from heading order", () => {
   const toc = generateEbookToc(ebook);
   const labels = [];
 
-  /** @param {import("../src/ebook.js").TocNode[]} nodes */
+  /** @param {import("../export/src/ebook.js").TocNode[]} nodes */
   function flatten(nodes) {
     for (const node of nodes) {
       labels.push(node.label);

@@ -215,7 +215,7 @@ media
 
 ## Ebook
 
-Format-independent book schema (implemented in `src/ebook-schema.js`):
+Format-independent book schema (implemented in `export/src/ebook-schema.js`):
 
 ```text
 ebook
@@ -255,7 +255,7 @@ Use **[SHORTHAND.md](SHORTHAND.md)** for accepted abbreviations and **[SYNONYMS.
 
 # Project status
 
-Working **parser**, **validator**, and **compiler** live in `src/`:
+Working **parser**, **validator**, and **compiler** live in `export/src/`:
 
 * `grammar.js` — tag registry, aliases, attribute parsing, inline-value matching
 * `parser.js` — opening-tag-only parsing with implicit close

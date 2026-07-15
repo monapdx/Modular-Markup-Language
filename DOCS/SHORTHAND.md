@@ -37,6 +37,12 @@ category: documentation
 | subhead      | sub                     |
 | caption      | cap                     |
 | evidence     | evi                     |
+| glossary     | glo                     |
+| definition   | def                     |
+| synonym      | syn                     |
+| antonym      | ant                     |
+| origin       | ori                     |
+| usage        | usag                    |
 | entity       | ent                     |
 | option       | opt                     |
 | select       | sel                     |

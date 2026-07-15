@@ -68,11 +68,14 @@ function createText(value, line) {
 function closeBeforeOpening(stack, newTagName, lastContentTarget) {
   if (stack.length <= 1) return;
 
+  const requiredParents = getRequiredParents(newTagName);
+
   let top = stack[stack.length - 1];
   if (
     !top.implicit &&
     top.children.length > 0 &&
-    top === lastContentTarget
+    top === lastContentTarget &&
+    !requiredParents?.includes(top.name)
   ) {
     stack.pop();
     top = stack[stack.length - 1];
@@ -86,7 +89,6 @@ function closeBeforeOpening(stack, newTagName, lastContentTarget) {
     stack.pop();
   }
 
-  const requiredParents = getRequiredParents(newTagName);
   if (!requiredParents) return;
 
   while (stack.length > 1) {

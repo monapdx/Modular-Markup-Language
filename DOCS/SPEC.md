@@ -381,6 +381,140 @@ source
 
 ---
 
+## 8.2 Glossary System
+
+### glossary
+
+Purpose:
+
+- [ ] Represents a collection of word entries.
+
+Rules:
+
+* [ ] Requires at least one word.
+
+Allowed Children:
+
+```text
+word
+```
+
+---
+
+### word
+
+Purpose:
+
+- [ ] Represents a glossary entry for a term.
+
+Rules:
+
+* [ ] Requires parent glossary.
+* [ ] Requires definition.
+
+Allowed Children:
+
+```text
+text
+definition
+synonym
+antonym
+origin
+usage
+```
+
+---
+
+### definition
+
+Purpose:
+
+- [ ] States the meaning of a word.
+
+Rules:
+
+* [ ] Requires parent word.
+
+Allowed Children:
+
+```text
+text
+```
+
+---
+
+### synonym
+
+Purpose:
+
+- [ ] Names a related or equivalent term.
+
+Rules:
+
+* [ ] Requires parent word.
+
+Allowed Children:
+
+```text
+text
+```
+
+---
+
+### antonym
+
+Purpose:
+
+- [ ] Names an opposite term.
+
+Rules:
+
+* [ ] Requires parent word.
+
+Allowed Children:
+
+```text
+text
+```
+
+---
+
+### origin
+
+Purpose:
+
+- [ ] Records etymology or historical source of a word.
+
+Rules:
+
+* [ ] Requires parent word.
+
+Allowed Children:
+
+```text
+text
+```
+
+---
+
+### usage
+
+Purpose:
+
+- [ ] Shows how a word is used in context.
+
+Rules:
+
+* [ ] Requires parent word.
+
+Allowed Children:
+
+```text
+text
+```
+
+---
+
 # 9. Timeline System
 
 ### timeline
@@ -731,6 +865,14 @@ a
 argument
 claim
 evidence
+
+glossary
+word
+definition
+synonym
+antonym
+origin
+usage
 
 timeline
 calendar

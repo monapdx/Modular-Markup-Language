@@ -27,6 +27,8 @@ category: documentation
 | dropdown   | no             | yes       |
 | table      | no             | yes       |
 | text       | yes            | yes       |
+| group      | no             | yes       |
+| glossary   | no             | yes       |
 
 ## CHILD TAGS
 
@@ -63,7 +65,23 @@ category: documentation
 | button     | form       |
 | textarea   | form       |
 | quote      | text       |
+| trait      | entity     |
+| word       | glossary   |
+| definition | word       |
+| synonym    | word       |
+| antonym    | word       |
+| origin     | word       |
+| usage      | word       |
+| metadata   | ebook      |
+| cover      | ebook      |
+| toc        | ebook      |
+| content    | ebook      |
 |            |            |
+
+## CONTEXTUAL VALIDATION
+
+- event ---> **AS A CHILD OF** ---> timeline ---> **MUST HAVE** date **BETWEEN** start-year AND end-year
+- 
 
 ---
 ## REQUIRES
@@ -78,21 +96,19 @@ category: documentation
 - option ---> **REQUIRES** ---> dropdown
 - select ---> **REQUIRES** ---> dropdown
 - list ---> **REQUIRES** ---> item
-
----
-## GROUP
-
-- group ---> **REQUIRES** ---> at least two **entity** children **SHARING A COMMON TRAIT VALUE**
-- entity ---> **AS A CHILD OF** ---> group ---> contains one or more **trait** children
-- trait ---> **REQUIRES** ---> entity parent; trait text is the trait value (e.g. human, male)
-- comparison ---> **DOES NOT** use the group shared-trait rule; it uses named schemas instead (before/after, entity/unique, scenario/condition)
-
+- group ---> **REQUIRES** ---> **TWO OR MORE ENTITIES**
+- glossary ---> REQUIRES ---> word
+- word ---> REQUIRES ---> definition
+- synonym  ---> REQUIRES ---> word
+- antonym ---> REQUIRES ---> word
+- origin ---> REQUIRES ---> word
+- usage ---> REQUIRES  ---> word
 ---
 ## AS A CHILD OF ---> IS ONLY VALID ---> WHEN MULTIPLES EXIST
 
 - entity ---> **AS A CHILD OF** ---> comparison ---> **IS ONLY VALID** ---> **WHEN TWO OR MORE EXIST AS CHILDREN**
 - scenario ---> **AS A CHILD OF** ---> comparison ---> **IS ONLY VALID** ---> **WHEN TWO OR MORE EXIST AS CHILDREN**
-
+- entity ---> **AS A CHILD OF** ---> group ---> **IS ONLY VALID** ---> **WHEN AT LEAST TWO EXIST**
 ---
 ## PAIRS & SETS ---> CANNOT EXIST OUTSIDE OF
 
@@ -110,19 +126,25 @@ category: documentation
 - legend ---> **CANNOT EXIST OUTSIDE OF** ---> fieldset
 - dropdown ---> **CANNOT EXIST OUTSIDE OF** ---> form
 - section ---> **CANNOT EXIST OUTSIDE OF** ---> document
-
+- trait ---> **CANNOT EXIST OUTSIDE OF** ---> entity
+- synonym ---> CANNOT EXIST OUTSIDE OF ---> word
+- antonym ---> CANNOT EXIST OUTSIDE OF ---> word
+- word ---> CANNOT EXIST OUTSIDE OF ---> glossary
+- definition ---> CANNOT EXIST OUTSIDE OF ---> word
+- origin ---> CANNOT EXIST OUTSIDE OF ---> word
+- usage ---> CANNOT EXIST OUTSIDE OF ---> word
 ---
 ## TAGS
 
-Here is the list of **[TAGS](/DOCS/TAGS)**. 
+Here is the list of **[TAGS](TAGS.md)**. 
 
 Looking for the **[SHORTHAND](/DOCS/SHORTHAND.md)** version?
 
-Check out a list of **[PROPOSED TAGS](/DOCS/PROPOSED.md)**.
+Check out a list of **[PROPOSED TAGS](PROPOSED.md)**.
 
 Curious about how the tags can be used together? Find out here ---> **[DEPENDENCIES](/DOCS/DEPENDENCIES.md)**.
 
 Did you know that you can use the tag **[CHAPTER](#)** instead of **[SECTION](#)**, if you want? **[SYNONYMS](/DOCS/SYNONYMS.md)** make it fine to replace one with the other!
 
 
-#TAgs #parent #child #GRAMMAr #SEMANTIc #MARKUp #DATA-STRUCTURe #LISTs #rules #dependencies 
+#tags #parent #child #grammar #semantic #markup #data-structure #lists #rules #dependencies 

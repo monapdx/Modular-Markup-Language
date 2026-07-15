@@ -343,6 +343,57 @@ function validateElement(node, parent, errors) {
       }
       break;
 
+    case "glossary":
+      if (!hasChildNamed(node, "word")) {
+        errors.push({
+          code: "MISSING_REQUIRED_CHILD",
+          element: "glossary",
+          requiredChild: "word",
+          line: node.line,
+          message: "glossary requires at least one child word",
+        });
+      }
+      break;
+
+    case "word":
+      if (parentName !== "glossary") {
+        errors.push({
+          code: "MISSING_REQUIRED_PARENT",
+          element: "word",
+          requiredParent: "glossary",
+          suggestedParentChain: ["glossary"],
+          line: node.line,
+          message: "word requires parent glossary",
+        });
+      }
+      if (!hasChildNamed(node, "definition")) {
+        errors.push({
+          code: "MISSING_REQUIRED_CHILD",
+          element: "word",
+          requiredChild: "definition",
+          line: node.line,
+          message: "word requires definition",
+        });
+      }
+      break;
+
+    case "definition":
+    case "synonym":
+    case "antonym":
+    case "origin":
+    case "usage":
+      if (parentName !== "word") {
+        errors.push({
+          code: "MISSING_REQUIRED_PARENT",
+          element: node.name,
+          requiredParent: "word",
+          suggestedParentChain: ["glossary", "word"],
+          line: node.line,
+          message: `${node.name} requires parent word`,
+        });
+      }
+      break;
+
     case "timeline": {
       const missing = [];
       if (!hasChildNamed(node, "start-year")) missing.push("start-year");

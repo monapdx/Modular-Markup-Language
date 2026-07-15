@@ -114,8 +114,23 @@ https://example.com/image.png
 ### 45. end-year
 ### 46. start-year
 
+## 47. glossary
 
-## CURRENT TOTAL: 48 OFFICIAL TAGS
+### 48. word
+markup
+### 49. definition
+A system of tags that structure meaning.
+### 50. synonym
+tagging
+### 51. antonym
+plaintext
+### 52. origin
+From Middle English marken, "to note or record."
+### 53. usage
+Authors use markup to describe documents without prescribing presentation.
+
+
+## CURRENT TOTAL: 55 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

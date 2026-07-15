@@ -115,6 +115,131 @@ The final output is HTML.`;
   assertEqual(validation.errors[0].suggestedParentChain, ["argument", "claim"]);
 });
 
+test("valid glossary / word / definition", () => {
+  const source = `glossary
+word
+markup
+definition
+A system of tags that structure meaning.
+synonym
+tagging
+antonym
+plaintext
+origin
+From Middle English marken.
+usage
+Authors use markup to describe documents.
+word
+schema
+definition
+A structured set of related tags.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertTrue(validation.valid);
+
+  const html = compile(ast);
+  assertIncludes(html, "<glossary>");
+  assertIncludes(html, "<word>");
+  assertIncludes(html, "<definition>");
+  assertIncludes(html, "<synonym>");
+  assertIncludes(html, "<antonym>");
+  assertIncludes(html, "<origin>");
+  assertIncludes(html, "<usage>");
+  assertIncludes(html, "<text>A system of tags that structure meaning.</text>");
+  assertIncludes(html, "<text>A structured set of related tags.</text>");
+  assertIncludes(html, "</glossary>");
+});
+
+test("word without glossary", () => {
+  const source = `word
+markup
+definition
+A system of tags.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "MISSING_REQUIRED_PARENT");
+  assertEqual(validation.errors[0].element, "word");
+  assertEqual(validation.errors[0].requiredParent, "glossary");
+});
+
+test("glossary without word", () => {
+  const source = `glossary
+Empty glossary.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "MISSING_REQUIRED_CHILD");
+  assertEqual(validation.errors[0].element, "glossary");
+  assertEqual(validation.errors[0].requiredChild, "word");
+});
+
+test("word without definition", () => {
+  const source = `glossary
+word
+markup
+synonym
+tagging`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertTrue(
+    validation.errors.some(
+      (e) => e.code === "MISSING_REQUIRED_CHILD" && e.element === "word" && e.requiredChild === "definition"
+    )
+  );
+});
+
+test("definition without word", () => {
+  const source = `definition
+A system of tags.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertFalse(validation.valid);
+  assertEqual(validation.errors[0].code, "MISSING_REQUIRED_PARENT");
+  assertEqual(validation.errors[0].element, "definition");
+  assertEqual(validation.errors[0].requiredParent, "word");
+  assertEqual(validation.errors[0].suggestedParentChain, ["glossary", "word"]);
+});
+
+test("glossary shorthand aliases", () => {
+  const source = `glo
+word
+markup
+def
+A system of tags.
+syn
+tagging
+ant
+plaintext
+ori
+Middle English.
+usag
+Used in documents.`;
+
+  const { ast, errors } = parse(source);
+  assertEqual(errors, []);
+  const validation = validate(ast);
+  assertTrue(validation.valid);
+
+  assertTrue(findElement(ast, "glossary") != null);
+  assertTrue(findElement(ast, "definition") != null);
+  assertTrue(findElement(ast, "synonym") != null);
+  assertTrue(findElement(ast, "antonym") != null);
+  assertTrue(findElement(ast, "origin") != null);
+  assertTrue(findElement(ast, "usage") != null);
+});
+
 test("closing tags are optional not required", () => {
   const withoutClosers = `argument
 claim

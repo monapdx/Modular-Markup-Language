@@ -73,7 +73,7 @@ The final rendered output is already HTML.
 </argument>
 ```
 
-Try this in the **[parser demo](https://monapdx.github.io/Modular-Markup-Language/)** at the repo root.
+Try this in the **[parser demo](https://monapdx.github.io/Modular-Markup-Language/FILES/)**.
 
 ---
 
@@ -292,7 +292,7 @@ Have a multi-tag schema idea? **[Submit a schema](https://github.com/monapdx/Mod
 * **[PROPOSED.md](PROPOSED.md)** — proposed tags and schemas
 * **[SYNONYMS.md](SYNONYMS.md)** — synonym mappings
 * **[LINKS.md](LINKS.md)** — links and navigation
-* **[Parser demo](../index.html)** — live parse, validate, and compile
+* **[Parser demo](../export/FILES/index.html)** — live parse, validate, and compile
 
 The language is actively evolving and many schemas, validation rules, and compilation targets remain under discussion.
 
@@ -322,7 +322,7 @@ Do you have a more advanced tag idea? **[SUBMIT A SCHEMA](https://github.com/mon
 
 You can read the full **[SPEC](/DOCS/SPEC.md)** here. 
 
-Try the **[PARSER](/FILES/index.html)**.
+Try the **[PARSER](../export/FILES/index.html)**.
 
 ---
 ## TAGS

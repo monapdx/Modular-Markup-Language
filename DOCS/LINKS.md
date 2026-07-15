@@ -21,7 +21,7 @@ Check out the **[README](/DOCS/README.md)** if you're not sure where to start.
 
 You can read the full **[SPEC](/DOCS/SPEC.md)** here. 
 
-Try the **[PARSER](/FILES/index.html)**!
+Try the **[PARSER](../export/FILES/index.html)**!
 
 ## TAGS
 

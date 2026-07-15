@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic Markup — Parser Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hot-pink: #ff00aa;
+      --lime: #c6ff00;
+      --purple: #7a00ff;
+      --yellow: #ffe600;
+      --black: #000;
+      --white: #fff;
+    }
+
+    body {
+      font-family: "Arial Black", Arial, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--purple);
+      color: var(--white);
+      border-bottom: 5px solid var(--black);
+      padding: 1rem 1.5rem;
+      box-shadow: 0 6px 0 var(--black);
+    }
+
+    header h1 { font-size: clamp(1.25rem, 3vw, 2rem); text-transform: uppercase; }
+    header p {
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.35rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--yellow);
+      border-bottom: 5px solid var(--black);
+    }
+
+    button {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      background: var(--lime);
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      padding: 0.5rem 0.85rem;
+      cursor: pointer;
+    }
+
+    button:hover { background: var(--hot-pink); color: var(--white); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1100px) {
+      .layout {
+        grid-template-columns: 1fr 1fr;
+      }
+      .source-panel { grid-column: 1 / -1; }
+    }
+
+    .panel {
+      border: 5px solid var(--black);
+      box-shadow: 8px 8px 0 var(--hot-pink);
+      display: flex;
+      flex-direction: column;
+      min-height: 240px;
+    }
+
+    .panel-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 4px solid var(--black);
+    }
+
+    .panel-body { flex: 1; overflow: auto; }
+
+    textarea {
+      width: 100%;
+      min-height: 280px;
+      border: none;
+      padding: 1rem;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.85rem;
+      resize: vertical;
+      outline: none;
+    }
+
+    pre {
+      margin: 0;
+      padding: 1rem;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 220px;
+    }
+
+    #ast-output { background: var(--lime); }
+    #errors-output { background: #fff; }
+    #compiled-output { background: var(--white); }
+
+    #preview-output {
+      background: var(--white);
+      padding: 1.25rem;
+      min-height: 220px;
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+    }
+
+    #preview-output.preview-empty {
+      color: #666;
+      font-style: italic;
+    }
+
+    #preview-output .mml-calendar {
+      width: 100%;
+      max-width: 420px;
+      border-collapse: collapse;
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--purple);
+      margin: 0 auto;
+    }
+
+    #preview-output .mml-calendar caption {
+      caption-side: top;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      background: var(--yellow);
+      border-bottom: 3px solid var(--black);
+    }
+
+    #preview-output .mml-calendar th,
+    #preview-output .mml-calendar td {
+      border: 2px solid var(--black);
+      text-align: center;
+      padding: 0.55rem 0.35rem;
+      width: 14.28%;
+      font-size: 0.9rem;
+    }
+
+    #preview-output .mml-calendar th {
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    #preview-output .mml-calendar td {
+      background: var(--white);
+    }
+
+    #preview-output .mml-calendar td.mml-event-day {
+      background: var(--lime);
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px var(--hot-pink);
+    }
+
+    #preview-output section subhead {
+      display: block;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 3px solid var(--black);
+    }
+
+    .status {
+      padding: 0.75rem 1.5rem;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      border-bottom: 4px solid var(--black);
+    }
+
+    .status.valid { background: var(--lime); }
+    .status.invalid { background: var(--hot-pink); color: var(--white); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Semantic Markup Parser</h1>
+    <p>Opening tags only — one per line. No /closing tags needed; they are generated for you at compile time.</p>
+  </header>
+
+  <div id="status" class="status valid">Ready</div>
+
+  <div class="controls">
+    <button type="button" id="run-btn">Parse &amp; Compile</button>
+    <button type="button" id="example-btn">Load Argument Example</button>
+    <button type="button" id="calendar-btn">Load Calendar Example</button>
+    <button type="button" id="clear-btn">Clear</button>
+  </div>
+
+  <main class="layout">
+    <section class="panel source-panel">
+      <div class="panel-header">Source</div>
+      <div class="panel-body">
+        <textarea id="source" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">AST (JSON)</div>
+      <div class="panel-body">
+        <pre id="ast-output"></pre>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">Validation Errors</div>
+      <div class="panel-body">
+        <pre id="errors-output"></pre>
+      </div>
+    </section>
+
+    <section class="panel preview-panel" style="grid-column: 1 / -1;">
+      <div class="panel-header">Live Preview</div>
+      <div class="panel-body">
+        <div id="preview-output" class="preview-empty">Fix errors or enter source to see a rendered preview.</div>
+      </div>
+    </section>
+
+    <section class="panel" style="grid-column: 1 / -1;">
+      <div class="panel-header">Compiled Output (HTML)</div>
+      <div class="panel-body">
+        <pre id="compiled-output"></pre>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { processSource } from "../src/index.js";
+
+    const sourceEl = document.getElementById("source");
+    const astEl = document.getElementById("ast-output");
+    const errorsEl = document.getElementById("errors-output");
+    const compiledEl = document.getElementById("compiled-output");
+    const previewEl = document.getElementById("preview-output");
+    const statusEl = document.getElementById("status");
+
+    const EXAMPLE = `argument
+claim
+Dogs are better companions.
+evidence
+Loki.`;
+
+    const CALENDAR_EXAMPLE = `calendar
+year
+2018
+month
+8
+event
+date
+22`;
+
+    sourceEl.value = EXAMPLE;
+
+    function updatePreview(html, valid) {
+      if (!valid || !html) {
+        previewEl.innerHTML = "";
+        previewEl.textContent = valid
+          ? "(nothing to preview)"
+          : "Fix errors to see a rendered preview.";
+        previewEl.classList.add("preview-empty");
+        return;
+      }
+      previewEl.classList.remove("preview-empty");
+      previewEl.innerHTML = html;
+    }
+
+    function run() {
+      const result = processSource(sourceEl.value);
+
+      astEl.textContent = result.astJson
+        ? JSON.stringify(result.astJson, null, 2)
+        : "(no AST)";
+
+      const allErrors = result.parseErrors.length
+        ? result.parseErrors
+        : result.validationErrors;
+
+      errorsEl.textContent = allErrors.length
+        ? JSON.stringify(allErrors, null, 2)
+        : "No errors.";
+
+      compiledEl.textContent = result.valid
+        ? result.html
+        : "(compilation skipped — fix errors first)";
+
+      updatePreview(result.html, result.valid);
+
+      statusEl.className = "status " + (result.valid ? "valid" : "invalid");
+      statusEl.textContent = result.valid
+        ? "Valid — parsed and compiled successfully"
+        : `Invalid — ${allErrors.length} error(s)`;
+    }
+
+    document.getElementById("run-btn").addEventListener("click", run);
+    document.getElementById("example-btn").addEventListener("click", () => {
+      sourceEl.value = EXAMPLE;
+      run();
+    });
+    document.getElementById("calendar-btn").addEventListener("click", () => {
+      sourceEl.value = CALENDAR_EXAMPLE;
+      run();
+    });
+    document.getElementById("clear-btn").addEventListener("click", () => {
+      sourceEl.value = "";
+      run();
+    });
+
+    sourceEl.addEventListener("input", () => {
+      clearTimeout(sourceEl._timer);
+      sourceEl._timer = setTimeout(run, 350);
+    });
+
+    run();
+  </script>
+</body>
+</html>

@@ -262,6 +262,907 @@ body,
    ========================================================== */
 
 .task-list-item {
+  border: 3px solid var(--nb-black) !important;
+  background: var(--nb-white) !important;
+  padding: 8px 12px !important;
+  margin: 6px 0 !important;
+  box-shadow: 4px 4px 0 var(--nb-black) !important;
+
+  transition:
+    background-color 0.08s ease,
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+.task-list-item:hover {
+  background: var(--background-secondary-alt) !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--nb-black) !important;
+}
+
+.task-list-item-checkbox {
+  transform: scale(1.4);
+}
+
+.is-checked {
+  background: #c6ff00 !important;
+}
+
+/* ==========================================================
+   BLOCKQUOTES
+   ========================================================== */
+
+.markdown-rendered blockquote,
+.markdown-preview-view blockquote,
+blockquote {
+  background: #ff00aa !important;
+  color: #fff !important;
+  border: 4px solid #000000 !important;
+  padding: 20px !important;
+  font-size: 1.15em !important;
+  font-style: italic !important;
+  box-shadow: 8px 8px 0 #000000 !important;
+}
+
+.markdown-rendered blockquote *,
+.markdown-preview-view blockquote * {
+  color: #fff !important;
+}
+
+/* ==========================================================
+   TABLES
+   ========================================================== */
+
+.markdown-rendered table,
+.markdown-preview-view table,
+table {
+  border-collapse: collapse !important;
+  border: 4px solid #000000 !important;
+}
+
+.markdown-rendered th,
+.markdown-preview-view th,
+th {
+  background: #ff00aa !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  font-weight: 900 !important;
+}
+
+.markdown-rendered td,
+.markdown-preview-view td,
+td {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+}
+
+.markdown-rendered tr:nth-child(even) td,
+.markdown-preview-view tr:nth-child(even) td,
+tr:nth-child(even) td {
+  background: #f5f5f5 !important;
+}
+
+/* ==========================================================
+   CODE BLOCKS — FIXED
+   ========================================================== */
+
+.markdown-rendered pre,
+.markdown-preview-view pre,
+.markdown-reading-view pre {
+  background: #000000 !important;
+  color: #c6ff00 !important;
+  border: 4px solid #ff00aa !important;
+  box-shadow: 6px 6px 0 #7a00ff !important;
+  padding: 1rem !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+}
+
+.markdown-rendered pre code,
+.markdown-preview-view pre code,
+.markdown-reading-view pre code {
+  background: transparent !important;
+  color: #c6ff00 !important;
+  border: 0 !important;
+  padding: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Force readable syntax highlighting inside rendered code blocks */
+.markdown-rendered pre code *,
+.markdown-preview-view pre code *,
+.markdown-reading-view pre code * {
+  opacity: 1 !important;
+}
+
+.markdown-rendered pre .token,
+.markdown-preview-view pre .token {
+  color: #c6ff00 !important;
+}
+
+.markdown-rendered pre .token.tag,
+.markdown-rendered pre .token.selector,
+.markdown-preview-view pre .token.tag,
+.markdown-preview-view pre .token.selector {
+  color: #00e5ff !important;
+}
+
+.markdown-rendered pre .token.attr-name,
+.markdown-rendered pre .token.property,
+.markdown-preview-view pre .token.attr-name,
+.markdown-preview-view pre .token.property {
+  color: #ffe600 !important;
+}
+
+.markdown-rendered pre .token.attr-value,
+.markdown-rendered pre .token.string,
+.markdown-preview-view pre .token.attr-value,
+.markdown-preview-view pre .token.string {
+  color: #c6ff00 !important;
+}
+
+.markdown-rendered pre .token.punctuation,
+.markdown-rendered pre .token.operator,
+.markdown-preview-view pre .token.punctuation,
+.markdown-preview-view pre .token.operator {
+  color: #ffffff !important;
+}
+
+.markdown-rendered pre .token.comment,
+.markdown-preview-view pre .token.comment {
+  color: #000 !important;
+  font-style: italic !important;
+}
+
+/* Live Preview / Source Mode code blocks */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock *,
+.cm-line.HyperMD-codeblock,
+.cm-line.HyperMD-codeblock * {
+  background: #000000 !important;
+  color: #c6ff00 !important;
+  opacity: 1 !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  border-left: 4px solid #ff00aa !important;
+  border-right: 4px solid #7a00ff !important;
+}
+
+/* Inline code */
+.markdown-rendered :not(pre) > code,
+.markdown-preview-view :not(pre) > code,
+.cm-inline-code {
+  background: #000000 !important;
+  color: #c6ff00 !important;
+  border: 2px solid #ff00aa !important;
+  padding: 2px 5px !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+}
+
+/* ==========================================================
+   CALLOUTS
+   ========================================================== */
+
+.callout {
+  border: 4px solid #000000 !important;
+  box-shadow: 6px 6px 0 #000000 !important;
+}
+
+.callout[data-callout="note"] {
+  background: #7a00ff !important;
+}
+
+.callout[data-callout="tip"] {
+  background: #c6ff00 !important;
+}
+
+.callout[data-callout="warning"] {
+  background: #ffe600 !important;
+}
+
+.callout[data-callout="danger"] {
+  background: #ff00aa !important;
+}
+
+/* ==========================================================
+   EMBEDS
+   ========================================================== */
+
+.markdown-embed {
+  border: 4px solid #000000 !important;
+  box-shadow: 6px 6px 0 #000000 !important;
+  background: #ffffff !important;
+  padding: 10px !important;
+}
+
+/* ==========================================================
+   HORIZONTAL RULES
+   ========================================================== */
+
+hr {
+  height: 8px !important;
+  background: #ff00aa !important;
+  border: 0 !important;
+  margin: 20px 0 !important;
+}
+
+/* ==========================================================
+   IMAGES
+   ========================================================== */
+
+img {
+  border: 4px solid #000000 !important;
+  box-shadow: 8px 8px 0 #7a00ff !important;
+}
+
+/* ==========================================================
+   FRONTMATTER / PROPERTIES
+   ========================================================== */
+
+.metadata-container {
+  border: 4px solid #000000 !important;
+  background: #ffe600 !important;
+  padding: 10px !important;
+  box-shadow: 6px 6px 0 #000000 !important;
+}
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+
+.nav-files-container,
+.nav-folder-children {
+  background: #111111 !important;
+}
+
+.nav-file-title,
+.nav-folder-title,
+.nav-file-title-content,
+.nav-folder-title-content {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.nav-file-title.is-active {
+  background: #ff00aa !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0 #c6ff00 !important;
+}
+
+/* ==========================================================
+   TABS
+   ========================================================== */
+
+.workspace-tab-header.is-active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+}
+
+/* ==========================================================
+   SELECTION
+   ========================================================== */
+
+::selection {
+  background: #ff00aa !important;
+  color: #000000 !important;
+}
+
+
+/* ---- snippet: properties.css ---- */
+/* ==========================================================
+   PROPERTIES / FRONTMATTER
+   ========================================================== */
+
+.metadata-container {
+    background: #ff00aa !important;
+    border: 4px solid #000 !important;
+    box-shadow: 8px 8px 0 #000 !important;
+    padding: 12px !important;
+    margin-bottom: 20px !important;
+    color:#000;
+}
+
+/* Property rows */
+
+.metadata-property {
+    background: #ffffff !important;
+    border: 3px solid #000 !important;
+    margin: 6px 0 !important;
+    padding: 8px !important;
+}
+
+/* Property names */
+
+.metadata-property-key {
+    color: #000 !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Property values */
+
+.metadata-property-value {
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
+/* Tags inside properties */
+
+.metadata-property-value .tag {
+    background: #000000 !important;
+    color: #fff !important;
+    border: 2px solid #000 !important;
+    box-shadow: 2px 2px 0 #000 !important;
+}
+
+/* Collapse button */
+
+.metadata-container .collapse-icon svg {
+    color: #fff !important;
+    stroke-width: 3px !important;
+}
+
+/* Hover effect */
+
+.metadata-property:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #000;
+}
+
+/* ---- snippet: tag-styles.css ---- */
+/* Neo-Brutalist Tags */
+
+.tag,
+.cm-hashtag {
+  display: inline-block;
+  background: #39ff14 !important;
+  color: #000 !important;
+
+  border: 3px solid #000 !important;
+  border-radius: 0 !important;
+
+  padding: 2px 8px !important;
+  margin: 1px 2px !important;
+
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+
+  box-shadow: 3px 3px 0 #000;
+
+  transition: transform 0.1s ease;
+}
+
+/* Hover effect */
+.tag:hover,
+.cm-hashtag:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #00e5ff;
+}
+
+/* Tag pane */
+.tag-pane-tag {
+  background: #39ff14 !important;
+  color: #000 !important;
+
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+
+  box-shadow: 3px 3px 0 #ff2bd6;
+  font-weight: 700;
+}
+
+.tag,
+.cm-hashtag {
+  background: #ffa1d9 !important;
+  color: #000 !important;
+
+  border: 3px solid #000 !important;
+  border-radius: 0 !important;
+
+  padding: 4px 10px !important;
+
+  font-weight: 900;
+  font-size: 0.9em;
+
+  box-shadow: 5px 5px 0 #ff2bd6;
+}
+
+/* ------------------------------------------------------------------ */
+/* Export fallback — basic readability only; snippets take priority   */
+/* ------------------------------------------------------------------ */
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body.theme-light {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  min-height: 100vh;
+}
+
+.markdown-preview-view {
+  max-width: 52rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Index page */
+.export-index {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.export-index h1 {
+  margin-top: 0;
+}
+
+.export-index ul {
+  list-style: none;
+  padding: 0;
+}
+
+.export-index li {
+  margin: 0.4rem 0;
+}
+
+.export-index a {
+  text-decoration: none;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e69dfc;
+}
+
+.markdown-preview-view,
+.markdown-rendered {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.markdown-preview-view a {
+  display: inline-block;
+
+  background: #39ff14 !important;
+  color: #000 !important;
+
+  border: 3px solid #000 !important;
+
+  padding: 4px 10px !important;
+
+  font-weight: 900 !important;
+  text-decoration: none !important;
+
+  box-shadow: 5px 5px 0 #000 !important;
+
+  transition: all 0.08s ease;
+}
+
+.markdown-preview-view a:hover {
+  background: #fc0377 !important;
+  color:#fff;
+
+  transform: translate(-2px,-2px);
+
+  box-shadow: 7px 7px 0 #000 !important;
+}
+
+.markdown-preview-view ul li::marker,
+.markdown-preview-view ol li::marker {
+  color: #fff !important;
+}
+
+/* ==========================================================
+   FINAL FIX: EXPORTED TASK LISTS — remove extra bullets
+   Put at bottom so it overrides earlier list styles
+   ========================================================== */
+
+ul.contains-task-list,
+.markdown-preview-view ul.contains-task-list,
+.markdown-rendered ul.contains-task-list {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+ul.contains-task-list > li.task-list-item,
+.markdown-preview-view ul.contains-task-list > li.task-list-item,
+.markdown-rendered ul.contains-task-list > li.task-list-item {
+  display: block !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
+ul.contains-task-list > li.task-list-item::marker,
+.markdown-preview-view ul.contains-task-list > li.task-list-item::marker,
+.markdown-rendered ul.contains-task-list > li.task-list-item::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* Kill bullets on ALL task-list items, including parent checklist rows */
+
+.markdown-preview-view li.task-list-item,
+.markdown-preview-view li.task-list-item li {
+  list-style: none !important;
+}
+
+.markdown-preview-view li.task-list-item::marker,
+.markdown-preview-view li.task-list-item li::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+.markdown-preview-view li.task-list-item {
+  display: block !important;
+  width: auto !important;
+}
+
+.markdown-preview-view li.task-list-item > ul {
+  margin-top: 8px !important;
+  margin-left: 32px !important;
+  padding-left: 0 !important;
+}
+
+/* Cleaner task/checklist layout */
+
+.markdown-preview-view li.task-list-item {
+  display: block !important;
+  list-style: none !important;
+
+  border: 3px solid #000 !important;
+  background: #fff !important;
+  box-shadow: 4px 4px 0 #000 !important;
+
+  padding: 0.55rem 0.75rem !important;
+  margin: 0.65rem 0 !important;
+
+  line-height: 1.45 !important;
+}
+
+.markdown-preview-view li.task-list-item::marker {
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* Checkbox spacing */
+.markdown-preview-view .task-list-item-checkbox {
+  margin-right: 0.45rem !important;
+  transform: scale(1.15) !important;
+}
+
+/* Nested checklist indentation */
+.markdown-preview-view li.task-list-item + li.task-list-item {
+  margin-top: 0.65rem !important;
+}
+
+/* Make deeply nested items a little quieter */
+.markdown-preview-view ul ul li.task-list-item {
+  border-width: 2px !important;
+  box-shadow: 3px 3px 0 #000 !important;
+  margin-left: 1.5rem !important;
+  font-size: 0.95em !important;
+}
+
+/* Keep nested task lists from adding browser weirdness */
+.markdown-preview-view ul.contains-task-list,
+.markdown-preview-view li.task-list-item > ul {
+  padding-left: 0 !important;
+}
+
+/* Restore normal list indentation outside task lists */
+.markdown-preview-view ul:not(.contains-task-list),
+.markdown-preview-view ol {
+  padding-left: 1.75rem !important;
+  margin-left: 0 !important;
+}
+
+.markdown-preview-view ul ul {
+  margin-top: 0.5rem !important;
+}
+
+/* Force exported tables to actually widen */
+
+.markdown-preview-view table,
+.markdown-rendered table {
+  width: 100% !important;
+  min-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.markdown-preview-view th,
+.markdown-preview-view td,
+.markdown-rendered th,
+.markdown-rendered td {
+  padding: 8px 12px !important;
+  word-break: normal !important;
+}
+
+
+
+/* ---- snippet: blockquotes.css ---- */
+/* chunky-blockquotes.css */
+
+.markdown-preview-view blockquote,
+.HyperMD-quote {
+  border-left: 10px solid #ff2bd6 !important;
+  background: #111;
+  color: #fff;
+  padding: 1em;
+  margin: 1.5em 0;
+  box-shadow: 6px 6px 0 #000;
+  font-size: 1.05em;
+}
+
+.markdown-preview-view blockquote p {
+  margin: 0.3em 0;
+}
+
+/* ---- snippet: callouts.css ---- */
+/* brutalist-callouts.css */
+
+.callout {
+  border: 3px solid #000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000;
+  background: #fff;
+}
+
+.callout-title {
+  background: #ff2bd6;
+  color: #000;
+  margin: -12px -12px 12px -12px;
+  padding: 0.6em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.callout[data-callout="note"] .callout-title {
+  background: #00e5ff;
+}
+
+.callout[data-callout="warning"] .callout-title {
+  background: #fffb00;
+}
+
+.callout[data-callout="success"] .callout-title {
+  background: #000;
+}
+
+/* ---- snippet: code-blocks.css ---- */
+/* Neon code blocks for Obsidian Reading View */
+
+.markdown-rendered pre {
+  background: #111 !important;
+  border: 2px solid #00e5ff !important;
+  box-shadow: 5px 5px 0 #ff2bd6 !important;
+  padding: 1em !important;
+  border-radius: 0 !important;
+}
+
+.markdown-rendered pre code {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+/* Inline code */
+.markdown-rendered :not(pre) > code {
+  background: #111 !important;
+  color: #000 !important;
+  border: 1px solid #ff2bd6 !important;
+  padding: 0.15em 0.35em;
+}
+
+/* ---- snippet: html.css ---- */
+/* html-ish-tags.css */
+/* Makes inline code tags feel like visible semantic markup */
+
+.cm-inline-code,
+.markdown-preview-view code {
+  font-family: monospace;
+  font-weight: 700;
+  color: #ff2bd6 !important;
+  background: #fff !important;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000;
+  border-radius: 0;
+}
+
+/* ---- snippet: links.css ---- */
+/* brutalist-links.css */
+
+
+
+/* ---- snippet: lists.css ---- */
+/* loud-lists.css */
+
+.markdown-preview-view ul li::marker,
+.markdown-preview-view ol li::marker {
+  color: #ff2bd6;
+  font-weight: 900;
+}
+
+.markdown-preview-view li {
+  margin: 0.35em 0;
+}
+
+.markdown-preview-view ul {
+  list-style-type: square;
+}
+
+/* ---- snippet: neo-brutalist-test.css ---- */
+/* Neo-Brutalist Obsidian — Readable + Code Block Fixed */
+
+/* ==========================================================
+   VARIABLES / GLOBAL RESET
+   ========================================================== */
+
+body,
+.theme-light,
+.theme-dark {
+  --background-primary: #e69dfc !important;
+  --background-secondary: #f3f3f3 !important;
+  --background-secondary-alt: #e9e9e9 !important;
+  --background-modifier-border: #000000 !important;
+
+  --text-normal: #000000 !important;
+  --text-muted: #222222 !important;
+  --text-faint: #444444 !important;
+  --text-accent: #7a00ff !important;
+  --text-accent-hover: #e69dfc !important;
+
+  --interactive-accent: #ff00aa !important;
+  --interactive-accent-hover: #c6ff00 !important;
+
+  --code-background: #000000 !important;
+  --code-normal: #c6ff00 !important;
+  --code-comment: #000 !important;
+  --code-function: #00e5ff !important;
+  --code-important: #ff00aa !important;
+  --code-keyword: #ff00aa !important;
+  --code-operator: #ffffff !important;
+  --code-property: #00e5ff !important;
+  --code-punctuation: #ffffff !important;
+  --code-string: #c6ff00 !important;
+  --code-tag: #00e5ff !important;
+  --code-value: #ffe600 !important;
+
+  --nb-pink: #ff00aa;
+  --nb-lime: #c6ff00;
+  --nb-purple: #7a00ff;
+  --nb-yellow: #ffe600;
+  --nb-cyan: #00e5ff;
+}
+
+/* Document area */
+.markdown-rendered,
+.markdown-preview-view,
+.markdown-reading-view,
+.markdown-preview-sizer,
+.markdown-source-view,
+.cm-editor,
+.cm-scroller,
+.cm-content {
+  background: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Normal document text only — intentionally NOT a wildcard selector */
+.markdown-rendered p,
+.markdown-rendered li,
+.markdown-rendered td,
+.markdown-rendered th,
+.markdown-rendered blockquote,
+.cm-line {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* ==========================================================
+   HEADINGS
+   ========================================================== */
+
+.markdown-rendered h1,
+.markdown-preview-view h1 {
+  background: #ff00aa !important;
+  color: #fff !important;
+  border: 4px solid #000000 !important;
+  padding: 10px 15px !important;
+  box-shadow: 6px 6px 0 #000000 !important;
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+}
+
+.markdown-rendered h2,
+.markdown-preview-view h2 {
+  background: #7a00ff !important;
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+  box-shadow: 5px 5px 0 #000000 !important;
+  font-weight: 900 !important;
+}
+
+.markdown-rendered h3,
+.markdown-preview-view h3 {
+  background: #c6ff00 !important;
+  color: #000000 !important;
+  border-left: 8px solid #000000 !important;
+  padding: 8px 12px !important;
+  font-weight: 900 !important;
+}
+
+.cm-header {
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+
+.cm-header-3 {
+  border-left: 8px solid #c6ff00 !important;
+  padding-left: 10px !important;
+}
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+
+
+
+.internal-link {
+  display: inline-block;
+  background: #ffffff !important;
+  color: #7a00ff !important;
+  border: 3px solid #000000 !important;
+  padding: 2px 8px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+}
+
+.internal-link:hover {
+  background: #c6ff00 !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #000000 !important;
+}
+
+/* ==========================================================
+   TAGS
+   ========================================================== */
+
+.tag {
+  background: #ffe600 !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  padding: 2px 8px !important;
+  font-weight: 900 !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+}
+
+/* ==========================================================
+   TASKS
+   ========================================================== */
+
+.task-list-item {
   border: 3px solid #000000 !important;
   background: #ffffff !important;
   padding: 8px !important;
@@ -884,4 +1785,33 @@ ul.contains-task-list > li.task-list-item::marker,
 .markdown-rendered td {
   padding: 8px 12px !important;
   word-break: normal !important;
+}
+/* ==========================================================
+   FINAL CHECKLIST HOVER OVERRIDE
+   ========================================================== */
+
+.markdown-preview-view ul.contains-task-list > li.task-list-item,
+.markdown-rendered ul.contains-task-list > li.task-list-item {
+  transition:
+    background-color 0.12s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease !important;
+}
+
+.markdown-preview-view ul.contains-task-list > li.task-list-item:hover,
+.markdown-rendered ul.contains-task-list > li.task-list-item:hover {
+  background: #e69dfc !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0 #000 !important;
+}
+
+/* Live Preview / editor checklist rows */
+.markdown-source-view.mod-cm6 .HyperMD-task-line:hover {
+  background: #e69dfc !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0 #000 !important;
+  transition:
+    background-color 0.12s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease !important;
 }

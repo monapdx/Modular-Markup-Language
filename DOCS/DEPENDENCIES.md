@@ -30,6 +30,8 @@ category: documentation
 | group      | no             | yes       |
 | glossary   | no             | yes       |
 | ebook      | no             | yes       |
+| survey     | no             | yes       |
+| question   | no             | yes       |
 | metadata   | no             | yes       |
 | cover      | no             | yes       |
 | content    | no             | yes       |
@@ -39,7 +41,7 @@ category: documentation
 
 | TAG        | CHILD OF   |
 | ---------- | ---------- |
-| option     | dropdown   |
+| option     | dropdown or choice question |
 | select     | dropdown   |
 | input      | form       |
 | item       | list       |
@@ -76,6 +78,9 @@ category: documentation
 | antonym    | word       |
 | origin     | word       |
 | usage      | word       |
+| question   | survey     |
+| prompt     | question   |
+| option     | question (choice types) |
 | metadata   | ebook      |
 | cover      | ebook      |
 | toc        | ebook      |
@@ -119,6 +124,8 @@ category: documentation
 - glossary ---> REQUIRES ---> word
 - word ---> REQUIRES ---> definition **when inside glossary**
 - ebook ---> REQUIRES ---> content
+- survey ---> REQUIRES ---> one or more questions
+- question ---> REQUIRES ---> prompt; choice questions require two or more options
 - synonym  ---> REQUIRES ---> word
 - antonym ---> REQUIRES ---> word
 - origin ---> REQUIRES ---> word

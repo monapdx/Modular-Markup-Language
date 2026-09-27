@@ -996,7 +996,40 @@ The `word` tag also remains available under `glossary`. Only glossary words requ
 
 ---
 
-# 18. Future Considerations
+# 18. Survey Schema
+
+A `survey` groups questions and describes how each answer is collected. One tag appears per line. Values may follow their tag on the next line or appear as quoted inline values.
+
+```text
+survey title="Tool Preferences"
+question id="workplace" type="single-choice" required="true"
+prompt "Where do you work most often?"
+option "Home"
+option "Office"
+question id="apps" type="multiple-choice"
+prompt "Which tools do you use?"
+option "Obsidian"
+option "VS Code"
+question id="usefulness" type="rating" min="1" max="5"
+prompt "How useful are they?"
+question id="notes" type="long-text"
+prompt "Anything else you want to tell us?"
+```
+
+| Tag | Parent | Meaning |
+| --- | --- | --- |
+| `survey` | document | Survey root; optional `title` and `action` attributes |
+| `question` | `survey` | One answerable question; `type` is required, `id` and `required` are optional |
+| `prompt` | `question` | Required, nonempty question wording |
+| `option` | choice `question` | One possible answer; the existing `option` tag also works under `dropdown` |
+
+Supported `question` types are `single-choice` (radio buttons), `multiple-choice` (checkboxes), `rating` (numbered radio buttons), `text` (short input), and `long-text` (textarea). A choice question needs at least two distinct, nonempty `option` values. Other types do not take options. A rating question needs integer `min` and `max` attributes between 0 and 10, with `max` greater than `min`. `required` accepts `true` or `false`. Each question ID must be unique and start with a letter; an omitted ID is generated from its position.
+
+The compiler produces an HTML form with controls named by question ID. If `action` is supplied on `survey`, the form uses that URL with `method="post"`; the schema does not provide response storage. `required` maps to native HTML validation for radio and text answers; for multiple-choice it is represented on the fieldset for semantics, because HTML cannot require at least one checkbox in a group without additional behavior. Branching and scoring are outside this initial schema.
+
+---
+
+# 19. Future Considerations
 
 Potential future areas include:
 
@@ -1011,7 +1044,7 @@ Potential future areas include:
 
 ---
 
-# 19. Guiding Principle
+# 20. Guiding Principle
 
 > A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.
 

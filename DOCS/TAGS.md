@@ -180,7 +180,23 @@ Interactive ebook script; `script` also works.
 
 See the [ebook schema](/DOCS/SPEC.md#16-ebook-schema) for an example and output behavior.
 
-## CURRENT TOTAL: 77 OFFICIAL TAGS
+## Survey
+
+### survey
+A set of questions; optional `title` and form `action` attributes.
+
+### question
+An answerable survey question with a `type` attribute and optional `id` and `required` attributes.
+
+### prompt
+The wording of a survey question.
+
+### option
+A possible answer for a single-choice or multiple-choice question; also used by dropdowns.
+
+See the [survey schema](/DOCS/SPEC.md#18-survey-schema) for types, validation, and a complete example.
+
+## CURRENT TOTAL: 80 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

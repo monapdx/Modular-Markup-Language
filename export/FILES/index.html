@@ -135,6 +135,15 @@
       font-style: italic;
     }
 
+    #preview-output ebook { display: block; max-width: 48rem; margin: 0 auto; padding: 1.5rem; background: #fff; color: #222; font-family: Georgia, serif; }
+    #preview-output ebook metadata { display: block; margin-bottom: 1.5rem; }
+    #preview-output ebook metadata title { display: block; font-size: 1.8rem; font-weight: bold; }
+    #preview-output ebook metadata author { display: block; margin-top: .4rem; }
+    #preview-output ebook metadata language { display: none; }
+    #preview-output ebook content, #preview-output ebook section { display: block; }
+    #preview-output ebook .mml-toc { display: block; border-block: 1px solid #aaa; padding: .7rem 0; margin: 1rem 0; }
+    #preview-output ebook .mml-toc ol { padding-left: 1.5rem; }
+
     #preview-output .mml-crossword-grid { border-collapse: collapse; margin: 1rem 0; }
     #preview-output .mml-crossword-grid td { width: 2rem; height: 2rem; border: 1px solid #222; text-align: center; position: relative; font-weight: bold; }
     #preview-output .mml-crossword-grid .mml-crossword-letter { background: white; color: #111; }
@@ -219,6 +228,7 @@
     <button type="button" id="example-btn">Load Argument Example</button>
     <button type="button" id="calendar-btn">Load Calendar Example</button>
     <button type="button" id="crossword-btn">Load Crossword Example</button>
+    <button type="button" id="ebook-btn">Load Ebook Example</button>
     <button type="button" id="clear-btn">Clear</button>
   </div>
 
@@ -305,6 +315,18 @@ Night lights, Fire remains
 down-clues
 Large body of salt water`;
 
+    const EBOOK_EXAMPLE = `ebook output="html" mode="static"
+metadata
+title "A Small Book"
+author "Ashly Lorenzana"
+language "en"
+toc
+content
+heading level="1" "First Chapter"
+paragraph "The opening paragraph."
+heading level="2" "A Smaller Section"
+paragraph "Another paragraph."`;
+
     sourceEl.value = EXAMPLE;
 
     function updatePreview(html, valid) {
@@ -358,6 +380,10 @@ Large body of salt water`;
     });
     document.getElementById("crossword-btn").addEventListener("click", () => {
       sourceEl.value = CROSSWORD_EXAMPLE;
+      run();
+    });
+    document.getElementById("ebook-btn").addEventListener("click", () => {
+      sourceEl.value = EBOOK_EXAMPLE;
       run();
     });
     document.getElementById("clear-btn").addEventListener("click", () => {

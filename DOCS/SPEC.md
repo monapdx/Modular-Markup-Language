@@ -916,43 +916,43 @@ style
 
 ---
 
-# 16. Future Considerations
+# 16. Ebook Schema
 
-Potential future areas include:
+An `ebook` is a structured book with optional front matter and a required `content` section. Like other MML, each opening tag occupies one line. Authors can put a quoted value on a tag line or put the value on the following line; closing tags are optional in the current parser.
 
-* [ ] Compiler targets
-* [ ] Rich editor support
-* [ ] Semantic repair actions
-* [ ] Schema extensions
-* [ ] Accessibility metadata
-* [ ] Knowledge graph generation
-* [ ] PDF and eBook compilation
-* [ ] AI-native document representations
+```text
+ebook output="html" mode="static"
+metadata
+title "A Small Book"
+author "Ashly Lorenzana"
+language "en"
+toc
+content
+heading level="1" "First Chapter"
+paragraph "The opening paragraph."
+heading level="2" "A Smaller Section"
+paragraph "Another paragraph."
+```
+
+| Tag | Parent | Meaning |
+| --- | --- | --- |
+| `ebook` | document | Book root; accepts `output` and `mode` attributes |
+| `metadata` | `ebook` | Optional bibliographic fields: `title`, `subtitle`, `author`, `language`, `description`, `date`, `publisher`, `rights` |
+| `cover` | `ebook` | Optional `image` and `caption` |
+| `toc` | `ebook` | Optional generated table of contents; accepts `min-depth` and `max-depth` |
+| `content` | `ebook` | Required body; may contain `heading`, `section`, `paragraph`, `text`, `image`, `caption`, `quote`, `blockquote`, `list`, `item`, `table`, `row`, `cell`, `column`, `media`, `audio`, `video`, `link`, and `footnote` |
+| `heading` | `content` or `section` | Heading text, optionally with `level="1"` through `level="6"` and `id` |
+| `paragraph` | `content` or `section` | Body paragraph |
+| `style` | `ebook` | Optional CSS for styled or interactive HTML mode |
+| `javascript` or `script` | `ebook` | Optional JavaScript for interactive HTML mode |
+
+`content` is the only required child. A `toc` is generated from the headings in document order; heading levels determine nesting. Missing heading IDs are assigned from their text. `min-depth` and `max-depth` control which levels appear in the TOC. The `output` attribute accepts `html`, `plain-text`, `pdf`, or `epub`; the current compiler produces HTML or plain-text only. The `mode` attribute accepts `static`, `styled`, or `interactive`. The compiler includes `style` in styled and interactive HTML and includes `javascript`/`script` in interactive HTML. Plain-text output omits cover, CSS, and JavaScript.
+
+The parser also accepts `p` as shorthand for `paragraph`, `h` for `heading`, and `js` for `javascript`. In an ebook, `title` and other metadata fields belong under `metadata`; `image` may appear under `cover` or `content` (and in its established media contexts).
 
 ---
 
-# 17. Guiding Principle
-
-> A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.
-
----
-## SUPPORT
-
-Check out the **[README](/DOCS/README.md)** if you're not sure where to start.
-
-You can read the full **[SPEC](/DOCS/SPEC.md)** here. 
-
-Try the **[PARSER](../export/FILES/index.html)**.
-
-You can find the full list of **[TAGS](/DOCS/TAGS.md)** here.
-
-
-
-
-#specification #draft #syntax #markup #semantic #grammar #language
----
-
-# 16. Crossword Grid Schema
+# 17. Crossword Grid Schema
 
 A `crossword-grid` describes a rectangular crossword with two directional word lists. Each tag occupies its own line; the following line contains its value. Closing tags are optional in the current parser.
 
@@ -993,3 +993,41 @@ The dimension line is `columns x rows`. Coordinates in `first-letters` are `(row
 A clue containing a comma must be enclosed in double quotes; double quotes inside a quoted clue are doubled. Coordinate commas inside parentheses do not separate list entries. The parser requires the four corresponding lists to have equal item counts, each length to match its answer, all words to fit inside the grid, and letters at crossings to agree. The same starting square may be shared by one across and one down word. Unused squares are black in the compiled HTML solution. Numbers are assigned to distinct starting squares in row-major order and shared by across and down words beginning in the same square.
 
 The `word` tag also remains available under `glossary`. Only glossary words require a `definition` child.
+
+---
+
+# 18. Future Considerations
+
+Potential future areas include:
+
+* [ ] Compiler targets
+* [ ] Rich editor support
+* [ ] Semantic repair actions
+* [ ] Schema extensions
+* [ ] Accessibility metadata
+* [ ] Knowledge graph generation
+* [ ] PDF and EPUB generation
+* [ ] AI-native document representations
+
+---
+
+# 19. Guiding Principle
+
+> A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.
+
+---
+## SUPPORT
+
+Check out the **[README](/DOCS/README.md)** if you're not sure where to start.
+
+You can read the full **[SPEC](/DOCS/SPEC.md)** here.
+
+Try the **[PARSER](../export/FILES/index.html)**.
+
+You can find the full list of **[TAGS](/DOCS/TAGS.md)** here.
+
+
+
+
+#specification #draft #syntax #markup #semantic #grammar #language
+---

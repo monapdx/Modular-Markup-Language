@@ -130,7 +130,29 @@ From Middle English marken, "to note or record."
 Authors use markup to describe documents without prescribing presentation.
 
 
-## CURRENT TOTAL: 55 OFFICIAL TAGS
+## Crossword grid
+
+### crossword-grid
+A rectangular crossword; its value is `columns x rows`.
+
+### across / down
+Directional groups containing `word`, `first-letters`, and `word-lengths`.
+
+### word
+Comma-separated crossword answers when nested under `across` or `down` (also used for glossary entries).
+
+### first-letters
+Comma-separated starting `(row,column)` grid squares.
+
+### word-lengths
+Comma-separated answer lengths.
+
+### across-clues / down-clues
+Clues in the same order as the corresponding directional words.
+
+See the [crossword schema](/DOCS/SPEC.md#16-crossword-grid-schema) for an example and validation rules.
+
+## CURRENT TOTAL: 62 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

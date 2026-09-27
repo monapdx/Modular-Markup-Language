@@ -955,6 +955,83 @@ test("HTML interactive export preserves style and javascript", () => {
   assertIncludes(output, 'id="chapter-one"');
 });
 
+test("crossword schema parses lists, shares numbering, and compiles a grid", () => {
+  const source = `crossword-grid
+5 x 5
+across
+word
+STARS, SAP
+first-letters
+(1,1), (3,1)
+word-lengths
+5, 3
+down
+word
+SAS
+first-letters
+(1,1)
+word-lengths
+3
+across-clues
+"Night lights, often", Tree fluid
+down-clues
+Three-letter answer`;
+  const result = processSource(source);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertEqual(findElement(result.ast, "crossword-grid").children.filter(c => c.type === "element").map(c => c.name), ["across", "down", "across-clues", "down-clues"]);
+  assertIncludes(result.html, '<table class="mml-crossword-grid"');
+  assertIncludes(result.html, '<small>1</small>S');
+  assertIncludes(result.html, '<li value="1">Three-letter answer</li>');
+  assertIncludes(result.html, 'Night lights, often');
+  assertIncludes(result.html, 'class="mml-crossword-block"');
+});
+
+test("crossword rejects mismatched lists, crossings, and out-of-bounds words", () => {
+  const source = `crossword-grid
+3 x 3
+across
+word
+CAT, DOG
+first-letters
+(1,1), (3,2)
+word-lengths
+3, 3
+down
+word
+RAT
+first-letters
+(1,1)
+word-lengths
+3
+across-clues
+One clue
+down-clues
+Another clue`;
+  const result = processSource(source);
+  assertFalse(result.valid);
+  for (const code of ["CROSSWORD_LIST_MISMATCH", "CROSSWORD_CROSSING_CONFLICT", "CROSSWORD_OUT_OF_BOUNDS"])
+    assertTrue(result.validationErrors.some(e => e.code === code), code);
+});
+
+test("crossword word does not need a glossary definition", () => {
+  const result = processSource(`crossword-grid
+2 x 1
+across
+word
+HI
+first-letters
+(1,1)
+word-lengths
+2
+down
+word
+first-letters
+word-lengths
+across-clues
+Greeting
+down-clues`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+});
 // --- Runner ---
 
 let passed = 0;

@@ -12,6 +12,7 @@ export {
   matchInlineValueElement,
 } from "./grammar.js";
 export { parse, getDocumentChildren } from "./parser.js";
+export { readCrossword, crosswordEntries, splitCrosswordList, validateCrossword, CROSSWORD_ROOT_CHILDREN, CROSSWORD_DIRECTION_CHILDREN } from "./crossword-schema.js";
 export { validate, validateAll } from "./validator.js";
 export { compile, astToJson } from "./compiler.js";
 export {

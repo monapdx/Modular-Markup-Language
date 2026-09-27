@@ -949,4 +949,47 @@ You can find the full list of **[TAGS](/DOCS/TAGS.md)** here.
 
 
 
-#specification #draft #syntax #markup #semantic #grammar #language 
+#specification #draft #syntax #markup #semantic #grammar #language
+---
+
+# 16. Crossword Grid Schema
+
+A `crossword-grid` describes a rectangular crossword with two directional word lists. Each tag occupies its own line; the following line contains its value. Closing tags are optional in the current parser.
+
+```text
+crossword-grid
+7 x 7
+across
+word
+STARS, ASH
+first-letters
+(1,1), (3,1)
+word-lengths
+5, 3
+down
+word
+SEA
+first-letters
+(1,1)
+word-lengths
+3
+across-clues
+Night lights, Fire remains
+down-clues
+Large body of salt water
+```
+
+The dimension line is `columns x rows`. Coordinates in `first-letters` are `(row,column)`, beginning at 1. The first item in each directional list belongs to the first word, the second to the second word, and so on. `across-clues` and `down-clues` follow their respective word order. An empty direction still includes its three empty list tags and its empty clue tag.
+
+| Tag | Parent | Value |
+| --- | --- | --- |
+| `crossword-grid` | document | Dimensions followed by the directional and clue tags |
+| `across`, `down` | `crossword-grid` | One `word`, `first-letters`, and `word-lengths` tag each |
+| `word` | `across` or `down` | Comma-separated answers using A–Z letters |
+| `first-letters` | `across` or `down` | Comma-separated starting squares `(row,column)` |
+| `word-lengths` | `across` or `down` | Comma-separated positive lengths |
+| `across-clues`, `down-clues` | `crossword-grid` | Comma-separated clues |
+
+A clue containing a comma must be enclosed in double quotes; double quotes inside a quoted clue are doubled. Coordinate commas inside parentheses do not separate list entries. The parser requires the four corresponding lists to have equal item counts, each length to match its answer, all words to fit inside the grid, and letters at crossings to agree. The same starting square may be shared by one across and one down word. Unused squares are black in the compiled HTML solution. Numbers are assigned to distinct starting squares in row-major order and shared by across and down words beginning in the same square.
+
+The `word` tag also remains available under `glossary`. Only glossary words require a `definition` child.

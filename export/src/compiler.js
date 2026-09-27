@@ -1,3 +1,4 @@
+import { readCrossword, crosswordEntries } from "./crossword-schema.js";
 /**
  * Compile semantic AST to HTML-like markup (custom element names preserved).
  */
@@ -191,6 +192,45 @@ function compileCalendar(node, depth) {
   return `${indent}<calendar>\n${table}\n${indent}</calendar>`;
 }
 
+/** Render a crossword solution and its numbered clues. */
+function compileCrossword(node, depth) {
+  const model = readCrossword(node);
+  if (!model.width || !model.height) return null;
+  const entries = crosswordEntries(model);
+  const squares = new Map();
+  const numbers = new Map();
+  const starts = [...new Set(entries.map(entry => `${entry.row},${entry.col}`))]
+    .sort((a, b) => { const [ar, ac] = a.split(",").map(Number), [br, bc] = b.split(",").map(Number); return ar - br || ac - bc; });
+  starts.forEach((position, i) => numbers.set(position, i + 1));
+  for (const entry of entries) for (let i = 0; i < entry.answer.length; i++) {
+    const row = entry.row + (entry.direction === "down" ? i : 0);
+    const col = entry.col + (entry.direction === "across" ? i : 0);
+    squares.set(`${row},${col}`, entry.answer[i]);
+  }
+  const pad = "  ".repeat(depth), lines = [`${pad}<section class="mml-crossword" aria-label="Crossword">`, `${pad}  <table class="mml-crossword-grid" aria-label="Crossword solution"><tbody>`];
+  for (let row = 1; row <= model.height; row++) {
+    lines.push(`${pad}    <tr>`);
+    for (let col = 1; col <= model.width; col++) {
+      const position = `${row},${col}`, letter = squares.get(position);
+      if (!letter) lines.push(`${pad}      <td class="mml-crossword-block" aria-label="Black square"></td>`);
+      else {
+        const number = numbers.get(position);
+        lines.push(`${pad}      <td class="mml-crossword-letter" aria-label="${number ? `Number ${number}, ` : ""}${escapeAttr(letter)}">${number ? `<small>${number}</small>` : ""}${escapeText(letter)}</td>`);
+      }
+    }
+    lines.push(`${pad}    </tr>`);
+  }
+  lines.push(`${pad}  </tbody></table>`);
+  for (const direction of ["across", "down"]) {
+    lines.push(`${pad}  <section class="mml-crossword-clues"><h3>${direction === "across" ? "Across" : "Down"}</h3><ol>`);
+    for (const entry of entries.filter(entry => entry.direction === direction))
+      lines.push(`${pad}    <li value="${numbers.get(`${entry.row},${entry.col}`)}">${escapeText(entry.clue)}</li>`);
+    lines.push(`${pad}  </ol></section>`);
+  }
+  lines.push(`${pad}</section>`);
+  return lines.join("\n");
+}
+
 /**
  * @param {Record<string, string>} attributes
  * @returns {string}
@@ -223,6 +263,11 @@ function compileNode(node, depth, options = {}) {
 
   /** @type {string[]} */
   const lines = [];
+
+  if (node.name === "crossword-grid") {
+    const crossword = compileCrossword(node, depth);
+    if (crossword) return crossword;
+  }
 
   if (node.name === "calendar") {
     const calendarTable = compileCalendar(node, depth);

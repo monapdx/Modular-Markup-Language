@@ -1,3 +1,4 @@
+import { validateCrossword } from "./crossword-schema.js";
 /**
  * Semantic validation for parsed AST nodes.
  *
@@ -343,6 +344,22 @@ function validateElement(node, parent, errors) {
       }
       break;
 
+    case "crossword-grid":
+      errors.push(...validateCrossword(node));
+      break;
+
+    case "across":
+    case "down":
+    case "across-clues":
+    case "down-clues":
+      if (parentName !== "crossword-grid") errors.push({code: "MISSING_REQUIRED_PARENT", element: node.name, requiredParent: "crossword-grid", suggestedParentChain: ["crossword-grid"], line: node.line, message: `${node.name} requires parent crossword-grid`});
+      break;
+
+    case "first-letters":
+    case "word-lengths":
+      if (parentName !== "across" && parentName !== "down") errors.push({code: "MISSING_REQUIRED_PARENT", element: node.name, requiredParent: "across or down", suggestedParentChain: ["crossword-grid", "across"], line: node.line, message: `${node.name} requires parent across or down`});
+      break;
+
     case "glossary":
       if (!hasChildNamed(node, "word")) {
         errors.push({
@@ -356,17 +373,17 @@ function validateElement(node, parent, errors) {
       break;
 
     case "word":
-      if (parentName !== "glossary") {
+      if (parentName !== "glossary" && parentName !== "across" && parentName !== "down") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: "word",
           requiredParent: "glossary",
           suggestedParentChain: ["glossary"],
           line: node.line,
-          message: "word requires parent glossary",
+          message: "word requires parent glossary, across, or down",
         });
       }
-      if (!hasChildNamed(node, "definition")) {
+      if (parentName === "glossary" && !hasChildNamed(node, "definition")) {
         errors.push({
           code: "MISSING_REQUIRED_CHILD",
           element: "word",

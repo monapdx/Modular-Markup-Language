@@ -152,7 +152,35 @@ Clues in the same order as the corresponding directional words.
 
 See the [crossword schema](/DOCS/SPEC.md#16-crossword-grid-schema) for an example and validation rules.
 
-## CURRENT TOTAL: 62 OFFICIAL TAGS
+## Ebook
+
+### ebook
+Book root with a required `content` section. `output` selects HTML or plain-text compilation; `mode` controls optional style and script inclusion.
+
+### metadata
+Bibliographic fields: `title`, `subtitle`, `author`, `language`, `description`, `date`, `publisher`, `rights`.
+
+### cover
+Optional `image` and `caption`.
+
+### toc
+Table of contents generated from headings in `content`.
+
+### content
+The required body of an ebook.
+
+### heading / paragraph
+Headings (with optional `level` and `id`) and body paragraphs within ebook content or sections.
+
+### title / subtitle / author / language / description / publisher / rights
+Fields within ebook metadata; `date` also works there.
+
+### javascript
+Interactive ebook script; `script` also works.
+
+See the [ebook schema](/DOCS/SPEC.md#16-ebook-schema) for an example and output behavior.
+
+## CURRENT TOTAL: 77 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

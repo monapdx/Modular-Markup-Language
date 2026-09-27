@@ -29,6 +29,10 @@ category: documentation
 | text       | yes            | yes       |
 | group      | no             | yes       |
 | glossary   | no             | yes       |
+| ebook      | no             | yes       |
+| metadata   | no             | yes       |
+| cover      | no             | yes       |
+| content    | no             | yes       |
 
 ## CHILD TAGS
 
@@ -76,6 +80,21 @@ category: documentation
 | cover      | ebook      |
 | toc        | ebook      |
 | content    | ebook      |
+| style      | ebook      |
+| javascript | ebook      |
+| script     | ebook      |
+| title      | metadata   |
+| subtitle   | metadata   |
+| author     | metadata   |
+| language   | metadata   |
+| description| metadata   |
+| date       | metadata or event |
+| publisher  | metadata   |
+| rights     | metadata   |
+| image      | cover, content, media, or section |
+| caption    | cover or media |
+| heading    | content or section |
+| paragraph  | content or section |
 |            |            |
 
 ## CONTEXTUAL VALIDATION
@@ -98,7 +117,8 @@ category: documentation
 - list ---> **REQUIRES** ---> item
 - group ---> **REQUIRES** ---> **TWO OR MORE ENTITIES**
 - glossary ---> REQUIRES ---> word
-- word ---> REQUIRES ---> definition
+- word ---> REQUIRES ---> definition **when inside glossary**
+- ebook ---> REQUIRES ---> content
 - synonym  ---> REQUIRES ---> word
 - antonym ---> REQUIRES ---> word
 - origin ---> REQUIRES ---> word

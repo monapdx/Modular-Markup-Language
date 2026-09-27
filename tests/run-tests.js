@@ -1032,6 +1032,58 @@ Greeting
 down-clues`);
   assertTrue(result.valid, JSON.stringify(result.validationErrors));
 });
+test("survey parses common question types and compiles response controls", () => {
+  const source = `survey title="Tool Preferences"
+question id="workplace" type="single-choice" required="true"
+prompt "Where do you work most often?"
+option "Home"
+option "Office"
+question id="apps" type="multiple-choice"
+prompt "Which tools do you use?"
+option "Obsidian"
+option "VS Code"
+question id="usefulness" type="rating" min="1" max="5"
+prompt "How useful are they?"
+question id="notes" type="long-text"
+prompt "Anything else?"`;
+  const result = processSource(source);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertIncludes(result.html, "<h2>Tool Preferences</h2>");
+  assertIncludes(result.html, 'type="radio" name="workplace" value="Home" required');
+  assertIncludes(result.html, 'type="checkbox" name="apps[]" value="Obsidian"');
+  assertIncludes(result.html, 'type="radio" name="usefulness" value="5"');
+  assertIncludes(result.html, '<textarea name="notes"></textarea>');
+});
+
+test("survey rejects missing prompts and invalid choice, rating, and IDs", () => {
+  const source = `survey
+question id="same" type="single-choice"
+option "Only one"
+question id="same" type="rating" min="5" max="1"
+prompt "Rate this"`;
+  const result = processSource(source);
+  assertFalse(result.valid);
+  for (const code of ["INVALID_SURVEY_ID", "INVALID_SURVEY_PROMPT", "INVALID_SURVEY_OPTIONS", "INVALID_SURVEY_RANGE"])
+    assertTrue(result.validationErrors.some(error => error.code === code), code);
+});
+
+test("quoted attribute values with spaces remain attributes", () => {
+  const { ast, errors } = parse('survey title="Tool Preferences"\nquestion type="text"\nprompt "Your thoughts"');
+  assertEqual(errors, []);
+  const survey = findElement(ast, "survey");
+  assertEqual(survey.attributes.title, "Tool Preferences");
+  assertTrue(validate(ast).valid);
+});
+
+test("survey text answer uses generated ID and optional form action", () => {
+  const result = processSource(`survey title="Quick Check" action="/responses"
+question type="text" required="true"
+prompt "Your name?"`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertIncludes(result.html, '<form class="mml-survey" action="/responses" method="post">');
+  assertIncludes(result.html, '<input type="text" name="question-1" required>');
+});
+
 // --- Runner ---
 
 let passed = 0;

@@ -28,6 +28,9 @@
 export const CANONICAL_ELEMENTS = new Set([
   "argument",
   "calendar",
+  "survey",
+  "question",
+  "prompt",
   "crossword-grid",
   "across",
   "down",
@@ -193,6 +196,9 @@ export const RESERVED_ELEMENTS = new Set([
  * @type {Readonly<Record<string, readonly string[]>>}
  */
 export const REQUIRED_PARENTS = {
+  question: ["survey"],
+  prompt: ["question"],
+  option: ["question", "dropdown"],
   evidence: ["claim", "argument"],
   "start-year": ["timeline"],
   "end-year": ["timeline"],
@@ -237,7 +243,7 @@ export const REQUIRED_PARENTS = {
 };
 
 const ELEMENT_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
-const ATTR_PAIR_PATTERN = /^[a-z][a-z0-9-]*="[^"]*"$/;
+const ATTR_PAIR_PATTERN = /([a-z][a-z0-9-]*)="([^"]*)"/y;
 
 /**
  * Resolve shorthand or legacy alias to canonical element name when defined.
@@ -274,20 +280,21 @@ export function parseAttributes(attrSegment) {
   const trimmed = attrSegment.trim();
   if (!trimmed) return {};
 
-  const parts = trimmed.split(/\s+/);
   /** @type {Record<string, string>} */
   const attributes = {};
-
-  for (const part of parts) {
-    if (!ATTR_PAIR_PATTERN.test(part)) {
-      return null;
+  let position = 0;
+  while (position < trimmed.length) {
+    ATTR_PAIR_PATTERN.lastIndex = position;
+    const match = ATTR_PAIR_PATTERN.exec(trimmed);
+    if (!match) return null;
+    attributes[match[1]] = match[2];
+    position = ATTR_PAIR_PATTERN.lastIndex;
+    if (position < trimmed.length) {
+      const space = trimmed.slice(position).match(/^\s+/);
+      if (!space) return null;
+      position += space[0].length;
     }
-    const eq = part.indexOf("=");
-    const key = part.slice(0, eq);
-    const value = part.slice(eq + 2, -1);
-    attributes[key] = value;
   }
-
   return attributes;
 }
 

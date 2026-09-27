@@ -135,6 +135,13 @@
       font-style: italic;
     }
 
+    #preview-output .mml-survey { max-width: 44rem; margin: 0 auto; padding: 1rem; background: #fff; color: #222; }
+    #preview-output .mml-survey fieldset { margin: 1rem 0; padding: .8rem 1rem; border: 2px solid #333; }
+    #preview-output .mml-survey legend { font-weight: bold; }
+    #preview-output .mml-survey label { display: inline-flex; align-items: center; gap: .3rem; margin: .3rem 1rem .3rem 0; }
+    #preview-output .mml-survey input[type="text"], #preview-output .mml-survey textarea { display: block; width: 100%; box-sizing: border-box; padding: .5rem; }
+    #preview-output .mml-survey textarea { min-height: 6rem; }
+
     #preview-output ebook { display: block; max-width: 48rem; margin: 0 auto; padding: 1.5rem; background: #fff; color: #222; font-family: Georgia, serif; }
     #preview-output ebook metadata { display: block; margin-bottom: 1.5rem; }
     #preview-output ebook metadata title { display: block; font-size: 1.8rem; font-weight: bold; }
@@ -229,6 +236,7 @@
     <button type="button" id="calendar-btn">Load Calendar Example</button>
     <button type="button" id="crossword-btn">Load Crossword Example</button>
     <button type="button" id="ebook-btn">Load Ebook Example</button>
+    <button type="button" id="survey-btn">Load Survey Example</button>
     <button type="button" id="clear-btn">Clear</button>
   </div>
 
@@ -327,6 +335,20 @@ paragraph "The opening paragraph."
 heading level="2" "A Smaller Section"
 paragraph "Another paragraph."`;
 
+    const SURVEY_EXAMPLE = `survey title="Tool Preferences"
+question id="workplace" type="single-choice" required="true"
+prompt "Where do you work most often?"
+option "Home"
+option "Office"
+question id="apps" type="multiple-choice"
+prompt "Which tools do you use?"
+option "Obsidian"
+option "VS Code"
+question id="usefulness" type="rating" min="1" max="5"
+prompt "How useful are they?"
+question id="notes" type="long-text"
+prompt "Anything else you want to tell us?"`;
+
     sourceEl.value = EXAMPLE;
 
     function updatePreview(html, valid) {
@@ -385,6 +407,13 @@ paragraph "Another paragraph."`;
     document.getElementById("ebook-btn").addEventListener("click", () => {
       sourceEl.value = EBOOK_EXAMPLE;
       run();
+    });
+    document.getElementById("survey-btn").addEventListener("click", () => {
+      sourceEl.value = SURVEY_EXAMPLE;
+      run();
+    });
+    previewEl.addEventListener("submit", (event) => {
+      if (event.target.matches(".mml-survey")) event.preventDefault();
     });
     document.getElementById("clear-btn").addEventListener("click", () => {
       sourceEl.value = "";

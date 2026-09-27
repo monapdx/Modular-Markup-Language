@@ -1,3 +1,4 @@
+import { validateSurvey } from "./survey-schema.js";
 import { validateCrossword } from "./crossword-schema.js";
 /**
  * Semantic validation for parsed AST nodes.
@@ -342,6 +343,18 @@ function validateElement(node, parent, errors) {
           message: "argument requires at least one child claim",
         });
       }
+      break;
+
+    case "survey":
+      errors.push(...validateSurvey(node));
+      break;
+
+    case "question":
+      if (parentName !== "survey") errors.push({code: "MISSING_REQUIRED_PARENT", element: "question", requiredParent: "survey", suggestedParentChain: ["survey"], line: node.line, message: "question requires parent survey"});
+      break;
+
+    case "prompt":
+      if (parentName !== "question") errors.push({code: "MISSING_REQUIRED_PARENT", element: "prompt", requiredParent: "question", suggestedParentChain: ["survey", "question"], line: node.line, message: "prompt requires parent question"});
       break;
 
     case "crossword-grid":

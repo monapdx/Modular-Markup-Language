@@ -1,3 +1,4 @@
+import { surveyQuestions } from "./survey-schema.js";
 import { readCrossword, crosswordEntries } from "./crossword-schema.js";
 /**
  * Compile semantic AST to HTML-like markup (custom element names preserved).
@@ -192,6 +193,40 @@ function compileCalendar(node, depth) {
   return `${indent}<calendar>\n${table}\n${indent}</calendar>`;
 }
 
+/** Render a survey as an accessible HTML form. Responses need a form handler to be collected. */
+function compileSurvey(node, depth) {
+  const pad = "  ".repeat(depth);
+  const title = node.attributes.title;
+  const action = node.attributes.action;
+  const actionAttr = action ? ` action="${escapeAttr(action)}" method="post"` : "";
+  const lines = [`${pad}<form class="mml-survey"${actionAttr}>`];
+  if (title) lines.push(`${pad}  <h2>${escapeText(title)}</h2>`);
+  for (const q of surveyQuestions(node)) {
+    const name = escapeAttr(q.id);
+    const required = q.required ? " required" : "";
+    const requiredGroup = q.required ? ' aria-required="true"' : "";
+    lines.push(`${pad}  <fieldset${requiredGroup}><legend>${escapeText(q.prompt)}</legend>`);
+    if (q.type === "single-choice" || q.type === "multiple-choice") {
+      const inputType = q.type === "single-choice" ? "radio" : "checkbox";
+      const inputName = inputType === "checkbox" ? `${name}[]` : name;
+      for (const option of q.options) {
+        lines.push(`${pad}    <label><input type="${inputType}" name="${inputName}" value="${escapeAttr(option)}"${inputType === "radio" ? required : ""}> ${escapeText(option)}</label>`);
+      }
+    } else if (q.type === "rating") {
+      for (let value = q.min; value <= q.max; value++) {
+        lines.push(`${pad}    <label><input type="radio" name="${name}" value="${value}"${required}> ${value}</label>`);
+      }
+    } else if (q.type === "long-text") {
+      lines.push(`${pad}    <textarea name="${name}"${required}></textarea>`);
+    } else {
+      lines.push(`${pad}    <input type="text" name="${name}"${required}>`);
+    }
+    lines.push(`${pad}  </fieldset>`);
+  }
+  lines.push(`${pad}  <button type="submit">Submit</button>`, `${pad}</form>`);
+  return lines.join("\n");
+}
+
 /** Render a crossword solution and its numbered clues. */
 function compileCrossword(node, depth) {
   const model = readCrossword(node);
@@ -263,6 +298,8 @@ function compileNode(node, depth, options = {}) {
 
   /** @type {string[]} */
   const lines = [];
+
+  if (node.name === "survey") return compileSurvey(node, depth);
 
   if (node.name === "crossword-grid") {
     const crossword = compileCrossword(node, depth);

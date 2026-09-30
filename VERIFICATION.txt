@@ -1,0 +1,139 @@
+Fixture checks passed: valid/invalid MML examples, missing imports, missing links, generated Markdown link rewriting.
+Assets present on GitHub were represented by existence-only placeholders for local link checks.
+External URL requests not exercised; subprocess report runner blocked by sandbox EPERM.
+
+tests/run-tests.js: exit 0
+✓ opening-tag-only argument / claim / evidence (user example)
+✓ valid argument / claim / evidence
+✓ evidence without claim
+✓ valid glossary / word / definition
+✓ word without glossary
+✓ glossary without word
+✓ word without definition
+✓ definition without word
+✓ glossary shorthand aliases
+✓ closing tags are optional not required
+✓ mismatched optional closing tag
+✓ standalone claim
+✓ timeline with year-start and year-end only
+✓ timeline with events
+✓ timeline with spaced end year alias
+✓ timeline event date outside range
+✓ calendar with year-month
+✓ calendar compiles to month table with highlighted event day
+✓ calendar event day outside month range
+✓ comparison before/after schema
+✓ comparison entity / shared / unique schema
+✓ comparison scenario / condition schema
+✓ valid group entity trait example from GIF
+✓ invalid group with only one entity
+✓ invalid group without shared trait value
+✓ trait without entity parent
+✓ group shorthand alias grp
+✓ media with image and caption
+✓ reserved words used as normal text
+✓ section title attribute
+✓ title attribute line is plain text inside section
+✓ malformed attribute line is text not tag
+✓ non-reserved word line is text
+✓ processSource returns empty html when invalid
+✓ legacy year-start alias normalizes to start-year
+✓ legacy year-month alias normalizes to month
+✓ shorthand tags from SHORTHAND.md
+✓ form elements from TAGS.md
+✓ document structure elements from TAGS.md
+✓ table elements from TAGS.md
+✓ media shorthand image alias
+✓ implicit close at EOF leaves no unclosed errors
+✓ sibling tags share parent when prior tag has content
+✓ plain text inside claim becomes text node
+✓ plain text inside evidence becomes text node
+✓ plain text inside caption becomes text node
+✓ ordinary text is not parsed as a tag
+✓ valid ebook with metadata, cover, toc, and content
+✓ valid ebook with only content
+✓ TOC generated from heading order
+✓ nested TOC generated from heading levels
+✓ heading IDs generated when missing
+✓ invalid ebook missing required content
+✓ plain-text export ignores style and javascript
+✓ HTML interactive export preserves style and javascript
+✓ crossword schema parses lists, shares numbering, and compiles a grid
+✓ crossword rejects mismatched lists, crossings, and out-of-bounds words
+✓ crossword word does not need a glossary definition
+✓ survey parses common question types and compiles response controls
+✓ survey rejects missing prompts and invalid choice, rating, and IDs
+✓ quoted attribute values with spaces remain attributes
+✓ survey text answer uses generated ID and optional form action
+
+62 passed, 0 failed
+
+scripts/check-tag-sync.mjs: exit 1
+45 issue(s)
+TAGS: canonical tag 'selection' has no heading.
+SHORTHAND: 'note' does not map to 'footnote' in grammar.
+SHORTHAND: 'sub' does not map to 'subhead' in grammar.
+SHORTHAND: 'cap' does not map to 'caption' in grammar.
+SHORTHAND: 'ent' does not map to 'entity' in grammar.
+SHORTHAND: 'opt' does not map to 'option' in grammar.
+SHORTHAND: 'sel' does not map to 'select' in grammar.
+SHORTHAND: 'leg' does not map to 'legend' in grammar.
+SHORTHAND: 'stat' does not map to 'statement' in grammar.
+SHORTHAND: 'pos' does not map to 'position' in grammar.
+SHORTHAND: 'sup' does not map to 'support' in grammar.
+SHORTHAND: 'chap' does not map to 'chapter' in grammar.
+SHORTHAND: 'rec' does not map to 'recording' in grammar.
+SHORTHAND: 'ill' does not map to 'illustration' in grammar.
+SHORTHAND: 'art' does not map to 'artwork' in grammar.
+SHORTHAND: 'sit' does not map to 'situation' in grammar.
+SHORTHAND: 'cir' does not map to 'circumstance' in grammar.
+SHORTHAND: implemented 'fnote' → 'footnote' is undocumented in the official table.
+SHORTHAND: implemented 'year-start' → 'start-year' is undocumented in the official table.
+SHORTHAND: implemented 'year-end' → 'end-year' is undocumented in the official table.
+SHORTHAND: implemented 'year-month' → 'month' is undocumented in the official table.
+SHORTHAND: implemented 'conditions' → 'condition' is undocumented in the official table.
+SHORTHAND: implemented 'js' → 'javascript' is undocumented in the official table.
+SHORTHAND: implemented 'p' → 'paragraph' is undocumented in the official table.
+SHORTHAND: implemented 'h' → 'heading' is undocumented in the official table.
+SYNONYMS: 'thesis' is not an implemented alias of 'argument'.
+SYNONYMS: 'position' is not an implemented alias of 'argument'.
+SYNONYMS: 'statement' is not an implemented alias of 'claim'.
+SYNONYMS: 'support' is not an implemented alias of 'evidence'.
+SYNONYMS: 'proof' is not an implemented alias of 'evidence'.
+SYNONYMS: 'chapter' is not an implemented alias of 'section'.
+SYNONYMS: 'recording' is not an implemented alias of 'audio'.
+SYNONYMS: 'song' is not an implemented alias of 'audio'.
+SYNONYMS: 'music' is not an implemented alias of 'audio'.
+SYNONYMS: 'recording' is not an implemented alias of 'video'.
+SYNONYMS: 'episode' is not an implemented alias of 'video'.
+SYNONYMS: 'film' is not an implemented alias of 'video'.
+SYNONYMS: 'photo' is not an implemented alias of 'image'.
+SYNONYMS: 'graphic' is not an implemented alias of 'image'.
+SYNONYMS: 'illustration' is not an implemented alias of 'image'.
+SYNONYMS: 'drawing' is not an implemented alias of 'image'.
+SYNONYMS: 'artwork' is not an implemented alias of 'image'.
+SYNONYMS: 'situation' is not an implemented alias of 'scenario'.
+SYNONYMS: 'circumstance' is not an implemented alias of 'condition'.
+SYNONYMS: 'item' is not an implemented alias of 'node'.
+
+scripts/check-examples.mjs: exit 1
+Checked 0 explicitly marked MML examples.
+1 issue(s)
+No examples marked with ```mml or ```mml-invalid. Label complete examples to enable validation; leave syntax fragments as text.
+
+scripts/check-repo-paths.mjs: exit 1
+3 issue(s)
+scripts/build-notes-html.mjs: missing directory export-blank
+scripts/notes-server.mjs: missing directory export-blank
+scripts/strip-html-content.mjs: missing directory export-blank
+
+scripts/check-links.mjs: exit 1
+8 issue(s)
+DOCS/README.md: missing target ./CODE_OF_CONDUCT.md
+DOCS/README.md: missing target ./CONTRIBUTING.md
+DOCS/README.md: missing target ./.github/PULL_REQUEST_TEMPLATE.md
+DOCS/TAGS.md: missing anchor /DOCS/SPEC.md#16-crossword-grid-schema
+export/DOCS/README.html: missing target CODE_OF_CONDUCT.html
+export/DOCS/README.html: missing target CONTRIBUTING.html
+export/DOCS/README.html: missing target .github/PULL_REQUEST_TEMPLATE.html
+export/DOCS/TAGS.html: missing anchor SPEC.html#16-crossword-grid-schema

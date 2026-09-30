@@ -6,6 +6,15 @@
   "scripts": {
     "test": "node tests/run-tests.js",
     "build-notes": "node scripts/build-notes-html.mjs",
-    "notes": "node scripts/notes-server.mjs"
+    "notes": "node scripts/notes-server.mjs",
+    "check:tags": "node scripts/check-tag-sync.mjs",
+    "check:examples": "node scripts/check-examples.mjs",
+    "check:paths": "node scripts/check-repo-paths.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:external": "node scripts/check-links.mjs --external",
+    "build-docs": "node scripts/build-docs.mjs",
+    "build:schema-index": "node scripts/generate-schema-index.mjs",
+    "maintenance": "node scripts/maintenance-report.mjs",
+    "check": "npm test && npm run check:tags && npm run check:examples && npm run check:paths && npm run check:links"
   }
 }

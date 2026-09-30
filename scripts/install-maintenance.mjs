@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+const file=new URL('../package.json',import.meta.url);const pkg=JSON.parse(fs.readFileSync(file,'utf8'));
+Object.assign(pkg.scripts??={}, {'check:tags':'node scripts/check-tag-sync.mjs','check:examples':'node scripts/check-examples.mjs','check:paths':'node scripts/check-repo-paths.mjs','check:links':'node scripts/check-links.mjs','check:external':'node scripts/check-links.mjs --external','build-docs':'node scripts/build-docs.mjs','build:schema-index':'node scripts/generate-schema-index.mjs','maintenance':'node scripts/maintenance-report.mjs','check':'npm test && npm run check:tags && npm run check:examples && npm run check:paths && npm run check:links'});
+fs.writeFileSync(file,JSON.stringify(pkg,null,2)+'\n');console.log('Added maintenance commands. Run npm install --save-dev --save-exact marked@17.0.5');

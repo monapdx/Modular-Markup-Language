@@ -4,7 +4,7 @@ category: documentation
 ---
 # Modular Markup (MML)
 
-[![Star Repo](https://img.shields.io/badge/%F0%9F%92%A1%20Propose%20Tag-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml) [![Suggest Schema](https://img.shields.io/badge/%F0%9F%92%A1%20Suggest%20Schema-111111?style=for-the-badge&labelColor=000000)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=suggest-schema.yml) 
+[![SUGGEST A TAG](https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/suggest-tag.svg?raw=true)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml) [![PROPOSE A SCHEMA](https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/propose-schema.svg?raw=true)](https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml)
 
 [![TAGS](https://raw.githubusercontent.com/monapdx/Modular-Markup-Language/main/assets/tags.svg)](https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/TAGS.md) [![SPECIFICATIONS](https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/specification.svg?raw=true)](https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/SPEC.md) [![DEPENDENCIES](https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/dependencies.svg?raw=true)](https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/DEPENDENCIES.md)
 

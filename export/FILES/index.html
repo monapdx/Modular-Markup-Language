@@ -142,6 +142,27 @@
     #preview-output .mml-survey input[type="text"], #preview-output .mml-survey textarea { display: block; width: 100%; box-sizing: border-box; padding: .5rem; }
     #preview-output .mml-survey textarea { min-height: 6rem; }
 
+    #preview-output :is(film, song, album, book, series, episode, game, podcast) {
+      display: block; margin: 1rem 0; padding: 1rem;
+      border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--purple);
+    }
+    #preview-output :is(film, song, album, book, series, episode, game, podcast) > * { display: block; margin: .35rem 0; }
+    #preview-output :is(film, song, album, book, series, episode, game, podcast) > title { font-size: 1.3rem; font-weight: bold; }
+    #preview-output song > album { padding: 0; border: 0; box-shadow: none; }
+    #preview-output director::before { content: "Director: "; font-weight: bold; }
+    #preview-output artist::before { content: "Artist: "; font-weight: bold; }
+    #preview-output creator::before { content: "Creator: "; font-weight: bold; }
+    #preview-output book > author::before { content: "Author: "; font-weight: bold; }
+    #preview-output :is(book, game) > publisher::before { content: "Publisher: "; font-weight: bold; }
+    #preview-output song > album::before { content: "Album: "; font-weight: bold; }
+    #preview-output release-year::before { content: "Released: "; font-weight: bold; }
+    #preview-output genre::before { content: "Genre: "; font-weight: bold; }
+    #preview-output series > start-year::before { content: "Started: "; font-weight: bold; }
+    #preview-output series > end-year::before { content: "Ended: "; font-weight: bold; }
+    #preview-output season-number::before { content: "Season: "; font-weight: bold; }
+    #preview-output episode-number::before { content: "Episode: "; font-weight: bold; }
+    #preview-output episode > date::before { content: "Date: "; font-weight: bold; }
+
     #preview-output ebook { display: block; max-width: 48rem; margin: 0 auto; padding: 1.5rem; background: #fff; color: #222; font-family: Georgia, serif; }
     #preview-output ebook metadata { display: block; margin-bottom: 1.5rem; }
     #preview-output ebook metadata title { display: block; font-size: 1.8rem; font-weight: bold; }
@@ -236,6 +257,7 @@
     <button type="button" id="calendar-btn">Load Calendar Example</button>
     <button type="button" id="crossword-btn">Load Crossword Example</button>
     <button type="button" id="ebook-btn">Load Ebook Example</button>
+    <button type="button" id="film-btn">Load Film Example</button>
     <button type="button" id="survey-btn">Load Survey Example</button>
     <button type="button" id="clear-btn">Clear</button>
   </div>
@@ -349,6 +371,19 @@ prompt "How useful are they?"
 question id="notes" type="long-text"
 prompt "Anything else you want to tell us?"`;
 
+    const FILM_EXAMPLE = `film
+title
+The Menu
+director
+Mark Mylod
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film`;
+
     sourceEl.value = EXAMPLE;
 
     function updatePreview(html, valid) {
@@ -406,6 +441,10 @@ prompt "Anything else you want to tell us?"`;
     });
     document.getElementById("ebook-btn").addEventListener("click", () => {
       sourceEl.value = EBOOK_EXAMPLE;
+      run();
+    });
+    document.getElementById("film-btn").addEventListener("click", () => {
+      sourceEl.value = FILM_EXAMPLE;
       run();
     });
     document.getElementById("survey-btn").addEventListener("click", () => {

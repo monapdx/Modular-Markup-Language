@@ -1,3 +1,4 @@
+import { WORK_TYPES } from "./work-schema.js";
 import { surveyQuestions } from "./survey-schema.js";
 import { readCrossword, crosswordEntries } from "./crossword-schema.js";
 /**
@@ -298,6 +299,18 @@ function compileNode(node, depth, options = {}) {
 
   /** @type {string[]} */
   const lines = [];
+
+  // Like ebook metadata, scalar fields compile directly to text. In particular,
+  // HTML title is a raw-text element and must not contain literal <text> markup.
+  if (WORK_TYPES.includes(node.name)) {
+    lines.push(`${indent}<${node.name}${formatAttributes(node.attributes)}>`);
+    for (const child of node.children) {
+      if (child.type !== "element") continue;
+      lines.push(`${indent}  <${child.name}${formatAttributes(child.attributes)}>${escapeText(textContent(child))}</${child.name}>`);
+    }
+    lines.push(`${indent}</${node.name}>`);
+    return lines.join("\n");
+  }
 
   if (node.name === "survey") return compileSurvey(node, depth);
 

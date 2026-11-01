@@ -1,237 +1,294 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>README</title>
-  <link rel="stylesheet" href="../style.css">
-</head>
-<body class="theme-light">
-  <main class="markdown-preview-view markdown-rendered">
-<div class="metadata-container">
-  <div class="metadata-property">
-    <span class="metadata-property-key">title</span>
-    <span class="metadata-property-value">README</span>
-  </div>
-  <div class="metadata-property">
-    <span class="metadata-property-key">category</span>
-    <span class="metadata-property-value">documentation</span>
-  </div>
-</div>
-
-<h1>Modular Markup (MML)</h1>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>README — MML</title><link rel="stylesheet" href="../style.css"></head><body class="theme-light"><main class="markdown-preview-view markdown-rendered"><h1 id="modular-markup-mml">Modular Markup (MML)</h1>
+<p><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml"><img src="https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/suggest-tag.svg?raw=true" alt="SUGGEST A TAG"></a> <a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml"><img src="https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/propose-schema.svg?raw=true" alt="PROPOSE A SCHEMA"></a></p>
+<p><a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/TAGS.md"><img src="https://raw.githubusercontent.com/monapdx/Modular-Markup-Language/main/assets/tags.svg" alt="TAGS"></a> <a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/SPEC.md"><img src="https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/specification.svg?raw=true" alt="SPECIFICATIONS"></a> <a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/DOCS/DEPENDENCIES.md"><img src="https://github.com/monapdx/Modular-Markup-Language/blob/main/assets/dependencies.svg?raw=true" alt="DEPENDENCIES"></a></p>
 <p><strong>A meaning-first markup language that remains readable as plain text.</strong></p>
-<p>Modular Markup (MML) is an experimental semantic markup language designed around a simple idea:</p>
+<p>Modular Markup (MML) is a semantic markup language designed around a simple idea:</p>
 <blockquote>
 <p>Documents should describe meaning, not formatting.</p>
 </blockquote>
 <p>Unlike Markdown, which relies on symbolic shortcuts, or HTML, which mixes semantic and presentational concerns, MML focuses on explicit semantic structures that are understandable to both humans and machines.</p>
-<p>The source document should remain readable as plain text while compiling into a fully structured document tree.</p>
+<p>Source documents stay readable as plain text while compiling into a structured document tree.</p>
 <hr>
-<h1>Goals</h1>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Human-readable source documents</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Explicit semantic structure</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Strong parent-child validation</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Meaning-first document modeling</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Plain text as the authoring format</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Automatic structure generation</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Compiler-friendly AST representation</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> Extensible semantic schemas</li>
+<h1 id="documentation-in-this-folder">Documentation in this folder</h1>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a href="SPEC.html">SPEC.md</a></strong></td>
+<td>Full language specification (v0.1): syntax, principles, validation rules, and schema definitions.</td>
+</tr>
+<tr>
+<td><strong><a href="TAGS.html">TAGS.md</a></strong></td>
+<td>Official tag registry with examples. Currently lists <strong>95 official tags</strong> (argument, calendar, claim, comparison, document, form, media, timeline, and others).</td>
+</tr>
+<tr>
+<td><strong><a href="SHORTHAND.html">SHORTHAND.md</a></strong></td>
+<td>Shorthand alias rules and the official shorthand table (<code>arg</code>, <code>comp</code>, <code>grp</code>, <code>img</code>, <code>evi</code>, etc.).</td>
+</tr>
+<tr>
+<td><strong><a href="DEPENDENCIES.html">DEPENDENCIES.md</a></strong></td>
+<td>Parent/child relationships, required children, and nesting rules — including <strong>group</strong> (shared trait values) and <strong>comparison</strong> schemas.</td>
+</tr>
+<tr>
+<td><strong><a href="SYNONYMS.html">SYNONYMS.md</a></strong></td>
+<td>Conceptual synonym mappings (e.g. section ↔ chapter, claim ↔ statement).</td>
+</tr>
+<tr>
+<td><strong><a href="PROPOSED.html">PROPOSED.md</a></strong></td>
+<td>Tags and schemas under consideration (node, cluster, identity, profile, education, and others).</td>
+</tr>
+<tr>
+<td><strong><a href="TAG PROPOSAL EVALUATION.html">TAG PROPOSAL EVALUATION.md</a></strong></td>
+<td>Checklist for reviewing individual tag proposals.</td>
+</tr>
+<tr>
+<td><strong><a href="SCHEMA PROPOSAL EVALUATION.html">SCHEMA PROPOSAL EVALUATION.md</a></strong></td>
+<td>Checklist for reviewing multi-tag schema proposals.</td>
+</tr>
+<tr>
+<td><strong><a href="LINKS.html">LINKS.md</a></strong></td>
+<td>Quick links to the repo, issue templates, parser demo, and other docs.</td>
+</tr>
+<tr>
+<td><strong><a href="SCRATCHPAD.html">SCRATCHPAD.md</a></strong></td>
+<td>Empty notes scratchpad (<code>category: notes</code>). A browser-based editor lives in <code>export-blank/DOCS/SCRATCHPAD.html</code>.</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="goals">Goals</h1>
+<ul>
+<li>Human-readable source documents</li>
+<li>Explicit semantic structure</li>
+<li>Strong parent-child validation</li>
+<li>Meaning-first document modeling</li>
+<li>Plain text as the authoring format</li>
+<li>Automatic structure generation (TOC, text nodes, implicit close)</li>
+<li>Compiler-friendly AST representation</li>
+<li>Extensible semantic schemas</li>
 </ul>
-
-<h1>Core Philosophy</h1>
-<p>MML is built around semantic objects rather than formatting instructions.</p>
-<p><strong>For example:</strong></p>
+<hr>
+<h1 id="quick-example">Quick example</h1>
+<p><strong>Source</strong> (opening-tag-only authoring — closing tags are optional):</p>
 <pre><code class="language-text">argument
 claim
+Markdown introduces an unnecessary abstraction layer.
 evidence
-timeline
-event
-comparison
-entity
-image
-caption
+The final rendered output is already HTML.
 </code></pre>
-<p>represent meaningful concepts.</p>
-<p><strong>By contrast, generic containers such as:</strong></p>
-<pre><code class="language-html">&lt;div&gt;
-&lt;span&gt;
+<p><strong>Compiled output:</strong></p>
+<pre><code class="language-html">&lt;argument&gt;
+  &lt;claim&gt;
+    &lt;text&gt;Markdown introduces an unnecessary abstraction layer.&lt;/text&gt;
+    &lt;evidence&gt;
+      &lt;text&gt;The final rendered output is already HTML.&lt;/text&gt;
+    &lt;/evidence&gt;
+  &lt;/claim&gt;
+&lt;/argument&gt;
 </code></pre>
-<p>have no direct equivalent in MML.</p>
-<p>Every element should represent something recognizable and meaningful.</p>
+<p>Try this in the <strong><a href="https://monapdx.github.io/Modular-Markup-Language/FILES/">parser demo</a></strong>.</p>
 <hr>
-<h1>Syntax</h1>
-<h2>Opening Tags</h2>
-<p>Opening tags are written as plain keywords.</p>
-<pre><code class="language-text">claim
-</code></pre>
+<h1 id="syntax-current-parser">Syntax (current parser)</h1>
+<h2 id="opening-tags">Opening tags</h2>
+<p>One tag per line. Attributes use double-quoted values:</p>
 <pre><code class="language-text">section title=&quot;Background&quot;
+ebook output=&quot;html&quot; mode=&quot;interactive&quot;
 </code></pre>
-
-<hr>
-<h2>Text Content</h2>
-<p>Anything that is not recognized as valid markup is treated as text.</p>
-<pre><code class="language-text">claim
-
-Arguments are not always unhealthy.
-
-
+<h2 id="closing-tags">Closing tags</h2>
+<p>Closing tags (<code>/claim</code>) are <strong>optional and never required</strong>. The parser infers structure from the next tag or content line and the compiler emits closers in output.</p>
+<h2 id="inline-quoted-values">Inline quoted values</h2>
+<p>Some elements accept a value on the same line:</p>
+<pre><code class="language-text">title &quot;Proof I Was Here&quot;
+heading level=&quot;1&quot; &quot;Chapter One&quot;
+image &quot;cover.jpg&quot;
 </code></pre>
-<p>The word &quot;Arguments&quot; is content, not a tag.</p>
+<h2 id="text-content">Text content</h2>
+<p>Anything that is not valid markup is treated as text. Blank lines inside content are ignored. Consecutive untagged lines merge into one text node.</p>
+<p>See <strong><a href="SPEC.html">SPEC.md</a></strong> for the full grammar.</p>
 <hr>
-<h1>Validation</h1>
+<h1 id="validation">Validation</h1>
 <p>MML validates semantic structure, not just syntax.</p>
-<p><strong>Example:</strong></p>
+<p><strong>Invalid:</strong></p>
 <pre><code class="language-text">evidence
 The final output is already HTML.
-
 </code></pre>
-<p><strong>Produces:</strong></p>
-<pre><code class="language-text">Error:
-evidence requires parent claim.
-</code></pre>
+<p><strong>Error:</strong> <code>evidence requires parent claim or argument</code></p>
 <p><strong>Valid:</strong></p>
 <pre><code class="language-text">argument
-
 claim
-
 evidence
 The final output is already HTML.
-
 </code></pre>
+<p>Parent/child requirements, required children, and schema rules are summarized in <strong><a href="DEPENDENCIES.html">DEPENDENCIES.md</a></strong>.</p>
 <hr>
-<h1>Automatic Text Nodes</h1>
-<p>Plain text is automatically wrapped in text nodes.</p>
-<p><strong>Source:</strong></p>
-<pre><code class="language-text">claim
-Markdown is unnecessary.
-
-</code></pre>
-<p><strong>Internal representation:</strong></p>
-<pre><code class="language-html">&lt;claim&gt;
-  &lt;text&gt;Markdown is unnecessary.&lt;/text&gt;
-&lt;/claim&gt;
-</code></pre>
-<p>Authors rarely need to write explicit text tags.</p>
-<hr>
-<h1>Semantic Schemas</h1>
-<h2>Argument</h2>
+<h1 id="semantic-schemas">Semantic schemas</h1>
+<p>Schemas implemented in the parser and validator include:</p>
+<h2 id="argument">Argument</h2>
 <pre><code class="language-text">argument
 └── claim
     └── evidence
 </code></pre>
-<p><strong>Rules:</strong></p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> argument requires at least one claim</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> claim may exist standalone</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> evidence requires parent claim</li>
+<ul>
+<li><code>argument</code> requires at least one <code>claim</code></li>
+<li><code>claim</code> may exist standalone</li>
+<li><code>evidence</code> requires parent <code>claim</code> or <code>argument</code></li>
 </ul>
-<hr>
-<h2>Timeline</h2>
+<h2 id="timeline">Timeline</h2>
 <pre><code class="language-text">timeline
-├── year-start
+├── start-year
 ├── event
-└── year-end
+│   └── date
+└── end-year
 </code></pre>
-<p><strong>Rules:</strong></p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> timeline requires year-start</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> timeline requires year-end</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> event requires date</li>
+<ul>
+<li><code>timeline</code> requires <code>start-year</code> and <code>end-year</code></li>
+<li>Event dates must fall within the timeline year range</li>
+<li>Legacy aliases: <code>year-start</code>, <code>year-end</code>, spaced forms like <code>end year</code></li>
 </ul>
-<hr>
-<h2>Calendar</h2>
+<h2 id="calendar">Calendar</h2>
 <pre><code class="language-text">calendar
-├── year-month
+├── year
+├── month
 └── event
+    └── date
 </code></pre>
-<p><strong>Rules:</strong></p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> calendar requires year-month</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> event requires date</li>
+<ul>
+<li>Requires <code>year</code> and/or <code>month</code></li>
+<li>Compiles to an HTML month table with highlighted event days</li>
+<li>Event day numbers are validated against the calendar month</li>
 </ul>
-<hr>
-<h2>Comparison</h2>
-<h3>Before / After</h3>
-<pre><code class="language-text">comparison
-├── before
-└── after
-</code></pre>
-<h3>Entity Comparison</h3>
-<pre><code class="language-text">comparison
+<h2 id="comparison">Comparison</h2>
+<p>Named schemas (see <strong><a href="DEPENDENCIES.html">DEPENDENCIES.md</a></strong>):</p>
+<ul>
+<li><strong>Before / after</strong> — <code>before</code> + <code>after</code></li>
+<li><strong>Entity</strong> — two or more <code>entity</code> children, each with <code>unique</code>, optionally <code>shared</code></li>
+<li><strong>Scenario</strong> — two or more <code>scenario</code> children, each with <code>condition</code></li>
+</ul>
+<h2 id="group">Group</h2>
+<pre><code class="language-text">group
 ├── entity
-│   └── unique
-├── entity
-│   └── unique
-└── shared
+│   └── trait
+└── entity
+    └── trait
 </code></pre>
-<h3>Scenario Comparison</h3>
-<pre><code class="language-text">comparison
-├── scenario
-│   └── conditions
-└── scenario
-    └── conditions
-</code></pre>
-<hr>
-<h2>Media</h2>
+<ul>
+<li>Requires at least two <code>entity</code> children</li>
+<li>At least two entities must share a common <strong>trait value</strong> (text inside <code>trait</code>)</li>
+<li>Differs from <code>comparison</code>, which uses named schemas instead of shared traits</li>
+</ul>
+<h2 id="media">Media</h2>
 <pre><code class="language-text">media
-├── image
-├── video
-├── audio
-├── caption
-└── source
+├── image | audio | video
+└── caption
 </code></pre>
-<p><strong>Rules:</strong></p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> media requires at least one image, audio, or video</li>
-<li class="task-list-item"><input class="task-list-item-checkbox"  type="checkbox"> caption typically belongs to media</li>
+<ul>
+<li><code>media</code> requires at least one of <code>image</code>, <code>audio</code>, or <code>video</code></li>
+<li><code>caption</code> belongs under <code>media</code> or <code>cover</code></li>
+</ul>
+<h2 id="creative-work-records">Creative-work records</h2>
+<p>Describe films, songs, albums, books, series, episodes, games, and podcasts with named fields:</p>
+<pre><code class="language-mml">film
+title
+The Menu
+director
+Mark Mylod
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film
+</code></pre>
+<p>Each record requires a <code>title</code>. Other fields are optional; repeat genres and credits for multiple values. Consecutive entries become siblings automatically. <code>book</code> describes a work, while <code>ebook</code> contains the actual book content. See <a href="SPEC.html#19-creative-work-records">creative-work records</a> for the fields and validation rules. The parser demo includes a <strong>Load Film Example</strong> button.</p>
+<h2 id="ebook">Ebook</h2>
+<p>Format-independent book schema (implemented in <code>export/src/ebook-schema.js</code>):</p>
+<pre><code class="language-text">ebook
+├── metadata (title, author, language, …)
+├── cover (image, caption)
+├── toc
+├── content (heading, section, paragraph, …)
+├── style
+└── javascript
+</code></pre>
+<ul>
+<li><code>content</code> is required</li>
+<li><code>toc</code> is a declaration tag — the compiler auto-generates a table of contents from <code>heading</code> tags inside <code>content</code></li>
+<li><code>style</code> and <code>javascript</code> are optional HTML/web exporter tags; plain-text export ignores them</li>
 </ul>
 <hr>
-<h1>Design Principles</h1>
-<h2>Text Wins</h2>
-<p>If something is not valid markup, it is text.</p>
-<p>The parser should never aggressively reinterpret ordinary writing as structure.</p>
+<h1 id="design-principles">Design principles</h1>
+<h2 id="text-wins">Text wins</h2>
+<p>If something is not valid markup, it is text. The parser does not reinterpret ordinary writing as structure.</p>
+<h2 id="singular-elements">Singular elements</h2>
+<p>Element names are singular (<code>claim</code>, <code>event</code>, <code>entity</code> — not <code>claims</code>, <code>events</code>, <code>entities</code>).</p>
+<h2 id="semantic-necessity">Semantic necessity</h2>
+<p>A tag should represent a meaningful concept that cannot already be expressed with existing tags.</p>
+<h2 id="shorthand-and-synonyms">Shorthand and synonyms</h2>
+<p>Use <strong><a href="SHORTHAND.html">SHORTHAND.md</a></strong> for accepted abbreviations and <strong><a href="SYNONYMS.html">SYNONYMS.md</a></strong> for conceptual alternates. Only shorthand entries registered in the parser are recognized as tags.</p>
 <hr>
-<h2>Singular Elements</h2>
-<p>Element names are singular.</p>
-<p><strong>Valid:</strong></p>
-<pre><code class="language-text">claim
-event
-entity
-image
+<h1 id="project-status">Project status</h1>
+<p>Working <strong>parser</strong>, <strong>validator</strong>, and <strong>compiler</strong> live in <code>export/src/</code>:</p>
+<ul>
+<li><code>grammar.js</code> — tag registry, aliases, attribute parsing, inline-value matching</li>
+<li><code>parser.js</code> — opening-tag-only parsing with implicit close</li>
+<li><code>validator.js</code> — semantic validation for all registered schemas</li>
+<li><code>compiler.js</code> — HTML compilation (calendar tables, ebook export, heading IDs, TOC)</li>
+<li><code>ebook.js</code> / <code>ebook-schema.js</code> — ebook TOC generation and schema constants</li>
+</ul>
+<p>Run tests from the repo root:</p>
+<pre><code class="language-bash">npm test
 </code></pre>
-<p><strong>Invalid:</strong></p>
-<pre><code class="language-text">claims
-events
-entities
-images
-</code></pre>
+<p>The language and documentation are still evolving. Official tags are listed in <strong><a href="TAGS.html">TAGS.md</a></strong>; newer parser features (such as ebook tags) may land in code before the tag list is updated.</p>
 <hr>
-<h2>Semantic Necessity</h2>
-<p>A tag should only exist if it represents a meaningful concept that cannot already be expressed using existing tags.</p>
+<h1 id="contribute">Contribute</h1>
+<p>Have an issue? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new/choose">Get in touch</a></strong>.</p>
+<p>Have an idea for a tag? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml">Submit a tag</a></strong> — review against <strong><a href="TAG PROPOSAL EVALUATION.html">TAG PROPOSAL EVALUATION.md</a></strong>.</p>
+<p>Have a multi-tag schema idea? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml">Submit a schema</a></strong> — review against <strong><a href="SCHEMA PROPOSAL EVALUATION.html">SCHEMA PROPOSAL EVALUATION.md</a></strong>.</p>
 <hr>
-<h1>Project Status</h1>
-<p>Early specification and parser prototype.</p>
+<h1 id="where-to-go-next">Where to go next</h1>
+<ul>
+<li><strong><a href="SPEC.html">SPEC.md</a></strong> — full specification</li>
+<li><strong><a href="TAGS.html">TAGS.md</a></strong> — official tag list</li>
+<li><strong><a href="SHORTHAND.html">SHORTHAND.md</a></strong> — shorthand aliases</li>
+<li><strong><a href="DEPENDENCIES.html">DEPENDENCIES.md</a></strong> — nesting and requirement rules</li>
+<li><strong><a href="PROPOSED.html">PROPOSED.md</a></strong> — proposed tags and schemas</li>
+<li><strong><a href="SYNONYMS.html">SYNONYMS.md</a></strong> — synonym mappings</li>
+<li><strong><a href="LINKS.html">LINKS.md</a></strong> — links and navigation</li>
+<li><strong><a href="../FILES/index.html">Parser demo</a></strong> — live parse, validate, and compile</li>
+</ul>
 <p>The language is actively evolving and many schemas, validation rules, and compilation targets remain under discussion.</p>
 <hr>
-<h2>CONTRIBUTE</h2>
+<h2 id="contribute-1">CONTRIBUTE</h2>
 <p>Have an issue? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new/choose?utm_source=chatgpt.com">GET IN TOUCH</a></strong>.</p>
 <p>Have an idea for a tag we should add? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=propose-tag.yml">SUBMIT A TAG</a></strong> here.</p>
 <p>Do you have a more advanced tag idea? <strong><a href="https://github.com/monapdx/Modular-Markup-Language/issues/new?template=submit-schema.yml&amp;utm_source=chatgpt.com">SUBMIT A SCHEMA</a></strong> instead!</p>
 <hr>
-<h2>SUPPORT</h2>
-<p>You can read the full <strong><a href="./SPEC.html">SPEC</a></strong> here.</p>
+<h2 id="community">Community</h2>
+<ul>
+<li>Please read our <a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a> before
+participating.</li>
+<li>See <a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for how to report bugs,
+propose tags/schemas, set up your dev environment, and submit pull
+requests.</li>
+<li>All pull requests use the template in
+<a href="https://github.com/monapdx/Modular-Markup-Language/blob/main/.github/ISSUE_TEMPLATE/PULL_REQUEST_TEMPLATE.md">.github/PULL_REQUEST_TEMPLATE.md</a>
+automatically.</li>
+</ul>
+<hr>
+<h2 id="support">SUPPORT</h2>
+<p>You can read the full <strong><a href="SPEC.html">SPEC</a></strong> here. </p>
 <p>Try the <strong><a href="../FILES/index.html">PARSER</a></strong>.</p>
 <hr>
-<h2>TAGS</h2>
-<p>Here is the list of <strong><a href="./TAGS.html">TAGS</a></strong>.</p>
-<p>Looking for the <strong><a href="./SHORTHAND.html">SHORTHAND</a></strong> version?</p>
-<p>Check out a list of <strong><a href="./PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
-<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="./DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
-<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="./SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
-<p><span class="tag">#readme</span> <span class="tag">#markup</span> <span class="tag">#grammar</span> <span class="tag">#syntax</span> <span class="tag">#semantic</span> <span class="tag">#data-structure</span> <span class="tag">#schemas</span> <span class="tag">#official</span> <span class="tag">#tags</span></p>
-
-  </main>
-</body>
-</html>
+<h2 id="tags">TAGS</h2>
+<p>Here is the list of <strong><a href="TAGS.html">TAGS</a></strong>. </p>
+<p>Looking for the <strong><a href="SHORTHAND.html">SHORTHAND</a></strong> version?</p>
+<p>Check out a list of <strong><a href="PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
+<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
+<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
+<p>#readme #markup #grammar #syntax #semantic #data-structure #schemas #official #tags #documentation</p>
+</main></body></html>

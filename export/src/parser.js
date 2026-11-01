@@ -1,3 +1,4 @@
+import { WORK_TYPES, WORK_FIELDS } from "./work-schema.js";
 import {
   matchOpeningTag,
   matchClosingTag,
@@ -67,6 +68,21 @@ function createText(value, line) {
  */
 function closeBeforeOpening(stack, newTagName, lastContentTarget) {
   if (stack.length <= 1) return;
+
+  // An album inside a song is a scalar field, not an album record.
+  if (stack.at(-1)?.name === "album" && stack.at(-2)?.name === "song") stack.pop();
+
+  // Different work types are sibling entries. The sole field/type overlap is
+  // song -> album; close /song explicitly when starting a separate album record.
+  if (WORK_TYPES.includes(newTagName)) {
+    let workIndex = -1;
+    for (let i = stack.length - 1; i > 0; i--) {
+      if (WORK_TYPES.includes(stack[i].name)) { workIndex = i; break; }
+    }
+    if (workIndex > 0 && !WORK_FIELDS[stack[workIndex].name].includes(newTagName)) {
+      stack.length = workIndex;
+    }
+  }
 
   const requiredParents = getRequiredParents(newTagName);
 
@@ -168,6 +184,15 @@ export function parse(source) {
           found: closing.name,
         });
         continue;
+      }
+
+      // A container closer may finish its final scalar field, so /film works
+      // immediately after a genre value without requiring /genre first.
+      if (WORK_TYPES.includes(closing.name) && stack.length > 2 &&
+          stack.at(-2).name === closing.name &&
+          WORK_FIELDS[closing.name].includes(stack.at(-1).name) &&
+          stack.at(-1).children.every(child => child.type === "text")) {
+        stack.pop();
       }
 
       const current = stack[stack.length - 1];

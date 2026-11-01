@@ -1,3 +1,4 @@
+export { WORK_TYPES, WORK_FIELDS, WORK_FIELD_PARENTS, validateWork } from "./work-schema.js";
 export {
   CANONICAL_ELEMENTS,
   ELEMENT_ALIASES,

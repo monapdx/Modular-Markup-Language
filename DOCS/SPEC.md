@@ -1029,7 +1029,101 @@ The compiler produces an HTML form with controls named by question ID. If `actio
 
 ---
 
-# 19. Future Considerations
+# 19. Creative-Work Records
+
+Use `film`, `song`, `album`, `book`, `series`, `episode`, `game`, and `podcast` to describe works. These are records about works; `ebook` continues to structure actual book content for export.
+
+Every record requires exactly one nonempty `title`. Other fields are optional and hold nonempty text, without nested elements. Fields may use a value on the following line or a quoted inline value. Use quoted inline values when a value itself is a reserved tag name.
+
+```mml
+film
+title
+The Menu
+director
+Mark Mylod
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film
+```
+
+All types accept `title`, `description`, `release-year`, and repeated `genre` fields, plus these fields:
+
+| Record | Additional fields |
+| --- | --- |
+| `film` | `director` |
+| `song` | `artist`, `album` |
+| `album` | `artist` |
+| `book` | `author`, `publisher` |
+| `series` | `creator`, `start-year`, `end-year` |
+| `episode` | `season-number`, `episode-number`, `date` |
+| `game` | `creator`, `publisher` |
+| `podcast` | `creator` |
+
+Repeat `genre` and credit fields (`director`, `artist`, `author`, `creator`, `publisher`) to express multiple values. All other fields accept at most one value. `release-year`, `start-year`, and `end-year` use exactly four digits. A series may omit its end year while ongoing; when both years exist, the end cannot precede the start. `season-number` is a nonnegative integer (0 can represent specials); `episode-number` is a positive integer. Episode `date` holds nonempty date text, as in the existing date field; no additional date-format validation is imposed.
+
+Consecutive work records become siblings automatically. Closers are optional; `/film` may directly follow the last field's value. Explicit field closers such as `/genre` also work.
+
+```mml
+book
+title "Example Book"
+author "First Author"
+author "Second Author"
+publisher "Example Publisher"
+release-year "2022"
+series
+title "Example Series"
+creator "Example Creator"
+start-year "2020"
+episode
+title "Pilot"
+season-number "1"
+episode-number "1"
+date "2020-01-01"
+```
+
+Within a song, `album` is the album's name as a text field. Elsewhere, `album` is a record with its own title and artist. Close `/song` explicitly to start a separate album record immediately after a song:
+
+```mml
+song
+title "Example Song"
+artist "Example Artist"
+album "Example Album"
+release-year "2022"
+/song
+album
+title "Example Album"
+artist "Example Artist"
+```
+
+A missing title, an empty field, an unsupported field, or an invalid numeric value is invalid:
+
+```mml-invalid
+film
+title "The Menu"
+release-year "twenty twenty-two"
+```
+
+The compiler preserves record and field names in its semantic output, with escaped text values (as with ebook metadata):
+
+```html
+<film>
+  <title>The Menu</title>
+  <director>Mark Mylod</director>
+  <release-year>2022</release-year>
+  <genre>dark-comedy</genre>
+  <genre>horror</genre>
+</film>
+```
+
+Existing ebook metadata, event dates, and timeline rules retain their original contexts. Work records have no required parent and can be grouped in a document, section, or list item; they cannot appear in containers whose schema disallows them, such as ebook content.
+
+---
+
+# 20. Future Considerations
 
 Potential future areas include:
 
@@ -1044,7 +1138,7 @@ Potential future areas include:
 
 ---
 
-# 20. Guiding Principle
+# 21. Guiding Principle
 
 > A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.
 

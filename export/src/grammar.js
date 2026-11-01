@@ -1,3 +1,5 @@
+import { WORK_TYPES, WORK_FIELD_PARENTS } from "./work-schema.js";
+
 /**
  * Modular Markup Language — Grammar (v0.1)
  *
@@ -26,6 +28,14 @@
 
 /** @readonly — canonical names from DOCS/TAGS.md */
 export const CANONICAL_ELEMENTS = new Set([
+  ...WORK_TYPES,
+  "director",
+  "artist",
+  "creator",
+  "release-year",
+  "genre",
+  "season-number",
+  "episode-number",
   "argument",
   "calendar",
   "survey",
@@ -241,6 +251,13 @@ export const REQUIRED_PARENTS = {
   heading: ["content", "section"],
   paragraph: ["content", "section"],
 };
+
+// Extend existing ebook/timeline fields rather than replacing their parent rules.
+for (const [field, parents] of Object.entries(WORK_FIELD_PARENTS)) {
+  // album can also be an independent record with its own title and artist.
+  if (WORK_TYPES.includes(field)) continue;
+  REQUIRED_PARENTS[field] = [...(REQUIRED_PARENTS[field] ?? []), ...parents];
+}
 
 const ELEMENT_NAME_PATTERN = /^[a-z][a-z0-9-]*$/;
 const ATTR_PAIR_PATTERN = /([a-z][a-z0-9-]*)="([^"]*)"/y;

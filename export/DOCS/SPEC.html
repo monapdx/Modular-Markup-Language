@@ -1,29 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SPEC</title>
-<link href="../style.css" rel="stylesheet"/>
-</head>
-<body class="theme-light">
-<main class="markdown-preview-view markdown-rendered">
-<div class="metadata-container">
-<div class="metadata-property">
-<span class="metadata-property-key">title</span>
-<span class="metadata-property-value">SPEC</span>
-</div>
-<div class="metadata-property">
-<span class="metadata-property-key">category</span>
-<span class="metadata-property-value">documentation</span>
-</div>
-<div class="metadata-property">
-<span class="metadata-property-key">version</span>
-<span class="metadata-property-value">0.1</span>
-</div>
-</div>
-<h1>1. Introduction</h1>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SPEC — MML</title><link rel="stylesheet" href="../style.css"></head><body class="theme-light"><main class="markdown-preview-view markdown-rendered"><h1 id="1-introduction">1. Introduction</h1>
 <p><strong>Modular Markup Language (MML)</strong> is a semantic document language designed around a simple principle:</p>
 <blockquote>
 <p>Documents should describe meaning rather than formatting.</p>
@@ -31,20 +7,20 @@
 <p>MML is intended to remain readable as plain text while providing enough structure for parsing, validation, compilation, and semantic analysis.</p>
 <p>Unlike Markdown, MML does not rely on symbolic formatting conventions.</p>
 <p>Unlike HTML, MML prioritizes semantic relationships and parent-child validation over presentation.</p>
-<hr/>
-<h1>2. Design Goals</h1>
+<hr>
+<h1 id="2-design-goals">2. Design Goals</h1>
 <p>MML is designed to be:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Human-readable</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Machine-parseable</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Semantically meaningful</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Validation-friendly</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Extensible</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Plain-text authorable</li>
+<ul>
+<li><input disabled="" type="checkbox"> Human-readable</li>
+<li><input disabled="" type="checkbox"> Machine-parseable</li>
+<li><input disabled="" type="checkbox"> Semantically meaningful</li>
+<li><input disabled="" type="checkbox"> Validation-friendly</li>
+<li><input disabled="" type="checkbox"> Extensible</li>
+<li><input disabled="" type="checkbox"> Plain-text authorable</li>
 </ul>
-<hr/>
-<h1>3. Core Principles</h1>
-<h2>3.1 Meaning First</h2>
+<hr>
+<h1 id="3-core-principles">3. Core Principles</h1>
+<h2 id="31-meaning-first">3.1 Meaning First</h2>
 <p>Elements should represent meaningful concepts rather than visual presentation.</p>
 <p>Preferred:</p>
 <pre><code class="language-text">argument
@@ -62,28 +38,36 @@ span
 wrapper
 container
 </code></pre>
-<hr/>
-<h2>3.2 Text Wins</h2>
+<hr>
+<h2 id="32-text-wins">3.2 Text Wins</h2>
 <p>If content is not valid markup, it is treated as text.</p>
 <p>The parser should never aggressively reinterpret ordinary writing as structure.</p>
-<hr/>
-<h2>3.3 Explicit Structure</h2>
+<hr>
+<h2 id="33-explicit-structure">3.3 Explicit Structure</h2>
 <p>All elements must be explicitly opened and closed.</p>
-<hr/>
-<h2>3.4 Semantic Validation</h2>
+<hr>
+<h2 id="34-semantic-validation">3.4 Semantic Validation</h2>
 <p>MML validates semantic relationships, not merely syntax.</p>
-<hr/>
-<h1>4. Syntax</h1>
-<h2>4.1 Opening Tags</h2>
+<hr>
+<h1 id="4-syntax">4. Syntax</h1>
+<h2 id="41-opening-tags">4.1 Opening Tags</h2>
 <p>Opening tags consist of a valid element name.</p>
 <p>Example:</p>
 <pre><code class="language-text">claim
 </code></pre>
 <p>Attributes may be included:</p>
-<pre><code class="language-text">section title="Background"
+<pre><code class="language-text">section title=&quot;Background&quot;
 </code></pre>
-<hr/>
-<h2>4.2 Element Names</h2>
+<hr>
+<h2 id="42-closing-tags">4.2 Closing Tags</h2>
+<p>Closing tags begin with a forward slash.</p>
+<p>Example:</p>
+<pre><code class="language-text">/claim
+</code></pre>
+<pre><code class="language-text">/argument
+</code></pre>
+<hr>
+<h2 id="43-element-names">4.3 Element Names</h2>
 <p>All element names are singular.</p>
 <p>Valid:</p>
 <pre><code class="language-text">claim
@@ -97,54 +81,89 @@ events
 entities
 images
 </code></pre>
-<hr/>
-<h2>4.3 Attributes</h2>
+<hr>
+<h2 id="44-attributes">4.4 Attributes</h2>
 <p>Attributes may only appear on opening tag lines.</p>
 <p>Example:</p>
-<pre><code class="language-text">section title="Introduction"
+<pre><code class="language-text">section title=&quot;Introduction&quot;
 </code></pre>
 <p>Attributes are parsed only when attached to a valid opening tag.</p>
 <p>Example:</p>
 <pre><code class="language-text">section
 
-title="Introduction"
+title=&quot;Introduction&quot;
+
+/section
 </code></pre>
 <p>In this example:</p>
-<pre><code class="language-text">title="Introduction"
+<pre><code class="language-text">title=&quot;Introduction&quot;
 </code></pre>
 <p>is plain text.</p>
-<hr/>
-<h1>5. Text Handling</h1>
-<h2>5.1 Automatic Text Nodes</h2>
+<hr>
+<h1 id="5-text-handling">5. Text Handling</h1>
+<h2 id="51-automatic-text-nodes">5.1 Automatic Text Nodes</h2>
 <p>Plain text is automatically wrapped in text elements.</p>
 <p>Source:</p>
 <pre><code class="language-text">claim
 Markdown introduces an unnecessary abstraction layer.
+/claim
 </code></pre>
 <p>Internal Representation:</p>
 <pre><code class="language-html">&lt;claim&gt;
   &lt;text&gt;Markdown introduces an unnecessary abstraction layer.&lt;/text&gt;
+&lt;/claim&gt;
 </code></pre>
 <p>Authors are not expected to manually create text elements in most situations.</p>
-<hr/>
-<h2>5.2 Reserved Words</h2>
+<hr>
+<h2 id="52-reserved-words">5.2 Reserved Words</h2>
 <p>Reserved words only act as markup when they appear in tag position.</p>
 <p>Example:</p>
 <pre><code class="language-text">claim
 Arguments are not always unhealthy.
+/claim
 </code></pre>
-<p>The word "Arguments" is text content.</p>
-<hr/>
-<h1>6. Parsing Rules</h1>
-<h2>6.1 Opening Tag Recognition</h2>
+<p>The word &quot;Arguments&quot; is text content.</p>
+<hr>
+<h1 id="6-parsing-rules">6. Parsing Rules</h1>
+<h2 id="61-opening-tag-recognition">6.1 Opening Tag Recognition</h2>
 <p>A line is interpreted as an opening tag when:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> It begins with a valid element name.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Any supplied attributes are valid.</li>
+<ul>
+<li><input disabled="" type="checkbox"> It begins with a valid element name.</li>
+<li><input disabled="" type="checkbox"> Any supplied attributes are valid.</li>
 </ul>
-<hr/>
-<h1>7. Validation Rules</h1>
-<h2>7.1 Parent Validation</h2>
+<hr>
+<h2 id="62-closing-tag-recognition">6.2 Closing Tag Recognition</h2>
+<p>A line is interpreted as a closing tag when:</p>
+<pre><code class="language-text">/element-name
+</code></pre>
+<p>matches a currently open element.</p>
+<hr>
+<h2 id="63-closing-validation">6.3 Closing Validation</h2>
+<p>Elements must close in stack order.</p>
+<p>Valid:</p>
+<pre><code class="language-text">argument
+
+claim
+Text.
+/claim
+
+/argument
+</code></pre>
+<p>Invalid:</p>
+<pre><code class="language-text">argument
+
+claim
+Text.
+
+/argument
+</code></pre>
+<p>Error:</p>
+<pre><code class="language-text">Cannot close argument while claim is still open.
+Expected /claim.
+</code></pre>
+<hr>
+<h1 id="7-validation-rules">7. Validation Rules</h1>
+<h2 id="71-parent-validation">7.1 Parent Validation</h2>
 <p>Elements may define required parents.</p>
 <p>Example:</p>
 <pre><code class="language-text">evidence
@@ -153,42 +172,43 @@ Arguments are not always unhealthy.
 <pre><code class="language-text">claim
 </code></pre>
 <p>parent.</p>
-<hr/>
-<h2>7.2 Missing Parent Errors</h2>
+<hr>
+<h2 id="72-missing-parent-errors">7.2 Missing Parent Errors</h2>
 <p>Example:</p>
 <pre><code class="language-text">evidence
 Some evidence.
+/evidence
 </code></pre>
 <p>Produces:</p>
 <pre><code class="language-text">Error:
 evidence requires parent claim.
 </code></pre>
 <p>The parser should provide structured repair information whenever possible.</p>
-<hr/>
-<h1>8. Element Definitions</h1>
-<h2>8.1 Argument System</h2>
-<h3>argument</h3>
+<hr>
+<h1 id="8-element-definitions">8. Element Definitions</h1>
+<h2 id="81-argument-system">8.1 Argument System</h2>
+<h3 id="argument">argument</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a collection of claims.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a collection of claims.</li>
 </ul>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires at least one claim.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires at least one claim.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">claim
 </code></pre>
-<hr/>
-<h3>claim</h3>
+<hr>
+<h3 id="claim">claim</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a semantic assertion.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a semantic assertion.</li>
 </ul>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> May exist independently.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> May exist within argument.</li>
+<ul>
+<li><input disabled="" type="checkbox"> May exist independently.</li>
+<li><input disabled="" type="checkbox"> May exist within argument.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">text
@@ -196,27 +216,125 @@ evidence
 quote
 source
 </code></pre>
-<hr/>
-<h3>evidence</h3>
+<hr>
+<h3 id="evidence">evidence</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Supports a claim.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Supports a claim.</li>
 </ul>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent claim.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent claim.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">text
 quote
 source
 </code></pre>
-<hr/>
-<h1>9. Timeline System</h1>
-<h3>timeline</h3>
+<hr>
+<h2 id="82-glossary-system">8.2 Glossary System</h2>
+<h3 id="glossary">glossary</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a chronological range.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a collection of word entries.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires at least one word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">word
+</code></pre>
+<hr>
+<h3 id="word">word</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a glossary entry for a term.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent glossary.</li>
+<li><input disabled="" type="checkbox"> Requires definition.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+definition
+synonym
+antonym
+origin
+usage
+</code></pre>
+<hr>
+<h3 id="definition">definition</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> States the meaning of a word.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+</code></pre>
+<hr>
+<h3 id="synonym">synonym</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Names a related or equivalent term.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+</code></pre>
+<hr>
+<h3 id="antonym">antonym</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Names an opposite term.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+</code></pre>
+<hr>
+<h3 id="origin">origin</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Records etymology or historical source of a word.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+</code></pre>
+<hr>
+<h3 id="usage">usage</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Shows how a word is used in context.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent word.</li>
+</ul>
+<p>Allowed Children:</p>
+<pre><code class="language-text">text
+</code></pre>
+<hr>
+<h1 id="9-timeline-system">9. Timeline System</h1>
+<h3 id="timeline">timeline</h3>
+<p>Purpose:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a chronological range.</li>
 </ul>
 <p>Required Children:</p>
 <pre><code class="language-text">year-start
@@ -226,30 +344,30 @@ year-end
 <pre><code class="language-text">event
 </code></pre>
 <p>A timeline containing only year-start and year-end is valid.</p>
-<hr/>
-<h3>year-start</h3>
+<hr>
+<h3 id="year-start">year-start</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent timeline.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent timeline.</li>
 </ul>
-<hr/>
-<h3>year-end</h3>
+<hr>
+<h3 id="year-end">year-end</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent timeline.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent timeline.</li>
 </ul>
-<hr/>
-<h3>event</h3>
+<hr>
+<h3 id="event">event</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a time-bound occurrence.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a time-bound occurrence.</li>
 </ul>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires date.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> May exist independently.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> May exist within timeline.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> May exist within calendar.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires date.</li>
+<li><input disabled="" type="checkbox"> May exist independently.</li>
+<li><input disabled="" type="checkbox"> May exist within timeline.</li>
+<li><input disabled="" type="checkbox"> May exist within calendar.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">date
@@ -260,18 +378,18 @@ source
 note
 link
 </code></pre>
-<hr/>
-<h3>date</h3>
+<hr>
+<h3 id="date">date</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent event.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent event.</li>
 </ul>
-<hr/>
-<h1>10. Calendar System</h1>
-<h3>calendar</h3>
+<hr>
+<h1 id="10-calendar-system">10. Calendar System</h1>
+<h3 id="calendar">calendar</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a calendar period.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a calendar period.</li>
 </ul>
 <p>Required Children:</p>
 <pre><code class="language-text">year-month
@@ -280,17 +398,17 @@ link
 <pre><code class="language-text">event
 </code></pre>
 <p>A calendar containing only year-month is valid.</p>
-<hr/>
-<h3>year-month</h3>
+<hr>
+<h3 id="year-month">year-month</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent calendar.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent calendar.</li>
 </ul>
-<hr/>
-<h1>11. Comparison System</h1>
+<hr>
+<h1 id="11-comparison-system">11. Comparison System</h1>
 <p>MML supports multiple comparison schemas.</p>
-<hr/>
-<h2>11.1 Before / After Schema</h2>
+<hr>
+<h2 id="111-before--after-schema">11.1 Before / After Schema</h2>
 <p>Required Children:</p>
 <pre><code class="language-text">before
 after
@@ -300,12 +418,16 @@ after
 
 before
 Old design.
+/before
 
 after
 New design.
+/after
+
+/comparison
 </code></pre>
-<hr/>
-<h2>11.2 Entity Schema</h2>
+<hr>
+<h2 id="112-entity-comparison-schema">11.2 Entity Comparison Schema</h2>
 <p>Required:</p>
 <pre><code class="language-text">entity
 entity
@@ -313,30 +435,30 @@ entity
 <p>Optional:</p>
 <pre><code class="language-text">shared
 </code></pre>
-<hr/>
-<h3>entity</h3>
+<hr>
+<h3 id="entity">entity</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent comparison.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent comparison.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">unique
 text
 </code></pre>
-<hr/>
-<h3>unique</h3>
+<hr>
+<h3 id="unique">unique</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent entity.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent entity.</li>
 </ul>
-<hr/>
-<h3>shared</h3>
+<hr>
+<h3 id="shared">shared</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent comparison.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent comparison.</li>
 </ul>
-<hr/>
-<h2>11.3 Scenario Schema</h2>
+<hr>
+<h2 id="113-scenario-comparison-schema">11.3 Scenario Comparison Schema</h2>
 <p>Required:</p>
 <pre><code class="language-text">scenario
 scenario
@@ -344,33 +466,33 @@ scenario
 <p>Each scenario should contain:</p>
 <pre><code class="language-text">conditions
 </code></pre>
-<hr/>
-<h3>scenario</h3>
+<hr>
+<h3 id="scenario">scenario</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent comparison.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent comparison.</li>
 </ul>
 <p>Allowed Children:</p>
 <pre><code class="language-text">conditions
 text
 note
 </code></pre>
-<hr/>
-<h3>conditions</h3>
+<hr>
+<h3 id="conditions">conditions</h3>
 <p>Rules:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Requires parent scenario.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Requires parent scenario.</li>
 </ul>
-<hr/>
-<h1>12. Media System</h1>
-<h3>media</h3>
+<hr>
+<h1 id="12-media-system">12. Media System</h1>
+<h3 id="media">media</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Groups related media assets.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Groups related media assets.</li>
 </ul>
 <p>Required Children:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> At least one of:</li>
+<ul>
+<li><input disabled="" type="checkbox"> At least one of:</li>
 </ul>
 <pre><code class="language-text">image
 audio
@@ -380,75 +502,432 @@ video
 <pre><code class="language-text">caption
 source
 </code></pre>
-<hr/>
-<h3>image</h3>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents an image.</li>
+<hr>
+<h3 id="image">image</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Represents an image.</li>
 </ul>
-<hr/>
-<h3>audio</h3>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents audio content.</li>
+<hr>
+<h3 id="audio">audio</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Represents audio content.</li>
 </ul>
-<hr/>
-<h3>video</h3>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents video content.</li>
+<hr>
+<h3 id="video">video</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Represents video content.</li>
 </ul>
-<hr/>
-<h3>caption</h3>
+<hr>
+<h3 id="caption">caption</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Describes associated media.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Describes associated media.</li>
 </ul>
 <p>Preferred Parent:</p>
 <pre><code class="language-text">media
 </code></pre>
-<hr/>
-<h1>13. Structural Elements</h1>
-<h3>section</h3>
+<hr>
+<h1 id="13-structural-elements">13. Structural Elements</h1>
+<h3 id="section">section</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a logical document section.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a logical document section.</li>
 </ul>
 <p>Attributes:</p>
 <pre><code class="language-text">title
 </code></pre>
 <p>Example:</p>
-<pre><code class="language-text">section title="Background"
+<pre><code class="language-text">section title=&quot;Background&quot;
 </code></pre>
 <p>The title attribute functions as the section heading.</p>
-<hr/>
-<h3>subhead</h3>
+<hr>
+<h3 id="subhead">subhead</h3>
 <p>Purpose:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Represents a heading within a section.</li>
+<ul>
+<li><input disabled="" type="checkbox"> Represents a heading within a section.</li>
 </ul>
-<hr/>
-<h1>14. Future Considerations</h1>
+<hr>
+<h1 id="14-runtime-elements">14. Runtime Elements</h1>
+<pre><code class="language-text">script
+style
+canvas
+</code></pre>
+<p>These elements provide runtime functionality and presentation support.</p>
+<hr>
+<h1 id="15-reserved-elements-v01">15. Reserved Elements v0.1</h1>
+<pre><code class="language-text">document
+section
+subhead
+
+text
+blockquote
+source
+
+link
+a
+
+argument
+claim
+evidence
+
+glossary
+word
+definition
+synonym
+antonym
+origin
+usage
+
+timeline
+calendar
+event
+date
+year-start
+year-end
+year-month
+
+comparison
+before
+after
+entity
+unique
+shared
+scenario
+conditions
+
+media
+image
+audio
+video
+caption
+
+table
+row
+column
+cell
+
+form
+fieldset
+input
+select
+option
+button
+
+canvas
+script
+style
+</code></pre>
+<hr>
+<h1 id="16-ebook-schema">16. Ebook Schema</h1>
+<p>An <code>ebook</code> is a structured book with optional front matter and a required <code>content</code> section. Like other MML, each opening tag occupies one line. Authors can put a quoted value on a tag line or put the value on the following line; closing tags are optional in the current parser.</p>
+<pre><code class="language-text">ebook output=&quot;html&quot; mode=&quot;static&quot;
+metadata
+title &quot;A Small Book&quot;
+author &quot;Ashly Lorenzana&quot;
+language &quot;en&quot;
+toc
+content
+heading level=&quot;1&quot; &quot;First Chapter&quot;
+paragraph &quot;The opening paragraph.&quot;
+heading level=&quot;2&quot; &quot;A Smaller Section&quot;
+paragraph &quot;Another paragraph.&quot;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Parent</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ebook</code></td>
+<td>document</td>
+<td>Book root; accepts <code>output</code> and <code>mode</code> attributes</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>ebook</code></td>
+<td>Optional bibliographic fields: <code>title</code>, <code>subtitle</code>, <code>author</code>, <code>language</code>, <code>description</code>, <code>date</code>, <code>publisher</code>, <code>rights</code></td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>ebook</code></td>
+<td>Optional <code>image</code> and <code>caption</code></td>
+</tr>
+<tr>
+<td><code>toc</code></td>
+<td><code>ebook</code></td>
+<td>Optional generated table of contents; accepts <code>min-depth</code> and <code>max-depth</code></td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td><code>ebook</code></td>
+<td>Required body; may contain <code>heading</code>, <code>section</code>, <code>paragraph</code>, <code>text</code>, <code>image</code>, <code>caption</code>, <code>quote</code>, <code>blockquote</code>, <code>list</code>, <code>item</code>, <code>table</code>, <code>row</code>, <code>cell</code>, <code>column</code>, <code>media</code>, <code>audio</code>, <code>video</code>, <code>link</code>, and <code>footnote</code></td>
+</tr>
+<tr>
+<td><code>heading</code></td>
+<td><code>content</code> or <code>section</code></td>
+<td>Heading text, optionally with <code>level=&quot;1&quot;</code> through <code>level=&quot;6&quot;</code> and <code>id</code></td>
+</tr>
+<tr>
+<td><code>paragraph</code></td>
+<td><code>content</code> or <code>section</code></td>
+<td>Body paragraph</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>ebook</code></td>
+<td>Optional CSS for styled or interactive HTML mode</td>
+</tr>
+<tr>
+<td><code>javascript</code> or <code>script</code></td>
+<td><code>ebook</code></td>
+<td>Optional JavaScript for interactive HTML mode</td>
+</tr>
+</tbody></table>
+<p><code>content</code> is the only required child. A <code>toc</code> is generated from the headings in document order; heading levels determine nesting. Missing heading IDs are assigned from their text. <code>min-depth</code> and <code>max-depth</code> control which levels appear in the TOC. The <code>output</code> attribute accepts <code>html</code>, <code>plain-text</code>, <code>pdf</code>, or <code>epub</code>; the current compiler produces HTML or plain-text only. The <code>mode</code> attribute accepts <code>static</code>, <code>styled</code>, or <code>interactive</code>. The compiler includes <code>style</code> in styled and interactive HTML and includes <code>javascript</code>/<code>script</code> in interactive HTML. Plain-text output omits cover, CSS, and JavaScript.</p>
+<p>The parser also accepts <code>p</code> as shorthand for <code>paragraph</code>, <code>h</code> for <code>heading</code>, and <code>js</code> for <code>javascript</code>. In an ebook, <code>title</code> and other metadata fields belong under <code>metadata</code>; <code>image</code> may appear under <code>cover</code> or <code>content</code> (and in its established media contexts).</p>
+<hr>
+<h1 id="17-crossword-grid-schema">17. Crossword Grid Schema</h1>
+<p>A <code>crossword-grid</code> describes a rectangular crossword with two directional word lists. Each tag occupies its own line; the following line contains its value. Closing tags are optional in the current parser.</p>
+<pre><code class="language-text">crossword-grid
+7 x 7
+across
+word
+STARS, ASH
+first-letters
+(1,1), (3,1)
+word-lengths
+5, 3
+down
+word
+SEA
+first-letters
+(1,1)
+word-lengths
+3
+across-clues
+Night lights, Fire remains
+down-clues
+Large body of salt water
+</code></pre>
+<p>The dimension line is <code>columns x rows</code>. Coordinates in <code>first-letters</code> are <code>(row,column)</code>, beginning at 1. The first item in each directional list belongs to the first word, the second to the second word, and so on. <code>across-clues</code> and <code>down-clues</code> follow their respective word order. An empty direction still includes its three empty list tags and its empty clue tag.</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Parent</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>crossword-grid</code></td>
+<td>document</td>
+<td>Dimensions followed by the directional and clue tags</td>
+</tr>
+<tr>
+<td><code>across</code>, <code>down</code></td>
+<td><code>crossword-grid</code></td>
+<td>One <code>word</code>, <code>first-letters</code>, and <code>word-lengths</code> tag each</td>
+</tr>
+<tr>
+<td><code>word</code></td>
+<td><code>across</code> or <code>down</code></td>
+<td>Comma-separated answers using A–Z letters</td>
+</tr>
+<tr>
+<td><code>first-letters</code></td>
+<td><code>across</code> or <code>down</code></td>
+<td>Comma-separated starting squares <code>(row,column)</code></td>
+</tr>
+<tr>
+<td><code>word-lengths</code></td>
+<td><code>across</code> or <code>down</code></td>
+<td>Comma-separated positive lengths</td>
+</tr>
+<tr>
+<td><code>across-clues</code>, <code>down-clues</code></td>
+<td><code>crossword-grid</code></td>
+<td>Comma-separated clues</td>
+</tr>
+</tbody></table>
+<p>A clue containing a comma must be enclosed in double quotes; double quotes inside a quoted clue are doubled. Coordinate commas inside parentheses do not separate list entries. The parser requires the four corresponding lists to have equal item counts, each length to match its answer, all words to fit inside the grid, and letters at crossings to agree. The same starting square may be shared by one across and one down word. Unused squares are black in the compiled HTML solution. Numbers are assigned to distinct starting squares in row-major order and shared by across and down words beginning in the same square.</p>
+<p>The <code>word</code> tag also remains available under <code>glossary</code>. Only glossary words require a <code>definition</code> child.</p>
+<hr>
+<h1 id="18-survey-schema">18. Survey Schema</h1>
+<p>A <code>survey</code> groups questions and describes how each answer is collected. One tag appears per line. Values may follow their tag on the next line or appear as quoted inline values.</p>
+<pre><code class="language-text">survey title=&quot;Tool Preferences&quot;
+question id=&quot;workplace&quot; type=&quot;single-choice&quot; required=&quot;true&quot;
+prompt &quot;Where do you work most often?&quot;
+option &quot;Home&quot;
+option &quot;Office&quot;
+question id=&quot;apps&quot; type=&quot;multiple-choice&quot;
+prompt &quot;Which tools do you use?&quot;
+option &quot;Obsidian&quot;
+option &quot;VS Code&quot;
+question id=&quot;usefulness&quot; type=&quot;rating&quot; min=&quot;1&quot; max=&quot;5&quot;
+prompt &quot;How useful are they?&quot;
+question id=&quot;notes&quot; type=&quot;long-text&quot;
+prompt &quot;Anything else you want to tell us?&quot;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Parent</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>survey</code></td>
+<td>document</td>
+<td>Survey root; optional <code>title</code> and <code>action</code> attributes</td>
+</tr>
+<tr>
+<td><code>question</code></td>
+<td><code>survey</code></td>
+<td>One answerable question; <code>type</code> is required, <code>id</code> and <code>required</code> are optional</td>
+</tr>
+<tr>
+<td><code>prompt</code></td>
+<td><code>question</code></td>
+<td>Required, nonempty question wording</td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td>choice <code>question</code></td>
+<td>One possible answer; the existing <code>option</code> tag also works under <code>dropdown</code></td>
+</tr>
+</tbody></table>
+<p>Supported <code>question</code> types are <code>single-choice</code> (radio buttons), <code>multiple-choice</code> (checkboxes), <code>rating</code> (numbered radio buttons), <code>text</code> (short input), and <code>long-text</code> (textarea). A choice question needs at least two distinct, nonempty <code>option</code> values. Other types do not take options. A rating question needs integer <code>min</code> and <code>max</code> attributes between 0 and 10, with <code>max</code> greater than <code>min</code>. <code>required</code> accepts <code>true</code> or <code>false</code>. Each question ID must be unique and start with a letter; an omitted ID is generated from its position.</p>
+<p>The compiler produces an HTML form with controls named by question ID. If <code>action</code> is supplied on <code>survey</code>, the form uses that URL with <code>method=&quot;post&quot;</code>; the schema does not provide response storage. <code>required</code> maps to native HTML validation for radio and text answers; for multiple-choice it is represented on the fieldset for semantics, because HTML cannot require at least one checkbox in a group without additional behavior. Branching and scoring are outside this initial schema.</p>
+<hr>
+<h1 id="19-creative-work-records">19. Creative-Work Records</h1>
+<p>Use <code>film</code>, <code>song</code>, <code>album</code>, <code>book</code>, <code>series</code>, <code>episode</code>, <code>game</code>, and <code>podcast</code> to describe works. These are records about works; <code>ebook</code> continues to structure actual book content for export.</p>
+<p>Every record requires exactly one nonempty <code>title</code>. Other fields are optional and hold nonempty text, without nested elements. Fields may use a value on the following line or a quoted inline value. Use quoted inline values when a value itself is a reserved tag name.</p>
+<pre><code class="language-mml">film
+title
+The Menu
+director
+Mark Mylod
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film
+</code></pre>
+<p>All types accept <code>title</code>, <code>description</code>, <code>release-year</code>, and repeated <code>genre</code> fields, plus these fields:</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Additional fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>film</code></td>
+<td><code>director</code></td>
+</tr>
+<tr>
+<td><code>song</code></td>
+<td><code>artist</code>, <code>album</code></td>
+</tr>
+<tr>
+<td><code>album</code></td>
+<td><code>artist</code></td>
+</tr>
+<tr>
+<td><code>book</code></td>
+<td><code>author</code>, <code>publisher</code></td>
+</tr>
+<tr>
+<td><code>series</code></td>
+<td><code>creator</code>, <code>start-year</code>, <code>end-year</code></td>
+</tr>
+<tr>
+<td><code>episode</code></td>
+<td><code>season-number</code>, <code>episode-number</code>, <code>date</code></td>
+</tr>
+<tr>
+<td><code>game</code></td>
+<td><code>creator</code>, <code>publisher</code></td>
+</tr>
+<tr>
+<td><code>podcast</code></td>
+<td><code>creator</code></td>
+</tr>
+</tbody></table>
+<p>Repeat <code>genre</code> and credit fields (<code>director</code>, <code>artist</code>, <code>author</code>, <code>creator</code>, <code>publisher</code>) to express multiple values. All other fields accept at most one value. <code>release-year</code>, <code>start-year</code>, and <code>end-year</code> use exactly four digits. A series may omit its end year while ongoing; when both years exist, the end cannot precede the start. <code>season-number</code> is a nonnegative integer (0 can represent specials); <code>episode-number</code> is a positive integer. Episode <code>date</code> holds nonempty date text, as in the existing date field; no additional date-format validation is imposed.</p>
+<p>Consecutive work records become siblings automatically. Closers are optional; <code>/film</code> may directly follow the last field&#39;s value. Explicit field closers such as <code>/genre</code> also work.</p>
+<pre><code class="language-mml">book
+title &quot;Example Book&quot;
+author &quot;First Author&quot;
+author &quot;Second Author&quot;
+publisher &quot;Example Publisher&quot;
+release-year &quot;2022&quot;
+series
+title &quot;Example Series&quot;
+creator &quot;Example Creator&quot;
+start-year &quot;2020&quot;
+episode
+title &quot;Pilot&quot;
+season-number &quot;1&quot;
+episode-number &quot;1&quot;
+date &quot;2020-01-01&quot;
+</code></pre>
+<p>Within a song, <code>album</code> is the album&#39;s name as a text field. Elsewhere, <code>album</code> is a record with its own title and artist. Close <code>/song</code> explicitly to start a separate album record immediately after a song:</p>
+<pre><code class="language-mml">song
+title &quot;Example Song&quot;
+artist &quot;Example Artist&quot;
+album &quot;Example Album&quot;
+release-year &quot;2022&quot;
+/song
+album
+title &quot;Example Album&quot;
+artist &quot;Example Artist&quot;
+</code></pre>
+<p>A missing title, an empty field, an unsupported field, or an invalid numeric value is invalid:</p>
+<pre><code class="language-mml-invalid">film
+title &quot;The Menu&quot;
+release-year &quot;twenty twenty-two&quot;
+</code></pre>
+<p>The compiler preserves record and field names in its semantic output, with escaped text values (as with ebook metadata):</p>
+<pre><code class="language-html">&lt;film&gt;
+  &lt;title&gt;The Menu&lt;/title&gt;
+  &lt;director&gt;Mark Mylod&lt;/director&gt;
+  &lt;release-year&gt;2022&lt;/release-year&gt;
+  &lt;genre&gt;dark-comedy&lt;/genre&gt;
+  &lt;genre&gt;horror&lt;/genre&gt;
+&lt;/film&gt;
+</code></pre>
+<p>Existing ebook metadata, event dates, and timeline rules retain their original contexts. Work records have no required parent and can be grouped in a document, section, or list item; they cannot appear in containers whose schema disallows them, such as ebook content.</p>
+<hr>
+<h1 id="20-future-considerations">20. Future Considerations</h1>
 <p>Potential future areas include:</p>
-<ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Compiler targets</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Rich editor support</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Semantic repair actions</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Schema extensions</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Accessibility metadata</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> Knowledge graph generation</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> PDF and eBook compilation</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox"/> AI-native document representations</li>
+<ul>
+<li><input disabled="" type="checkbox"> Compiler targets</li>
+<li><input disabled="" type="checkbox"> Rich editor support</li>
+<li><input disabled="" type="checkbox"> Semantic repair actions</li>
+<li><input disabled="" type="checkbox"> Schema extensions</li>
+<li><input disabled="" type="checkbox"> Accessibility metadata</li>
+<li><input disabled="" type="checkbox"> Knowledge graph generation</li>
+<li><input disabled="" type="checkbox"> PDF and EPUB generation</li>
+<li><input disabled="" type="checkbox"> AI-native document representations</li>
 </ul>
-<hr/>
-<h1>15. Guiding Principle</h1>
+<hr>
+<h1 id="21-guiding-principle">21. Guiding Principle</h1>
 <blockquote>
 <p>A document should remain understandable as plain text while remaining unambiguously parseable as structured semantic data.</p>
 </blockquote>
-<hr/>
-<h2>15.1 SUPPORT</h2>
-<p>Check out the <strong><a href="./README.html">README</a></strong> if you're not sure where to start.</p>
-<p>You can read the full <strong><a href="./SPEC.html">SPEC</a></strong> here.</p>
+<hr>
+<h2 id="support">SUPPORT</h2>
+<p>Check out the <strong><a href="README.html">README</a></strong> if you&#39;re not sure where to start.</p>
+<p>You can read the full <strong><a href="SPEC.html">SPEC</a></strong> here.</p>
 <p>Try the <strong><a href="../FILES/index.html">PARSER</a></strong>.</p>
-<p>You can find the full list of <strong><a href="./TAGS.html">TAGS</a></strong> here.</p>
-<p><span class="tag">#specification</span> <span class="tag">#draft</span> <span class="tag">#syntax</span> <span class="tag">#markup</span> <span class="tag">#semantic</span> <span class="tag">#grammar</span> <span class="tag">#language</span></p>
-</main>
-</body>
-</html>
+<p>You can find the full list of <strong><a href="TAGS.html">TAGS</a></strong> here.</p>
+<p>#specification #draft #syntax #markup #semantic #grammar #language</p>
+<hr>
+</main></body></html>

@@ -1,3 +1,4 @@
+import { WORK_TYPES, WORK_FIELD_PARENTS, validateWork } from "./work-schema.js";
 import { validateSurvey } from "./survey-schema.js";
 import { validateCrossword } from "./crossword-schema.js";
 /**
@@ -213,6 +214,21 @@ function walkNode(node, parent, errors) {
 function validateElement(node, parent, errors) {
   const parentName = parent?.name ?? null;
 
+  if (WORK_TYPES.includes(node.name) && !(node.name === "album" && parentName === "song")) {
+    errors.push(...validateWork(node));
+  }
+
+  // Shared fields retain their established ebook, event, and timeline behavior.
+  const workOnlyFields = ["director", "artist", "creator", "release-year", "genre", "season-number", "episode-number"];
+  if (workOnlyFields.includes(node.name) && !WORK_FIELD_PARENTS[node.name].includes(parentName)) {
+    const parents = WORK_FIELD_PARENTS[node.name];
+    errors.push({
+      code: "MISSING_REQUIRED_PARENT", element: node.name, line: node.line,
+      requiredParent: parents.join(" or "), suggestedParentChain: [parents[0]],
+      message: `${node.name} requires parent ${parents.join(" or ")}`,
+    });
+  }
+
   switch (node.name) {
     case "evidence":
       if (parentName !== "claim" && parentName !== "argument") {
@@ -229,14 +245,14 @@ function validateElement(node, parent, errors) {
 
     case "start-year":
     case "end-year":
-      if (parentName !== "timeline") {
+      if (parentName !== "timeline" && parentName !== "series") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: node.name,
-          requiredParent: "timeline",
+          requiredParent: "timeline or series",
           suggestedParentChain: ["timeline"],
           line: node.line,
-          message: `${node.name} requires parent timeline`,
+          message: `${node.name} requires parent timeline or series`,
         });
       }
       break;
@@ -256,14 +272,14 @@ function validateElement(node, parent, errors) {
       break;
 
     case "date":
-      if (parentName !== "event" && parentName !== "metadata") {
+      if (parentName !== "event" && parentName !== "metadata" && parentName !== "episode") {
         errors.push({
           code: "MISSING_REQUIRED_PARENT",
           element: "date",
           requiredParent: "event",
           suggestedParentChain: ["event"],
           line: node.line,
-          message: "date requires parent event or metadata",
+          message: "date requires parent event, metadata, or episode",
         });
       }
       break;

@@ -45,11 +45,11 @@ category: documentation
 | select     | dropdown   |
 | input      | form       |
 | item       | list       |
-| year-start | timeline   |
-| year-end   | timeline   |
+| year-start | timeline or series |
+| year-end   | timeline or series |
 | month      | calendar   |
 | year       | calendar   |
-| date       | event      |
+| date       | event, metadata, or episode |
 | image      | media      |
 | audio      | media      |
 | video      | media      |
@@ -88,19 +88,36 @@ category: documentation
 | style      | ebook      |
 | javascript | ebook      |
 | script     | ebook      |
-| title      | metadata   |
+| title      | metadata or any creative-work record |
 | subtitle   | metadata   |
-| author     | metadata   |
+| author     | metadata or book |
 | language   | metadata   |
-| description| metadata   |
-| date       | metadata or event |
-| publisher  | metadata   |
+| description| metadata or any creative-work record |
+| date       | metadata, event, or episode |
+| publisher  | metadata, book, or game |
 | rights     | metadata   |
 | image      | cover, content, media, or section |
 | caption    | cover or media |
 | heading    | content or section |
 | paragraph  | content or section |
 |            |            |
+
+## CREATIVE-WORK RECORDS
+
+`film`, `song`, `album`, `book`, `series`, `episode`, `game`, and `podcast` require exactly one nonempty `title`. They have no required parent. Each record accepts optional `description`, `release-year`, and repeated `genre`, plus the following fields:
+
+| Record | Additional children |
+| --- | --- |
+| film | director |
+| song | artist, album (text field) |
+| album | artist |
+| book | author, publisher |
+| series | creator, start-year, end-year |
+| episode | season-number, episode-number, date |
+| game | creator, publisher |
+| podcast | creator |
+
+Fields contain nonempty text only. Credits and genres may repeat; other fields may occur once. Years use four digits, series end-year cannot precede start-year, season-number is nonnegative, and episode-number is positive. Consecutive work records become siblings; close `/song` explicitly before a standalone album record. See [SPEC](SPEC.md#19-creative-work-records).
 
 ## CONTEXTUAL VALIDATION
 
@@ -140,7 +157,7 @@ category: documentation
 ## PAIRS & SETS ---> CANNOT EXIST OUTSIDE OF
 
 - after **AND** before ---> **CANNOT EXIST OUTSIDE OF** ---> comparison
-- start-year **AND** end-year ---> **CANNOT EXIST OUTSIDE OF** timeline
+- start-year **AND** end-year ---> **CANNOT EXIST OUTSIDE OF** timeline or series
 - image, audio, **AND** video **CANNOT EXIST OUTSIDE OF** media
 
 ---

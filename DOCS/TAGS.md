@@ -150,7 +150,7 @@ Comma-separated answer lengths.
 ### across-clues / down-clues
 Clues in the same order as the corresponding directional words.
 
-See the [crossword schema](/DOCS/SPEC.md#16-crossword-grid-schema) for an example and validation rules.
+See the [crossword schema](/DOCS/SPEC.md#17-crossword-grid-schema) for an example and validation rules.
 
 ## Ebook
 
@@ -196,7 +196,34 @@ A possible answer for a single-choice or multiple-choice question; also used by 
 
 See the [survey schema](/DOCS/SPEC.md#18-survey-schema) for types, validation, and a complete example.
 
-## CURRENT TOTAL: 80 OFFICIAL TAGS
+## Creative-work records
+
+### film / song / album / book / series / episode / game / podcast
+Records describing creative works. Each requires exactly one nonempty `title`; all accept optional `description`, `release-year`, and repeated `genre` fields. `book` describes a work; `ebook` contains its actual content for export. In a song, `album` is a scalar album-name field; elsewhere it is a record.
+
+### director
+Film director credit. Repeat for multiple directors.
+
+### artist
+Song or album artist credit. Repeat for multiple artists.
+
+### creator
+Series, game, or podcast creator credit. Repeat for multiple creators.
+
+### release-year
+Four-digit release/publication year of any creative-work record.
+
+### genre
+A genre label on any creative-work record. Repeat for multiple genres; labels such as `dark-comedy` remain plain text.
+
+### season-number / episode-number
+Episode numbering. Season numbers are nonnegative (0 for specials); episode numbers are positive integers.
+
+The existing `title` and `description` fields also belong directly under any work record; `author` belongs under `book`, and `publisher` under `book` or `game`. `start-year` and `end-year` also belong under `series`; `date` also belongs under `episode`.
+
+See the [creative-work schema](SPEC.md#19-creative-work-records) for field rules and complete examples.
+
+## CURRENT TOTAL: 95 OFFICIAL TAGS
 
 ---
 ## CONTRIBUTE

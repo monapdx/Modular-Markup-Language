@@ -1084,6 +1084,206 @@ prompt "Your name?"`);
   assertIncludes(result.html, '<input type="text" name="question-1" required>');
 });
 
+// --- Creative-work records ---
+
+test("film example keeps repeated genres and credits as sibling fields", () => {
+  const result = processSource(`film
+title
+The Menu
+director
+Mark Mylod
+director
+Another Director
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  const film = result.ast.children[0];
+  assertEqual(film.name, "film");
+  assertEqual(film.children.map(child => child.name), ["title", "director", "director", "release-year", "genre", "genre"]);
+  assertEqual(film.children[0].children[0].value, "The Menu");
+  assertEqual(film.children.at(-1).children[0].value, "horror");
+  assertIncludes(result.html, "<release-year>2022</release-year>");
+  assertEqual((result.html.match(/<genre>/g) ?? []).length, 2);
+});
+
+test("all work types parse, validate, and compile as consecutive sibling records", () => {
+  const entries = [
+    ["film", 'director "Director"'],
+    ["song", 'artist "Artist"\nalbum "Album Name"'],
+    ["book", 'author "Author"\npublisher "Publisher"'],
+    ["series", 'creator "Creator"\nstart-year "2020"'],
+    ["episode", 'season-number "0"\nepisode-number "1"\ndate "2022-11-18"'],
+    ["album", 'artist "Artist"'],
+    ["game", 'creator "Creator"\npublisher "Publisher"'],
+    ["podcast", 'creator "Creator"'],
+  ];
+  const result = processSource(entries.map(([type, fields]) => `${type}\ntitle "Example ${type}"\n${fields}\nrelease-year "2022"\ngenre "Example"\ndescription "A description"`).join("\n"));
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertEqual(result.ast.children.map(child => child.name), entries.map(([type]) => type));
+  for (const [type] of entries) {
+    assertIncludes(result.html, `<${type}>`);
+    assertIncludes(result.html, `</${type}>`);
+  }
+});
+
+test("same-type works stay siblings with multiline values and no closers", () => {
+  const result = processSource(`film
+title
+First Movie
+genre
+horror
+film
+title
+Second Movie
+genre
+comedy`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertEqual(result.ast.children.map(child => child.name), ["film", "film"]);
+});
+
+test("song album field stays scalar and later fields belong to song", () => {
+  const result = processSource(`song
+title
+Song Name
+artist
+Artist Name
+album
+Album Name
+release-year
+1996
+genre
+alternative`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  const song = result.ast.children[0];
+  assertEqual(song.children.map(child => child.name), ["title", "artist", "album", "release-year", "genre"]);
+  assertEqual(song.children[2].children[0].value, "Album Name");
+});
+
+test("explicit song closer permits a standalone album record", () => {
+  const result = processSource(`song
+title "Song Name"
+album "Album Name"
+/song
+album
+title "Album Name"
+artist "Artist Name"
+/album`);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertEqual(result.ast.children.map(child => child.name), ["song", "album"]);
+});
+
+test("work container closer finishes a final scalar field; mismatched closers still fail", () => {
+  for (const source of ['film\ntitle\nThe Menu\n/film', 'film\ntitle\nThe Menu\n/title\n/film']) {
+    assertTrue(processSource(source).valid, source);
+  }
+  assertFalse(processSource('film\ntitle\nThe Menu\n/book').valid);
+  assertFalse(processSource('film\ntitle\nThe Menu\n/director').valid);
+});
+
+test("work records need exactly one nonempty title and named fields", () => {
+  for (const source of ["film", 'film\nThe Menu', 'film\ntitle ""', 'film\ntitle "First"\ntitle "Second"']) {
+    assertFalse(processSource(source).valid, source);
+  }
+});
+
+test("work validation rejects blank fields, wrong field parents, and invalid child elements", () => {
+  for (const source of [
+    'film\ntitle "The Menu"\ndirector ""',
+    'film\ntitle "The Menu"\nrelease-year ""',
+    'director "Someone"', 'genre "horror"', 'release-year "2022"',
+    'book\ntitle "Book Name"\ndirector "Someone"',
+    'film\ntitle "The Menu"\ncreator "Someone"',
+    'episode\ntitle "Pilot"\nartist "Someone"',
+    'film\ntitle "The Menu"\nlist\nitem "An unrelated child"',
+  ]) assertFalse(processSource(source).valid, source);
+});
+
+test("work fields accept only text, even when validating an AST directly", () => {
+  const { ast } = parse('film\ntitle "The Menu"\ndirector "Mark Mylod"');
+  findElement(ast, "director").children.push({ type: "element", name: "section", attributes: {}, children: [], line: 4 });
+  assertTrue(validate(ast).errors.some(error => error.code === "INVALID_WORK_FIELD"));
+});
+
+test("work years use four digits and series ranges may be open-ended", () => {
+  for (const year of ["22", "2022-01-01", "2022x", "unknown", "2022.0"]) {
+    assertFalse(processSource(`film\ntitle "Film Name"\nrelease-year "${year}"`).valid, year);
+  }
+  for (const fields of ['start-year "2020"', 'end-year "2022"', 'start-year "2020"\nend-year "2022"']) {
+    assertTrue(processSource(`series\ntitle "Series Name"\n${fields}`).valid, fields);
+  }
+  assertFalse(processSource('series\ntitle "Series Name"\nstart-year "2022"\nend-year "2020"').valid);
+});
+
+test("episode numbers reject negative, fractional, and zero episode values", () => {
+  for (const fields of ['season-number "-1"', 'season-number "1.5"', 'episode-number "0"', 'episode-number "1x"']) {
+    assertFalse(processSource(`episode\ntitle "Pilot"\n${fields}`).valid, fields);
+  }
+});
+
+test("repeated credits are allowed but duplicate scalar fields are rejected", () => {
+  const valid = processSource('book\ntitle "Book Name"\nauthor "First Author"\nauthor "Second Author"\npublisher "First Publisher"\npublisher "Second Publisher"');
+  assertTrue(valid.valid, JSON.stringify(valid.validationErrors));
+  for (const fields of ['release-year "2022"\nrelease-year "2023"', 'description "One"\ndescription "Two"']) {
+    assertTrue(processSource(`film\ntitle "The Menu"\n${fields}`).validationErrors.some(error => error.code === "DUPLICATE_WORK_FIELD"));
+  }
+});
+
+test("work compilation preserves semantic tags and escapes field text", () => {
+  const result = processSource('book\ntitle "A < B & C"\nauthor "A & B"');
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertIncludes(result.html, "<book>");
+  assertIncludes(result.html, "<title>A &lt; B &amp; C</title>");
+  assertIncludes(result.html, "<author>A &amp; B</author>");
+});
+
+test("book records and ebook metadata keep independent nesting rules", () => {
+  const source = `book
+title "Book Name"
+author "Author Name"
+publisher "Publisher Name"
+/book
+ebook
+metadata
+title "Ebook Title"
+author "Ebook Author"
+publisher "Ebook Publisher"
+date "2022-11-18"
+content
+paragraph "Actual ebook content"`;
+  const { ast, errors } = parse(source);
+  assertTrue(validateAll(errors, ast).valid, JSON.stringify(validateAll(errors, ast).errors));
+  assertEqual(ast.children.map(child => child.name), ["book", "ebook"]);
+  assertEqual(findElement(ast, "metadata").children.map(child => child.name), ["title", "author", "publisher", "date"]);
+  assertIncludes(compile(ast.children[0]), "<book>");
+  assertIncludes(compile(ast.children[1]), "Actual ebook content");
+});
+
+test("series year and episode date additions preserve timeline and event behavior", () => {
+  const source = `series
+title "Series Name"
+start-year "2020"
+end-year "2022"
+/series
+episode
+title "Pilot"
+date "2020-01-01"
+/episode
+timeline
+start-year "2020"
+end-year "2022"
+event
+date "2021-01-01"`;
+  const result = processSource(source);
+  assertTrue(result.valid, JSON.stringify(result.validationErrors));
+  assertEqual(result.ast.children.map(child => child.name), ["series", "episode", "timeline"]);
+  assertFalse(processSource('timeline\nstart-year "2020"\nend-year "2022"\nevent\ndate "2023-01-01"').valid);
+});
+
 // --- Runner ---
 
 let passed = 0;

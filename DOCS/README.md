@@ -25,7 +25,7 @@ Source documents stay readable as plain text while compiling into a structured d
 | File | Purpose |
 | ---- | ------- |
 | **[SPEC.md](SPEC.md)** | Full language specification (v0.1): syntax, principles, validation rules, and schema definitions. |
-| **[TAGS.md](TAGS.md)** | Official tag registry with examples. Currently lists **48 official tags** (argument, calendar, claim, comparison, document, form, media, timeline, and others). |
+| **[TAGS.md](TAGS.md)** | Official tag registry with examples. Currently lists **95 official tags** (argument, calendar, claim, comparison, document, form, media, timeline, and others). |
 | **[SHORTHAND.md](SHORTHAND.md)** | Shorthand alias rules and the official shorthand table (`arg`, `comp`, `grp`, `img`, `evi`, etc.). |
 | **[DEPENDENCIES.md](DEPENDENCIES.md)** | Parent/child relationships, required children, and nesting rules — including **group** (shared trait values) and **comparison** schemas. |
 | **[SYNONYMS.md](SYNONYMS.md)** | Conceptual synonym mappings (e.g. section ↔ chapter, claim ↔ statement). |
@@ -215,6 +215,27 @@ media
 * `media` requires at least one of `image`, `audio`, or `video`
 * `caption` belongs under `media` or `cover`
 
+## Creative-work records
+
+Describe films, songs, albums, books, series, episodes, games, and podcasts with named fields:
+
+```mml
+film
+title
+The Menu
+director
+Mark Mylod
+release-year
+2022
+genre
+dark-comedy
+genre
+horror
+/film
+```
+
+Each record requires a `title`. Other fields are optional; repeat genres and credits for multiple values. Consecutive entries become siblings automatically. `book` describes a work, while `ebook` contains the actual book content. See [creative-work records](SPEC.md#19-creative-work-records) for the fields and validation rules. The parser demo includes a **Load Film Example** button.
+
 ## Ebook
 
 Format-independent book schema (implemented in `export/src/ebook-schema.js`):
@@ -310,13 +331,13 @@ Do you have a more advanced tag idea? **[SUBMIT A SCHEMA](https://github.com/mon
 ---
 ## Community
 
-- Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before
+- Please read our [Code of Conduct](https://github.com/monapdx/Modular-Markup-Language/blob/main/CODE_OF_CONDUCT.md) before
   participating.
-- See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to report bugs,
+- See [CONTRIBUTING.md](https://github.com/monapdx/Modular-Markup-Language/blob/main/CONTRIBUTING.md) for how to report bugs,
   propose tags/schemas, set up your dev environment, and submit pull
   requests.
 - All pull requests use the template in
-  [.github/PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md)
+  [.github/PULL_REQUEST_TEMPLATE.md](https://github.com/monapdx/Modular-Markup-Language/blob/main/.github/ISSUE_TEMPLATE/PULL_REQUEST_TEMPLATE.md)
   automatically.
 
 ---

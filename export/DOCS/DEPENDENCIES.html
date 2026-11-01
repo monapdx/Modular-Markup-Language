@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DEPENDENCIES</title>
-  <link rel="stylesheet" href="../style.css">
-</head>
-<body class="theme-light">
-  <main class="markdown-preview-view markdown-rendered">
-<div class="metadata-container">
-  <div class="metadata-property">
-    <span class="metadata-property-key">title</span>
-    <span class="metadata-property-value">DEPENDENCIES</span>
-  </div>
-  <div class="metadata-property">
-    <span class="metadata-property-key">category</span>
-    <span class="metadata-property-value">documentation</span>
-  </div>
-</div>
-
-<h2>PARENT TAGS</h2>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DEPENDENCIES — MML</title><link rel="stylesheet" href="../style.css"></head><body class="theme-light"><main class="markdown-preview-view markdown-rendered"><h2 id="parent-tags">PARENT TAGS</h2>
 <table>
 <thead>
 <tr>
@@ -28,8 +8,7 @@
 <th>CONTAINER</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>document</td>
 <td>no</td>
 <td>yes</td>
@@ -124,9 +103,48 @@
 <td>yes</td>
 <td>yes</td>
 </tr>
-</tbody>
-</table>
-<h2>CHILD TAGS</h2>
+<tr>
+<td>group</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>glossary</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ebook</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>survey</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>question</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>cover</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>content</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+</tbody></table>
+<h2 id="child-tags">CHILD TAGS</h2>
 <table>
 <thead>
 <tr>
@@ -134,10 +152,9 @@
 <th>CHILD OF</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>option</td>
-<td>dropdown</td>
+<td>dropdown or choice question</td>
 </tr>
 <tr>
 <td>select</td>
@@ -153,11 +170,11 @@
 </tr>
 <tr>
 <td>year-start</td>
-<td>timeline</td>
+<td>timeline or series</td>
 </tr>
 <tr>
 <td>year-end</td>
-<td>timeline</td>
+<td>timeline or series</td>
 </tr>
 <tr>
 <td>month</td>
@@ -169,7 +186,7 @@
 </tr>
 <tr>
 <td>date</td>
-<td>event</td>
+<td>event, metadata, or episode</td>
 </tr>
 <tr>
 <td>image</td>
@@ -256,15 +273,177 @@
 <td>text</td>
 </tr>
 <tr>
+<td>trait</td>
+<td>entity</td>
+</tr>
+<tr>
+<td>word</td>
+<td>glossary</td>
+</tr>
+<tr>
+<td>definition</td>
+<td>word</td>
+</tr>
+<tr>
+<td>synonym</td>
+<td>word</td>
+</tr>
+<tr>
+<td>antonym</td>
+<td>word</td>
+</tr>
+<tr>
+<td>origin</td>
+<td>word</td>
+</tr>
+<tr>
+<td>usage</td>
+<td>word</td>
+</tr>
+<tr>
+<td>question</td>
+<td>survey</td>
+</tr>
+<tr>
+<td>prompt</td>
+<td>question</td>
+</tr>
+<tr>
+<td>option</td>
+<td>question (choice types)</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>cover</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>toc</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>content</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>style</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>javascript</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>script</td>
+<td>ebook</td>
+</tr>
+<tr>
+<td>title</td>
+<td>metadata or any creative-work record</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>metadata</td>
+</tr>
+<tr>
+<td>author</td>
+<td>metadata or book</td>
+</tr>
+<tr>
+<td>language</td>
+<td>metadata</td>
+</tr>
+<tr>
+<td>description</td>
+<td>metadata or any creative-work record</td>
+</tr>
+<tr>
+<td>date</td>
+<td>metadata, event, or episode</td>
+</tr>
+<tr>
+<td>publisher</td>
+<td>metadata, book, or game</td>
+</tr>
+<tr>
+<td>rights</td>
+<td>metadata</td>
+</tr>
+<tr>
+<td>image</td>
+<td>cover, content, media, or section</td>
+</tr>
+<tr>
+<td>caption</td>
+<td>cover or media</td>
+</tr>
+<tr>
+<td>heading</td>
+<td>content or section</td>
+</tr>
+<tr>
+<td>paragraph</td>
+<td>content or section</td>
+</tr>
+<tr>
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<hr>
-<h2>REQUIRES</h2>
+</tbody></table>
+<h2 id="creative-work-records">CREATIVE-WORK RECORDS</h2>
+<p><code>film</code>, <code>song</code>, <code>album</code>, <code>book</code>, <code>series</code>, <code>episode</code>, <code>game</code>, and <code>podcast</code> require exactly one nonempty <code>title</code>. They have no required parent. Each record accepts optional <code>description</code>, <code>release-year</code>, and repeated <code>genre</code>, plus the following fields:</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Additional children</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>film</td>
+<td>director</td>
+</tr>
+<tr>
+<td>song</td>
+<td>artist, album (text field)</td>
+</tr>
+<tr>
+<td>album</td>
+<td>artist</td>
+</tr>
+<tr>
+<td>book</td>
+<td>author, publisher</td>
+</tr>
+<tr>
+<td>series</td>
+<td>creator, start-year, end-year</td>
+</tr>
+<tr>
+<td>episode</td>
+<td>season-number, episode-number, date</td>
+</tr>
+<tr>
+<td>game</td>
+<td>creator, publisher</td>
+</tr>
+<tr>
+<td>podcast</td>
+<td>creator</td>
+</tr>
+</tbody></table>
+<p>Fields contain nonempty text only. Credits and genres may repeat; other fields may occur once. Years use four digits, series end-year cannot precede start-year, season-number is nonnegative, and episode-number is positive. Consecutive work records become siblings; close <code>/song</code> explicitly before a standalone album record. See <a href="SPEC.html#19-creative-work-records">SPEC</a>.</p>
+<h2 id="contextual-validation">CONTEXTUAL VALIDATION</h2>
 <ul>
-    
+<li>event ---&gt; <strong>AS A CHILD OF</strong> ---&gt; timeline ---&gt; <strong>MUST HAVE</strong> date <strong>BETWEEN</strong> start-year AND end-year</li>
+<li></li>
+</ul>
+<hr>
+<h2 id="requires">REQUIRES</h2>
+<ul>
 <li>claim &lt;--- <strong>REQUIRES</strong> &lt;--- evidence</li>
 <li>calendar ---&gt; <strong>REQUIRES</strong> ---&gt; month <strong>AND</strong> year</li>
 <li>event ---&gt; <strong>REQUIRES</strong> ---&gt; date</li>
@@ -275,23 +454,33 @@
 <li>option ---&gt; <strong>REQUIRES</strong> ---&gt; dropdown</li>
 <li>select ---&gt; <strong>REQUIRES</strong> ---&gt; dropdown</li>
 <li>list ---&gt; <strong>REQUIRES</strong> ---&gt; item</li>
+<li>group ---&gt; <strong>REQUIRES</strong> ---&gt; <strong>TWO OR MORE ENTITIES</strong></li>
+<li>glossary ---&gt; REQUIRES ---&gt; word</li>
+<li>word ---&gt; REQUIRES ---&gt; definition <strong>when inside glossary</strong></li>
+<li>ebook ---&gt; REQUIRES ---&gt; content</li>
+<li>survey ---&gt; REQUIRES ---&gt; one or more questions</li>
+<li>question ---&gt; REQUIRES ---&gt; prompt; choice questions require two or more options</li>
+<li>synonym  ---&gt; REQUIRES ---&gt; word</li>
+<li>antonym ---&gt; REQUIRES ---&gt; word</li>
+<li>origin ---&gt; REQUIRES ---&gt; word</li>
+<li>usage ---&gt; REQUIRES  ---&gt; word</li>
 </ul>
-
 <hr>
-<h2>AS A CHILD OF ---&gt; IS ONLY VALID ---&gt; WHEN MULTIPLES EXIST</h2>
+<h2 id="as-a-child-of----gt-is-only-valid----gt-when-multiples-exist">AS A CHILD OF ---&gt; IS ONLY VALID ---&gt; WHEN MULTIPLES EXIST</h2>
 <ul>
 <li>entity ---&gt; <strong>AS A CHILD OF</strong> ---&gt; comparison ---&gt; <strong>IS ONLY VALID</strong> ---&gt; <strong>WHEN TWO OR MORE EXIST AS CHILDREN</strong></li>
 <li>scenario ---&gt; <strong>AS A CHILD OF</strong> ---&gt; comparison ---&gt; <strong>IS ONLY VALID</strong> ---&gt; <strong>WHEN TWO OR MORE EXIST AS CHILDREN</strong></li>
+<li>entity ---&gt; <strong>AS A CHILD OF</strong> ---&gt; group ---&gt; <strong>IS ONLY VALID</strong> ---&gt; <strong>WHEN AT LEAST TWO EXIST</strong></li>
 </ul>
 <hr>
-<h2>PAIRS &amp; SETS ---&gt; CANNOT EXIST OUTSIDE OF</h2>
+<h2 id="pairs-amp-sets----gt-cannot-exist-outside-of">PAIRS &amp; SETS ---&gt; CANNOT EXIST OUTSIDE OF</h2>
 <ul>
 <li>after <strong>AND</strong> before ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; comparison</li>
-<li>start-year <strong>AND</strong> end-year ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> timeline</li>
+<li>start-year <strong>AND</strong> end-year ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> timeline or series</li>
 <li>image, audio, <strong>AND</strong> video <strong>CANNOT EXIST OUTSIDE OF</strong> media</li>
 </ul>
 <hr>
-<h2>CANNOT EXIST OUTSIDE OF</h2>
+<h2 id="cannot-exist-outside-of">CANNOT EXIST OUTSIDE OF</h2>
 <ul>
 <li>row ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; table</li>
 <li>column ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; table</li>
@@ -300,16 +489,20 @@
 <li>legend ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; fieldset</li>
 <li>dropdown ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; form</li>
 <li>section ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; document</li>
+<li>trait ---&gt; <strong>CANNOT EXIST OUTSIDE OF</strong> ---&gt; entity</li>
+<li>synonym ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; word</li>
+<li>antonym ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; word</li>
+<li>word ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; glossary</li>
+<li>definition ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; word</li>
+<li>origin ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; word</li>
+<li>usage ---&gt; CANNOT EXIST OUTSIDE OF ---&gt; word</li>
 </ul>
 <hr>
-<h2>TAGS</h2>
-<p>Here is the list of <strong><a href="/DOCS/TAGS">TAGS</a></strong>.</p>
-<p>Looking for the <strong><a href="./SHORTHAND.html">SHORTHAND</a></strong> version?</p>
-<p>Check out a list of <strong><a href="./PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
-<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="./DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
-<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="./SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
-<p><span class="tag">#TAgs</span> <span class="tag">#parent</span> <span class="tag">#child</span> <span class="tag">#GRAMMAr</span> <span class="tag">#SEMANTIc</span> <span class="tag">#MARKUp</span> <span class="tag">#DATA-STRUCTURe</span> <span class="tag">#LISTs</span> <span class="tag">#rules</span> <span class="tag">#dependencies</span></p>
-
-  </main>
-</body>
-</html>
+<h2 id="tags">TAGS</h2>
+<p>Here is the list of <strong><a href="TAGS.html">TAGS</a></strong>. </p>
+<p>Looking for the <strong><a href="SHORTHAND.html">SHORTHAND</a></strong> version?</p>
+<p>Check out a list of <strong><a href="PROPOSED.html">PROPOSED TAGS</a></strong>.</p>
+<p>Curious about how the tags can be used together? Find out here ---&gt; <strong><a href="DEPENDENCIES.html">DEPENDENCIES</a></strong>.</p>
+<p>Did you know that you can use the tag <strong><a href="#">CHAPTER</a></strong> instead of <strong><a href="#">SECTION</a></strong>, if you want? <strong><a href="SYNONYMS.html">SYNONYMS</a></strong> make it fine to replace one with the other!</p>
+<p>#tags #parent #child #grammar #semantic #markup #data-structure #lists #rules #dependencies </p>
+</main></body></html>
